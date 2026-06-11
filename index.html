@@ -1,4 +1,13 @@
-"""<!DOCTYPE html>
+cat > /home/claude/build_portfolio.py << 'PYEOF'
+with open('/home/claude/profile_b64.txt') as f:
+    profile_b64 = f.read().strip()
+with open('/home/claude/cover_b64.txt') as f:
+    cover_b64 = f.read().strip()
+
+profile_src = f"data:image/png;base64,{profile_b64}"
+cover_src = f"data:image/png;base64,{cover_b64}"
+
+html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -1532,3 +1541,10 @@ window.addEventListener('scroll', () => {{
 </script>
 </body>
 </html>"""
+
+with open('/mnt/user-data/outputs/parameshwari_portfolio.html', 'w', encoding='utf-8') as f:
+    f.write(html)
+
+print("Done!", len(html), "chars")
+PYEOF
+python3 /home/claude/build_portfolio.py
