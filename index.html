@@ -1,922 +1,276 @@
-cat > /home/claude/build_portfolio.py << 'PYEOF'
-with open('/home/claude/profile_b64.txt') as f:
-    profile_b64 = f.read().strip()
-with open('/home/claude/cover_b64.txt') as f:
-    cover_b64 = f.read().strip()
-
-profile_src = f"data:image/png;base64,{profile_b64}"
-cover_src = f"data:image/png;base64,{cover_b64}"
-
-html = f"""<!DOCTYPE html>
+html = """<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>S. Parameshwari | Banking Professional</title>
-<meta name="description" content="S. Parameshwari - Banking Professional & Branch Operations Manager. 7+ years of excellence in banking operations, leadership, and customer relations.">
-
-<!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- AOS -->
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 <style>
-:root {{
-  --navy: #0a1628;
-  --navy-mid: #122040;
-  --navy-light: #1a3060;
-  --gold: #c9a84c;
-  --gold-light: #e8c97a;
-  --gold-pale: #f5e6b8;
-  --white: #ffffff;
-  --off-white: #f8f6f0;
-  --glass: rgba(255,255,255,0.06);
-  --glass-border: rgba(201,168,76,0.25);
-  --text-muted: rgba(255,255,255,0.6);
-  --shadow-gold: 0 0 40px rgba(201,168,76,0.15);
-}}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --navy:#0a1628;--navy-mid:#122040;--navy-light:#1a3060;
+  --gold:#c9a84c;--gold-light:#e8c97a;--gold-pale:#f5e6b8;
+  --white:#fff;--glass:rgba(255,255,255,0.06);
+  --glass-border:rgba(201,168,76,0.25);
+  --text-muted:rgba(255,255,255,0.60);
+  --shadow-gold:0 0 40px rgba(201,168,76,0.18);
+}
+body{font-family:'Inter',sans-serif;background:var(--navy);color:#fff;overflow-x:hidden}
 
-[data-theme="light"] {{
-  --navy: #f0f4ff;
-  --navy-mid: #dce6ff;
-  --navy-light: #c8d8ff;
-  --glass: rgba(0,0,0,0.04);
-  --glass-border: rgba(10,22,40,0.15);
-  --text-muted: rgba(10,22,40,0.6);
-  --body-text: #0a1628;
-}}
+/* LOADER */
+#loader{position:fixed;inset:0;z-index:9999;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .5s}
+.ld-logo{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:var(--gold);letter-spacing:4px}
+.ld-bar{width:200px;height:3px;background:rgba(201,168,76,.2);border-radius:10px;overflow:hidden}
+.ld-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:10px;animation:lf 2.2s ease forwards}
+@keyframes lf{to{width:100%}}
 
-*, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 6%;display:flex;align-items:center;justify-content:space-between;background:rgba(10,22,40,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--glass-border);transition:padding .3s}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--gold);text-decoration:none;letter-spacing:1px}
+.nav-logo span{color:#fff}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.8);text-decoration:none;font-size:.85rem;font-weight:500;letter-spacing:.5px;position:relative;transition:color .3s}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--gold);transition:width .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-links a:hover::after{width:100%}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--gold);border-radius:2px;transition:all .3s}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(10,22,40,.97);backdrop-filter:blur(20px);padding:24px 6%;border-bottom:1px solid var(--glass-border);z-index:999}
+.mobile-menu.open{display:block}
+.mobile-menu a{display:block;padding:13px 0;color:rgba(255,255,255,.85);text-decoration:none;font-size:1rem;border-bottom:1px solid rgba(255,255,255,.07);transition:color .3s}
+.mobile-menu a:hover{color:var(--gold)}
 
-html {{ scroll-behavior: smooth; }}
+/* HERO */
+.hero{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden;padding-top:70px}
+#pc{position:absolute;inset:0;z-index:0}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(201,168,76,.1) 0%,transparent 60%),linear-gradient(135deg,#0a1628 0%,#122040 55%,#0d1e3a 100%);z-index:1}
+.hero-content{position:relative;z-index:2;max-width:1400px;margin:0 auto;padding:80px 6%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:100px;padding:6px 18px;font-size:.72rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
+.hero-eyebrow::before{content:'';width:7px;height:7px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+.hero-name{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,4.8rem);font-weight:900;line-height:1.1;margin-bottom:10px;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 50%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-role{font-size:clamp(.9rem,1.5vw,1.1rem);color:var(--gold);font-weight:600;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:14px}
+.typing-wrap{font-size:clamp(1rem,1.8vw,1.2rem);color:rgba(255,255,255,.7);min-height:2.2em;margin-bottom:26px;font-weight:300}
+#typed{border-right:2px solid var(--gold);padding-right:4px}
+.hero-tags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:34px}
+.htag{background:var(--glass);border:1px solid var(--glass-border);border-radius:100px;padding:6px 16px;font-size:.8rem;color:rgba(255,255,255,.8);backdrop-filter:blur(10px)}
+.htag i{color:var(--gold);margin-right:5px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+.btn-p{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);border:none;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;text-decoration:none;transition:all .3s;box-shadow:0 4px 20px rgba(201,168,76,.35)}
+.btn-p:hover{transform:translateY(-3px);box-shadow:0 10px 32px rgba(201,168,76,.5)}
+.btn-s{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:transparent;color:var(--gold);border:1.5px solid var(--gold);border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;text-decoration:none;transition:all .3s}
+.btn-s:hover{background:rgba(201,168,76,.1);transform:translateY(-3px)}
 
-body {{
-  font-family: 'Inter', sans-serif;
-  background: var(--navy);
-  color: #fff;
-  overflow-x: hidden;
-  transition: background 0.4s, color 0.4s;
-}}
+/* PROFILE FRAME */
+.hero-visual{display:flex;justify-content:center;align-items:center}
+.pframe{position:relative;width:clamp(260px,34vw,400px);height:clamp(260px,34vw,400px)}
+.pring{position:absolute;inset:-14px;border-radius:50%;background:conic-gradient(var(--gold),var(--gold-light),rgba(255,255,255,.1),var(--gold));animation:spin 8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.pring-inner{position:absolute;inset:-7px;border-radius:50%;background:var(--navy-mid)}
+.pimg{position:relative;z-index:1;width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:top;border:4px solid var(--navy-mid)}
+.pbadge{position:absolute;bottom:18px;right:-10px;z-index:2;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);border-radius:14px;padding:10px 16px;text-align:center;box-shadow:0 8px 24px rgba(201,168,76,.45)}
+.pbadge-num{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:900;line-height:1}
+.pbadge-lbl{font-size:.62rem;font-weight:700;letter-spacing:.5px;white-space:nowrap}
 
-[data-theme="light"] body {{ color: #0a1628; }}
+/* SECTIONS */
+section{padding:100px 6%;max-width:1400px;margin:0 auto}
+.s-full{max-width:100%;padding:0}
+.s-label{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.s-label::before{content:'';width:28px;height:1px;background:var(--gold)}
+.s-div{width:55px;height:3px;background:linear-gradient(90deg,var(--gold),transparent);border-radius:3px;margin-bottom:16px}
+.s-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.2;margin-bottom:14px}
+.s-title span{color:var(--gold)}
+.s-sub{font-size:1rem;color:var(--text-muted);max-width:540px;line-height:1.7;margin-bottom:56px}
 
-/* ─── LOADER ─── */
-#loader {{
-  position: fixed; inset: 0; z-index: 9999;
-  background: var(--navy);
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 20px;
-}}
-.loader-logo {{
-  font-family: 'Playfair Display', serif;
-  font-size: 2.5rem; font-weight: 700;
-  color: var(--gold);
-  letter-spacing: 4px;
-}}
-.loader-bar {{
-  width: 200px; height: 3px;
-  background: rgba(201,168,76,0.2);
-  border-radius: 10px; overflow: hidden;
-}}
-.loader-fill {{
-  height: 100%; width: 0;
-  background: linear-gradient(90deg, var(--gold), var(--gold-light));
-  border-radius: 10px;
-  animation: loadfill 2s ease forwards;
-}}
-@keyframes loadfill {{ to {{ width: 100%; }} }}
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.about-cover{border-radius:24px;overflow:hidden;position:relative;box-shadow:0 24px 70px rgba(0,0,0,.45)}
+.about-cover img{width:100%;display:block;filter:brightness(.9)}
+.about-cover-ov{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,22,40,.25),rgba(201,168,76,.08))}
+.about-text p{color:rgba(255,255,255,.75);line-height:1.85;margin-bottom:18px;font-size:1rem}
+.traits{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+.trait{background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:18px;backdrop-filter:blur(12px);transition:all .3s;cursor:default}
+.trait:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:var(--shadow-gold)}
+.trait-ico{font-size:1.4rem;margin-bottom:8px}
+.trait-t{font-weight:600;font-size:.9rem;margin-bottom:4px}
+.trait-d{font-size:.76rem;color:var(--text-muted)}
 
-/* ─── NAV ─── */
-nav {{
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  padding: 16px 5%;
-  display: flex; align-items: center; justify-content: space-between;
-  background: rgba(10,22,40,0.85);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--glass-border);
-  transition: all 0.3s;
-}}
-.nav-logo {{
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem; font-weight: 700;
-  color: var(--gold);
-  letter-spacing: 1px;
-  text-decoration: none;
-}}
-.nav-logo span {{ color: #fff; }}
-.nav-links {{
-  display: flex; gap: 28px; list-style: none;
-}}
-.nav-links a {{
-  color: rgba(255,255,255,0.8);
-  text-decoration: none;
-  font-size: 0.85rem; font-weight: 500;
-  letter-spacing: 0.5px;
-  transition: color 0.3s;
-  position: relative;
-}}
-.nav-links a::after {{
-  content: '';
-  position: absolute; bottom: -4px; left: 0;
-  width: 0; height: 2px;
-  background: var(--gold);
-  transition: width 0.3s;
-}}
-.nav-links a:hover {{ color: var(--gold); }}
-.nav-links a:hover::after {{ width: 100%; }}
+/* STATS BAND */
+.stats-band{background:linear-gradient(135deg,var(--navy-mid),var(--navy-light));padding:80px 6%}
+.stats-grid{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.stat{text-align:center;background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:40px 20px;backdrop-filter:blur(10px);transition:all .3s;cursor:default}
+.stat:hover{transform:translateY(-8px);box-shadow:var(--shadow-gold);border-color:var(--gold)}
+.stat-n{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--gold);line-height:1;margin-bottom:8px}
+.stat-l{font-size:.82rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px}
 
-.nav-right {{ display: flex; align-items: center; gap: 12px; }}
-.theme-btn {{
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  border: 1px solid var(--glass-border);
-  background: var(--glass);
-  color: var(--gold);
-  cursor: pointer; font-size: 1rem;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.3s;
-}}
-.theme-btn:hover {{ background: var(--gold); color: var(--navy); }}
+/* TIMELINE */
+.timeline{position:relative;padding:20px 0}
+.timeline::before{content:'';position:absolute;left:50%;transform:translateX(-50%);top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--gold),transparent)}
+.tl-item{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:60px;position:relative;align-items:start}
+.tl-item:nth-child(odd) .tl-card{order:1;text-align:right}
+.tl-item:nth-child(odd) .tl-side{order:2}
+.tl-item:nth-child(even) .tl-card{order:2}
+.tl-item:nth-child(even) .tl-side{order:1}
+.tl-dot{position:absolute;left:50%;transform:translateX(-50%);top:24px;width:20px;height:20px;background:var(--gold);border-radius:50%;border:4px solid var(--navy-mid);box-shadow:0 0 20px rgba(201,168,76,.5);z-index:1}
+.tl-year{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:900;color:rgba(201,168,76,.2);line-height:1}
+.tl-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;padding:28px;backdrop-filter:blur(10px);transition:all .3s}
+.tl-card:hover{border-color:var(--gold);box-shadow:var(--shadow-gold);transform:translateY(-4px)}
+.tl-role{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--gold);margin-bottom:4px}
+.tl-org{font-size:.82rem;color:var(--text-muted);margin-bottom:12px}
+.tl-desc{font-size:.87rem;color:rgba(255,255,255,.7);line-height:1.75}
+.tl-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.tl-tag{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);border-radius:100px;padding:4px 12px;font-size:.7rem;color:var(--gold-light)}
+.tl-item:nth-child(odd) .tl-tags{justify-content:flex-end}
 
-.hamburger {{
-  display: none;
-  flex-direction: column; gap: 5px; cursor: pointer;
-  background: none; border: none; padding: 4px;
-}}
-.hamburger span {{
-  display: block; width: 24px; height: 2px;
-  background: var(--gold); border-radius: 2px;
-  transition: all 0.3s;
-}}
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.sg-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:26px;color:var(--gold)}
+.ski{margin-bottom:22px}
+.ski-hd{display:flex;justify-content:space-between;margin-bottom:8px;font-size:.87rem;font-weight:500}
+.ski-pct{color:var(--gold);font-weight:700}
+.ski-bar{height:6px;background:rgba(255,255,255,.1);border-radius:100px;overflow:hidden}
+.ski-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:100px;width:0;transition:width 1.6s cubic-bezier(.25,.46,.45,.94)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.chip{background:var(--glass);border:1px solid var(--glass-border);border-radius:10px;padding:10px 16px;font-size:.82rem;font-weight:500;display:flex;align-items:center;gap:8px;transition:all .3s;cursor:default}
+.chip:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+.chip i{color:var(--gold);font-size:1rem}
 
-/* Mobile menu */
-.mobile-menu {{
-  display: none;
-  position: fixed; top: 70px; left: 0; right: 0;
-  background: rgba(10,22,40,0.97);
-  backdrop-filter: blur(20px);
-  padding: 24px 5%;
-  border-bottom: 1px solid var(--glass-border);
-  z-index: 999;
-}}
-.mobile-menu.open {{ display: block; }}
-.mobile-menu a {{
-  display: block; padding: 12px 0;
-  color: rgba(255,255,255,0.85);
-  text-decoration: none; font-size: 1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  transition: color 0.3s;
-}}
-.mobile-menu a:hover {{ color: var(--gold); }}
+/* EDU */
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.edu-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:32px;backdrop-filter:blur(10px);position:relative;overflow:hidden;transition:all .3s}
+.edu-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light))}
+.edu-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-gold);border-color:var(--gold)}
+.edu-ico{width:50px;height:50px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:var(--gold);margin-bottom:16px}
+.edu-deg{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:6px}
+.edu-uni{font-size:.85rem;color:var(--gold);margin-bottom:4px;font-weight:500}
+.edu-yr{font-size:.76rem;color:var(--text-muted)}
 
-/* ─── HERO ─── */
-.hero {{
-  min-height: 100vh;
-  position: relative;
-  display: flex; align-items: center;
-  overflow: hidden;
-  padding-top: 70px;
-}}
+/* ACHIEVEMENTS */
+.ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.ach-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:30px;backdrop-filter:blur(10px);text-align:center;transition:all .3s;position:relative;overflow:hidden;cursor:default}
+.ach-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .3s}
+.ach-card:hover::after{transform:scaleX(1)}
+.ach-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-gold);border-color:var(--gold)}
+.ach-ico{font-size:2.4rem;margin-bottom:14px;display:block}
+.ach-t{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:8px}
+.ach-d{font-size:.8rem;color:var(--text-muted);line-height:1.65}
 
-#particles-canvas {{
-  position: absolute; inset: 0;
-  z-index: 0;
-}}
+/* GALLERY */
+.gal-section{background:linear-gradient(180deg,transparent,var(--navy-mid) 50%,transparent);padding:100px 6%}
+.gal-inner{max-width:1400px;margin:0 auto}
+.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:260px 260px;gap:16px}
+.gal-item{border-radius:18px;overflow:hidden;cursor:pointer;position:relative;background:var(--glass);border:1px solid var(--glass-border);transition:all .3s}
+.gal-item:first-child{grid-column:span 2;grid-row:span 2}
+.gal-item img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .4s}
+.gal-item:hover img{transform:scale(1.05)}
+.gal-ov{position:absolute;inset:0;background:rgba(10,22,40,.65);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
+.gal-item:hover .gal-ov{opacity:1}
+.gal-item:hover{border-color:var(--gold)}
+.gal-ov i{font-size:2rem;color:var(--gold)}
+.gal-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:10px;color:var(--text-muted)}
+.gal-ph i{font-size:2rem;color:var(--gold)}
+.gal-ph span{font-size:.78rem}
 
-.hero-bg-gradient {{
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 30% 50%, rgba(201,168,76,0.08) 0%, transparent 60%),
-              radial-gradient(ellipse at 80% 20%, rgba(26,48,96,0.6) 0%, transparent 50%),
-              linear-gradient(135deg, #0a1628 0%, #122040 50%, #0d1e3a 100%);
-  z-index: 1;
-}}
+/* TESTIMONIALS */
+.t-track{overflow:hidden;position:relative}
+.t-wrap{display:flex;gap:24px;transition:transform .5s ease}
+.t-card{min-width:calc(33.333% - 16px);background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:32px;backdrop-filter:blur(10px);flex-shrink:0}
+.t-q{font-size:3rem;color:var(--gold);font-family:'Playfair Display',serif;line-height:.4;margin-bottom:14px}
+.t-text{font-size:.9rem;color:rgba(255,255,255,.8);line-height:1.75;margin-bottom:22px;font-style:italic}
+.t-auth{display:flex;align-items:center;gap:12px}
+.t-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--navy-light));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;color:var(--navy)}
+.t-name{font-weight:600;font-size:.88rem}
+.t-role{font-size:.74rem;color:var(--gold)}
+.t-nav{display:flex;justify-content:center;gap:10px;margin-top:30px}
+.tnbtn{width:40px;height:40px;border-radius:50%;background:var(--glass);border:1px solid var(--glass-border);color:var(--gold);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .3s}
+.tnbtn:hover{background:var(--gold);color:var(--navy)}
 
-.hero-content {{
-  position: relative; z-index: 2;
-  max-width: 1400px; margin: 0 auto;
-  padding: 80px 5%;
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 60px; align-items: center;
-}}
+/* CONTACT */
+.contact-wrap{display:grid;grid-template-columns:1fr 1.5fr;gap:60px}
+.ci{display:flex;align-items:flex-start;gap:16px;margin-bottom:26px}
+.ci-ico{width:48px;height:48px;flex-shrink:0;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--gold)}
+.ci-lbl{font-size:.73rem;color:var(--text-muted);margin-bottom:2px;text-transform:uppercase;letter-spacing:1px}
+.ci-val{font-weight:600;font-size:.93rem}
+.cform{display:flex;flex-direction:column;gap:14px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg label{font-size:.78rem;font-weight:500;color:var(--text-muted)}
+.fg input,.fg textarea{background:var(--glass);border:1px solid var(--glass-border);border-radius:10px;padding:13px 16px;color:#fff;font-family:'Inter',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s;backdrop-filter:blur(10px)}
+.fg input:focus,.fg textarea:focus{border-color:var(--gold)}
+.fg textarea{resize:vertical;min-height:130px}
 
-.hero-text {{ order: 1; }}
+/* FOOTER */
+footer{background:linear-gradient(180deg,var(--navy-mid) 0%,#060d1a 100%);border-top:1px solid var(--glass-border);padding:60px 6% 28px;text-align:center}
+.ft-logo{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold);margin-bottom:10px}
+.ft-tag{font-size:.88rem;color:var(--text-muted);font-style:italic;margin-bottom:30px}
+.ft-soc{display:flex;justify-content:center;gap:14px;margin-bottom:36px}
+.soc-btn{width:44px;height:44px;border-radius:50%;background:var(--glass);border:1px solid var(--glass-border);color:var(--gold);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1rem;transition:all .3s}
+.soc-btn:hover{background:var(--gold);color:var(--navy);transform:translateY(-3px)}
+.ft-copy{border-top:1px solid rgba(255,255,255,.07);padding-top:22px;font-size:.78rem;color:rgba(255,255,255,.28)}
 
-.hero-eyebrow {{
-  display: inline-flex; align-items: center; gap: 10px;
-  background: rgba(201,168,76,0.1);
-  border: 1px solid rgba(201,168,76,0.3);
-  border-radius: 100px;
-  padding: 6px 16px;
-  font-size: 0.75rem; font-weight: 600;
-  letter-spacing: 2px; text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 24px;
-}}
-.hero-eyebrow::before {{
-  content: '';
-  width: 6px; height: 6px;
-  background: var(--gold);
-  border-radius: 50%;
-  animation: pulse-dot 2s infinite;
-}}
-@keyframes pulse-dot {{
-  0%, 100% {{ opacity: 1; transform: scale(1); }}
-  50% {{ opacity: 0.5; transform: scale(1.4); }}
-}}
+/* FLOAT */
+.float-s{position:fixed;left:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:100}
+.float-s a{width:40px;height:40px;border-radius:50%;background:rgba(10,22,40,.85);border:1px solid var(--glass-border);color:var(--gold);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:.88rem;transition:all .3s;backdrop-filter:blur(12px)}
+.float-s a:hover{background:var(--gold);color:var(--navy);transform:scale(1.15)}
+#btt{position:fixed;bottom:28px;right:28px;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);border:none;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(201,168,76,.4);opacity:0;transform:translateY(20px);transition:all .3s;z-index:100}
+#btt.show{opacity:1;transform:translateY(0)}
+#btt:hover{transform:translateY(-4px) scale(1.07)}
 
-.hero-name {{
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.8rem, 5vw, 4.5rem);
-  font-weight: 900;
-  line-height: 1.1;
-  margin-bottom: 12px;
-  background: linear-gradient(135deg, #fff 0%, var(--gold-light) 50%, var(--gold) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}}
-
-.hero-title {{
-  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-  color: var(--gold);
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-}}
-
-.typing-container {{
-  font-size: clamp(1rem, 1.8vw, 1.25rem);
-  color: rgba(255,255,255,0.75);
-  min-height: 2em;
-  margin-bottom: 28px;
-  font-weight: 300;
-}}
-#typed-text {{ border-right: 2px solid var(--gold); padding-right: 4px; }}
-
-.hero-tags {{
-  display: flex; flex-wrap: wrap; gap: 10px;
-  margin-bottom: 36px;
-}}
-.hero-tag {{
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: 100px;
-  padding: 6px 16px;
-  font-size: 0.8rem; color: rgba(255,255,255,0.8);
-  backdrop-filter: blur(10px);
-}}
-
-.hero-buttons {{
-  display: flex; gap: 14px; flex-wrap: wrap;
-}}
-.btn-primary {{
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 14px 28px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: var(--navy);
-  border: none; border-radius: 8px;
-  font-weight: 700; font-size: 0.9rem;
-  cursor: pointer; text-decoration: none;
-  transition: all 0.3s;
-  box-shadow: 0 4px 20px rgba(201,168,76,0.35);
-}}
-.btn-primary:hover {{
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(201,168,76,0.5);
-}}
-.btn-secondary {{
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 14px 28px;
-  background: transparent;
-  color: var(--gold);
-  border: 1.5px solid var(--gold);
-  border-radius: 8px;
-  font-weight: 600; font-size: 0.9rem;
-  cursor: pointer; text-decoration: none;
-  transition: all 0.3s;
-}}
-.btn-secondary:hover {{
-  background: rgba(201,168,76,0.1);
-  transform: translateY(-2px);
-}}
-
-.hero-visual {{ order: 2; display: flex; justify-content: center; align-items: center; }}
-
-.profile-frame {{
-  position: relative;
-  width: clamp(280px, 35vw, 420px);
-  height: clamp(280px, 35vw, 420px);
-}}
-.profile-ring {{
-  position: absolute; inset: -12px;
-  border-radius: 50%;
-  background: conic-gradient(var(--gold), var(--gold-light), transparent, var(--gold));
-  animation: spin-ring 8s linear infinite;
-}}
-@keyframes spin-ring {{ to {{ transform: rotate(360deg); }} }}
-.profile-ring-inner {{
-  position: absolute; inset: -6px;
-  border-radius: 50%;
-  background: var(--navy-mid);
-}}
-.profile-img {{
-  position: relative; z-index: 1;
-  width: 100%; height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid var(--navy-mid);
-}}
-
-.profile-badge {{
-  position: absolute; bottom: 20px; right: -10px; z-index: 2;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: var(--navy);
-  border-radius: 12px;
-  padding: 10px 16px;
-  text-align: center;
-  box-shadow: 0 8px 24px rgba(201,168,76,0.4);
-}}
-.profile-badge-num {{
-  font-family: 'Playfair Display', serif;
-  font-size: 1.6rem; font-weight: 900; line-height: 1;
-}}
-.profile-badge-label {{
-  font-size: 0.65rem; font-weight: 700;
-  letter-spacing: 0.5px; white-space: nowrap;
-}}
-
-/* ─── SECTION BASE ─── */
-section {{
-  padding: 100px 5%;
-  max-width: 1400px; margin: 0 auto;
-}}
-.section-full {{ max-width: 100%; padding-left: 0; padding-right: 0; }}
-.section-inner {{ max-width: 1400px; margin: 0 auto; padding: 0 5%; }}
-
-.section-label {{
-  display: inline-flex; align-items: center; gap: 8px;
-  font-size: 0.7rem; font-weight: 700;
-  letter-spacing: 3px; text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 12px;
-}}
-.section-label::before {{
-  content: ''; width: 30px; height: 1px; background: var(--gold);
-}}
-.section-title {{
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 16px;
-}}
-.section-title span {{ color: var(--gold); }}
-.section-subtitle {{
-  font-size: 1rem; color: var(--text-muted);
-  max-width: 540px; line-height: 1.7;
-  margin-bottom: 60px;
-}}
-.section-divider {{
-  width: 60px; height: 3px;
-  background: linear-gradient(90deg, var(--gold), transparent);
-  border-radius: 3px; margin-bottom: 20px;
-}}
-
-/* ─── ABOUT ─── */
-.about-grid {{
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 60px; align-items: center;
-}}
-.about-cover {{
-  border-radius: 20px; overflow: hidden;
-  position: relative;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-}}
-.about-cover img {{
-  width: 100%; display: block;
-}}
-.about-cover-overlay {{
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(10,22,40,0.3), rgba(201,168,76,0.1));
-}}
-.about-text p {{
-  color: rgba(255,255,255,0.75);
-  line-height: 1.8; margin-bottom: 20px;
-  font-size: 1rem;
-}}
-.about-traits {{
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 16px; margin-top: 32px;
-}}
-.trait-card {{
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: 12px; padding: 18px;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s;
-}}
-.trait-card:hover {{
-  border-color: var(--gold);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-gold);
-}}
-.trait-icon {{
-  font-size: 1.4rem; margin-bottom: 8px; color: var(--gold);
-}}
-.trait-title {{
-  font-weight: 600; font-size: 0.9rem; margin-bottom: 4px;
-}}
-.trait-desc {{
-  font-size: 0.78rem; color: var(--text-muted);
-}}
-
-/* ─── STATS ─── */
-.stats-section {{
-  background: linear-gradient(135deg, var(--navy-mid), var(--navy-light));
-  padding: 80px 5%;
-}}
-.stats-grid {{
-  max-width: 1400px; margin: 0 auto;
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 30px;
-}}
-.stat-card {{
-  text-align: center;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px; padding: 40px 20px;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s;
-}}
-.stat-card:hover {{
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-gold);
-  border-color: var(--gold);
-}}
-.stat-number {{
-  font-family: 'Playfair Display', serif;
-  font-size: 3rem; font-weight: 900;
-  color: var(--gold); line-height: 1;
-  margin-bottom: 8px;
-}}
-.stat-label {{
-  font-size: 0.85rem; color: var(--text-muted);
-  font-weight: 500; text-transform: uppercase; letter-spacing: 1px;
-}}
-
-/* ─── TIMELINE ─── */
-.timeline {{
-  position: relative;
-  padding: 20px 0;
-}}
-.timeline::before {{
-  content: '';
-  position: absolute; left: 50%; transform: translateX(-50%);
-  top: 0; bottom: 0; width: 2px;
-  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-}}
-.timeline-item {{
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 40px; margin-bottom: 60px;
-  position: relative;
-  align-items: start;
-}}
-.timeline-item:nth-child(odd) .timeline-card {{ order: 1; text-align: right; }}
-.timeline-item:nth-child(odd) .timeline-side {{ order: 2; }}
-.timeline-item:nth-child(even) .timeline-card {{ order: 2; }}
-.timeline-item:nth-child(even) .timeline-side {{ order: 1; }}
-
-.timeline-dot {{
-  position: absolute; left: 50%; transform: translateX(-50%);
-  top: 24px;
-  width: 20px; height: 20px;
-  background: var(--gold);
-  border-radius: 50%;
-  border: 4px solid var(--navy-mid);
-  box-shadow: 0 0 20px rgba(201,168,76,0.5);
-  z-index: 1;
-}}
-.timeline-year {{
-  font-family: 'Playfair Display', serif;
-  font-size: 2.5rem; font-weight: 900;
-  color: rgba(201,168,76,0.2);
-  line-height: 1;
-}}
-.timeline-card {{
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: 16px; padding: 28px;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s;
-}}
-.timeline-card:hover {{
-  border-color: var(--gold);
-  box-shadow: var(--shadow-gold);
-  transform: translateY(-4px);
-}}
-.timeline-role {{
-  font-family: 'Playfair Display', serif;
-  font-size: 1.25rem; font-weight: 700;
-  color: var(--gold); margin-bottom: 4px;
-}}
-.timeline-org {{
-  font-size: 0.85rem; color: var(--text-muted);
-  margin-bottom: 12px;
-}}
-.timeline-desc {{
-  font-size: 0.88rem; color: rgba(255,255,255,0.7);
-  line-height: 1.7;
-}}
-.timeline-achievements {{
-  margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px;
-}}
-.achievement-tag {{
-  background: rgba(201,168,76,0.1);
-  border: 1px solid rgba(201,168,76,0.25);
-  border-radius: 100px;
-  padding: 4px 12px;
-  font-size: 0.72rem; color: var(--gold-light);
-}}
-
-/* ─── SKILLS ─── */
-.skills-grid {{
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 60px;
-}}
-.skill-group-title {{
-  font-family: 'Playfair Display', serif;
-  font-size: 1.4rem; font-weight: 700;
-  margin-bottom: 28px; color: var(--gold);
-}}
-.skill-item {{ margin-bottom: 22px; }}
-.skill-header {{
-  display: flex; justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 0.88rem; font-weight: 500;
-}}
-.skill-pct {{ color: var(--gold); font-weight: 700; }}
-.skill-bar {{
-  height: 6px; background: rgba(255,255,255,0.1);
-  border-radius: 100px; overflow: hidden;
-}}
-.skill-fill {{
-  height: 100%;
-  background: linear-gradient(90deg, var(--gold), var(--gold-light));
-  border-radius: 100px;
-  width: 0;
-  transition: width 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}}
-
-.tech-chips {{
-  display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;
-}}
-.tech-chip {{
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: 8px; padding: 10px 16px;
-  font-size: 0.82rem; font-weight: 500;
-  display: flex; align-items: center; gap: 8px;
-  transition: all 0.3s; cursor: default;
-}}
-.tech-chip:hover {{
-  border-color: var(--gold); color: var(--gold);
-  transform: translateY(-2px);
-}}
-.tech-chip i {{ color: var(--gold); font-size: 1rem; }}
-
-/* ─── EDUCATION ─── */
-.edu-grid {{
-  display: grid; grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-}}
-.edu-card {{
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px; padding: 32px;
-  backdrop-filter: blur(10px);
-  position: relative; overflow: hidden;
-  transition: all 0.3s;
-}}
-.edu-card::before {{
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: linear-gradient(90deg, var(--gold), var(--gold-light));
-}}
-.edu-card:hover {{
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-gold);
-  border-color: var(--gold);
-}}
-.edu-icon {{
-  width: 52px; height: 52px;
-  background: rgba(201,168,76,0.1);
-  border: 1px solid rgba(201,168,76,0.3);
-  border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.4rem; color: var(--gold);
-  margin-bottom: 18px;
-}}
-.edu-degree {{
-  font-family: 'Playfair Display', serif;
-  font-size: 1.15rem; font-weight: 700;
-  margin-bottom: 6px;
-}}
-.edu-uni {{ font-size: 0.85rem; color: var(--gold); margin-bottom: 4px; font-weight: 500; }}
-.edu-year {{ font-size: 0.78rem; color: var(--text-muted); }}
-
-/* ─── ACHIEVEMENTS ─── */
-.achievements-grid {{
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}}
-.achievement-card {{
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px; padding: 30px;
-  backdrop-filter: blur(10px);
-  text-align: center;
-  transition: all 0.3s;
-  position: relative; overflow: hidden;
-}}
-.achievement-card::after {{
-  content: '';
-  position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  transform: scaleX(0); transition: transform 0.3s;
-}}
-.achievement-card:hover::after {{ transform: scaleX(1); }}
-.achievement-card:hover {{
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-gold);
-  border-color: var(--gold);
-}}
-.achievement-icon {{
-  font-size: 2.5rem; margin-bottom: 16px;
-  display: block;
-}}
-.achievement-title {{
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem; font-weight: 700;
-  margin-bottom: 8px;
-}}
-.achievement-desc {{
-  font-size: 0.82rem; color: var(--text-muted); line-height: 1.6;
-}}
-
-/* ─── GALLERY ─── */
-.gallery-section {{
-  background: linear-gradient(180deg, transparent, var(--navy-mid), transparent);
-}}
-.gallery-grid {{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto;
-  gap: 16px;
-}}
-.gallery-item {{
-  border-radius: 16px; overflow: hidden;
-  cursor: pointer; position: relative;
-  aspect-ratio: 4/3;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.3s;
-}}
-.gallery-item:first-child {{
-  grid-column: span 2; grid-row: span 2;
-  aspect-ratio: auto;
-}}
-.gallery-item img {{ width: 100%; height: 100%; object-fit: cover; display: block; }}
-.gallery-placeholder {{
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
-  color: var(--text-muted);
-}}
-.gallery-placeholder i {{ font-size: 2rem; color: var(--gold); }}
-.gallery-overlay {{
-  position: absolute; inset: 0;
-  background: rgba(10,22,40,0.7);
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; transition: opacity 0.3s;
-}}
-.gallery-item:hover .gallery-overlay {{ opacity: 1; }}
-.gallery-item:hover {{ border-color: var(--gold); }}
-.gallery-overlay i {{ font-size: 2rem; color: var(--gold); }}
-
-/* ─── TESTIMONIALS ─── */
-.testimonials-track {{ overflow: hidden; position: relative; }}
-.testimonials-wrapper {{
-  display: flex; transition: transform 0.5s ease;
-  gap: 24px;
-}}
-.testimonial-card {{
-  min-width: calc(33.333% - 16px);
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px; padding: 32px;
-  backdrop-filter: blur(10px);
-  flex-shrink: 0;
-}}
-.testimonial-quote {{
-  font-size: 2rem; color: var(--gold);
-  font-family: 'Playfair Display', serif;
-  line-height: 0.5; margin-bottom: 16px;
-}}
-.testimonial-text {{
-  font-size: 0.9rem; color: rgba(255,255,255,0.8);
-  line-height: 1.7; margin-bottom: 24px;
-  font-style: italic;
-}}
-.testimonial-author {{ display: flex; align-items: center; gap: 12px; }}
-.author-avatar {{
-  width: 44px; height: 44px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold), var(--navy-light));
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 700; font-size: 1rem; color: var(--navy);
-}}
-.author-name {{ font-weight: 600; font-size: 0.9rem; }}
-.author-role {{ font-size: 0.75rem; color: var(--gold); }}
-.testimonials-nav {{
-  display: flex; justify-content: center; gap: 10px; margin-top: 32px;
-}}
-.tNav-btn {{
-  width: 40px; height: 40px; border-radius: 50%;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  color: var(--gold); cursor: pointer; font-size: 1rem;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.3s;
-}}
-.tNav-btn:hover {{ background: var(--gold); color: var(--navy); }}
-
-/* ─── CONTACT ─── */
-.contact-wrapper {{
-  display: grid; grid-template-columns: 1fr 1.4fr;
-  gap: 60px;
-}}
-.contact-info-item {{
-  display: flex; align-items: flex-start; gap: 16px;
-  margin-bottom: 28px;
-}}
-.contact-icon {{
-  width: 48px; height: 48px; flex-shrink: 0;
-  background: rgba(201,168,76,0.1);
-  border: 1px solid rgba(201,168,76,0.3);
-  border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.1rem; color: var(--gold);
-}}
-.contact-label {{ font-size: 0.75rem; color: var(--text-muted); margin-bottom: 2px; text-transform: uppercase; letter-spacing: 1px; }}
-.contact-value {{ font-weight: 600; font-size: 0.95rem; }}
-
-.contact-form {{ display: flex; flex-direction: column; gap: 16px; }}
-.form-row {{ display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }}
-.form-group {{ display: flex; flex-direction: column; gap: 6px; }}
-.form-group label {{ font-size: 0.8rem; font-weight: 500; color: var(--text-muted); }}
-.form-group input, .form-group textarea, .form-group select {{
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  border-radius: 10px; padding: 13px 16px;
-  color: #fff; font-family: 'Inter', sans-serif;
-  font-size: 0.9rem; outline: none;
-  transition: border-color 0.3s;
-  backdrop-filter: blur(10px);
-}}
-.form-group input:focus, .form-group textarea:focus {{
-  border-color: var(--gold);
-}}
-.form-group textarea {{ resize: vertical; min-height: 120px; }}
-
-/* ─── FOOTER ─── */
-footer {{
-  background: linear-gradient(180deg, var(--navy-mid) 0%, #060d1a 100%);
-  border-top: 1px solid var(--glass-border);
-  padding: 60px 5% 30px;
-  text-align: center;
-}}
-.footer-logo {{
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem; font-weight: 700;
-  color: var(--gold); margin-bottom: 12px;
-}}
-.footer-tagline {{
-  font-size: 0.9rem; color: var(--text-muted);
-  font-style: italic; margin-bottom: 32px;
-}}
-.footer-socials {{
-  display: flex; justify-content: center; gap: 14px; margin-bottom: 40px;
-}}
-.social-btn {{
-  width: 44px; height: 44px; border-radius: 50%;
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  color: var(--gold);
-  display: flex; align-items: center; justify-content: center;
-  text-decoration: none; font-size: 1rem;
-  transition: all 0.3s;
-}}
-.social-btn:hover {{
-  background: var(--gold); color: var(--navy);
-  transform: translateY(-3px);
-}}
-.footer-bottom {{
-  border-top: 1px solid rgba(255,255,255,0.07);
-  padding-top: 24px;
-  font-size: 0.8rem; color: rgba(255,255,255,0.3);
-}}
-
-/* ─── FLOATING ELEMENTS ─── */
-.float-social {{
-  position: fixed; left: 20px; top: 50%;
-  transform: translateY(-50%);
-  display: flex; flex-direction: column; gap: 10px;
-  z-index: 100;
-}}
-.float-social a {{
-  width: 40px; height: 40px; border-radius: 50%;
-  background: rgba(10,22,40,0.8);
-  border: 1px solid var(--glass-border);
-  color: var(--gold);
-  display: flex; align-items: center; justify-content: center;
-  text-decoration: none; font-size: 0.9rem;
-  transition: all 0.3s; backdrop-filter: blur(10px);
-}}
-.float-social a:hover {{ background: var(--gold); color: var(--navy); transform: scale(1.15); }}
-
-#back-top {{
-  position: fixed; bottom: 30px; right: 30px;
-  width: 48px; height: 48px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold), var(--gold-light));
-  color: var(--navy); border: none; cursor: pointer;
-  font-size: 1.1rem;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 20px rgba(201,168,76,0.4);
-  opacity: 0; transform: translateY(20px);
-  transition: all 0.3s; z-index: 100;
-}}
-#back-top.show {{ opacity: 1; transform: translateY(0); }}
-#back-top:hover {{ transform: translateY(-4px) scale(1.05); }}
-
-/* ─── RESPONSIVE ─── */
-@media (max-width: 1024px) {{
-  .hero-content {{ grid-template-columns: 1fr; text-align: center; gap: 40px; }}
-  .hero-visual {{ order: -1; }}
-  .hero-tags, .hero-buttons {{ justify-content: center; }}
-  .about-grid, .skills-grid, .contact-wrapper {{ grid-template-columns: 1fr; }}
-  .stats-grid {{ grid-template-columns: repeat(2, 1fr); }}
-  .timeline::before {{ left: 24px; }}
-  .timeline-item {{ grid-template-columns: 1fr; padding-left: 52px; }}
-  .timeline-item:nth-child(odd) .timeline-card, .timeline-item:nth-child(even) .timeline-card {{ order: 2; text-align: left; }}
-  .timeline-item:nth-child(odd) .timeline-side, .timeline-item:nth-child(even) .timeline-side {{ order: 1; }}
-  .timeline-dot {{ left: 24px; transform: none; }}
-  .achievements-grid {{ grid-template-columns: 1fr 1fr; }}
-  .gallery-grid {{ grid-template-columns: 1fr 1fr; }}
-  .gallery-item:first-child {{ grid-column: span 2; }}
-  .testimonial-card {{ min-width: calc(50% - 12px); }}
-  .float-social {{ display: none; }}
-}}
-@media (max-width: 768px) {{
-  .nav-links {{ display: none; }}
-  .hamburger {{ display: flex; }}
-  section {{ padding: 70px 5%; }}
-  .edu-grid, .achievements-grid {{ grid-template-columns: 1fr; }}
-  .form-row {{ grid-template-columns: 1fr; }}
-  .gallery-grid {{ grid-template-columns: 1fr; }}
-  .gallery-item:first-child {{ grid-column: span 1; }}
-  .testimonial-card {{ min-width: 100%; }}
-  .stats-grid {{ grid-template-columns: 1fr 1fr; }}
-  .profile-frame {{ width: 260px; height: 260px; }}
-}}
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .hero-content{grid-template-columns:1fr;text-align:center;gap:40px}
+  .hero-visual{order:-1}
+  .hero-tags,.hero-btns{justify-content:center}
+  .about-grid,.skills-grid,.contact-wrap{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .timeline::before{left:22px}
+  .tl-item{grid-template-columns:1fr;padding-left:50px}
+  .tl-item:nth-child(odd) .tl-card,.tl-item:nth-child(even) .tl-card{order:2;text-align:left}
+  .tl-item:nth-child(odd) .tl-tags{justify-content:flex-start}
+  .tl-item:nth-child(odd) .tl-side,.tl-item:nth-child(even) .tl-side{order:1}
+  .tl-dot{left:22px;transform:none}
+  .ach-grid{grid-template-columns:1fr 1fr}
+  .gal-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .gal-item:first-child{grid-column:span 2;height:300px}
+  .t-card{min-width:calc(50% - 12px)}
+  .float-s{display:none}
+}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  section{padding:70px 5%}
+  .edu-grid,.ach-grid{grid-template-columns:1fr}
+  .frow{grid-template-columns:1fr}
+  .gal-grid{grid-template-columns:1fr;grid-template-rows:auto}
+  .gal-item:first-child{grid-column:span 1;height:260px}
+  .t-card{min-width:100%}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .pframe{width:260px;height:260px}
+}
 </style>
 </head>
-
 <body>
-<!-- Loader -->
+
 <div id="loader">
-  <div class="loader-logo">SP</div>
-  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div class="ld-logo">SP</div>
+  <div class="ld-bar"><div class="ld-fill"></div></div>
+  <p style="color:var(--text-muted);font-size:.82rem;letter-spacing:2px">LOADING PORTFOLIO...</p>
 </div>
 
-<!-- Back to top -->
-<button id="back-top" onclick="window.scrollTo({{top:0,behavior:'smooth'}})">
-  <i class="fas fa-chevron-up"></i>
-</button>
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-chevron-up"></i></button>
 
-<!-- Float Social -->
-<div class="float-social">
+<div class="float-s">
   <a href="mailto:parameshwari@example.com" title="Email"><i class="fas fa-envelope"></i></a>
-  <a href="tel:+919876543210" title="Phone"><i class="fas fa-phone"></i></a>
+  <a href="tel:+919876543210" title="Call"><i class="fas fa-phone"></i></a>
   <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
 </div>
 
 <!-- NAV -->
-<nav id="navbar">
-  <a href="#hero" class="nav-logo">S<span>.</span> Parameshwari</a>
+<nav id="nav">
+  <a href="#hero" class="nav-logo">S<span>.</span>Parameshwari</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
@@ -925,626 +279,391 @@ footer {{
     <li><a href="#achievements">Achievements</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <div class="nav-right">
-    <button class="theme-btn" id="themeToggle" title="Toggle theme">
-      <i class="fas fa-moon"></i>
-    </button>
-    <button class="hamburger" id="hamburger">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+  <button class="hamburger" id="hbg"><span></span><span></span><span></span></button>
 </nav>
-
-<!-- Mobile Menu -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#about" onclick="closeMobile()">About</a>
-  <a href="#experience" onclick="closeMobile()">Experience</a>
-  <a href="#skills" onclick="closeMobile()">Skills</a>
-  <a href="#education" onclick="closeMobile()">Education</a>
-  <a href="#achievements" onclick="closeMobile()">Achievements</a>
-  <a href="#contact" onclick="closeMobile()">Contact</a>
+<div class="mobile-menu" id="mm">
+  <a href="#about" onclick="closeMM()">About</a>
+  <a href="#experience" onclick="closeMM()">Experience</a>
+  <a href="#skills" onclick="closeMM()">Skills</a>
+  <a href="#education" onclick="closeMM()">Education</a>
+  <a href="#achievements" onclick="closeMM()">Achievements</a>
+  <a href="#contact" onclick="closeMM()">Contact</a>
 </div>
 
-<!-- ═══ HERO ═══ -->
-<section id="hero" style="padding:0; max-width:100%;">
-  <canvas id="particles-canvas"></canvas>
-  <div class="hero-bg-gradient"></div>
+<!-- HERO -->
+<section id="hero" style="padding:0;max-width:100%">
+  <canvas id="pc"></canvas>
+  <div class="hero-bg"></div>
   <div class="hero-content">
     <div class="hero-text">
       <div class="hero-eyebrow">Banking Professional</div>
       <h1 class="hero-name">S. Parameshwari</h1>
-      <p class="hero-title">Branch Operations Manager</p>
-      <div class="typing-container"><span id="typed-text"></span></div>
+      <p class="hero-role">Branch Operations Manager</p>
+      <div class="typing-wrap"><span id="typed"></span></div>
       <div class="hero-tags">
-        <span class="hero-tag"><i class="fas fa-chart-line" style="color:var(--gold);margin-right:6px"></i> Analytical Thinker</span>
-        <span class="hero-tag"><i class="fas fa-puzzle-piece" style="color:var(--gold);margin-right:6px"></i> Problem Solver</span>
-        <span class="hero-tag"><i class="fas fa-users" style="color:var(--gold);margin-right:6px"></i> Team Leader</span>
-        <span class="hero-tag"><i class="fas fa-bullseye" style="color:var(--gold);margin-right:6px"></i> Results Driven</span>
+        <span class="htag"><i class="fas fa-chart-line"></i>Analytical Thinker</span>
+        <span class="htag"><i class="fas fa-puzzle-piece"></i>Problem Solver</span>
+        <span class="htag"><i class="fas fa-users"></i>Team Leader</span>
+        <span class="htag"><i class="fas fa-bullseye"></i>Results Driven</span>
       </div>
-      <div class="hero-buttons">
-        <a href="#" class="btn-primary"><i class="fas fa-download"></i> Download Resume</a>
-        <a href="#contact" class="btn-secondary"><i class="fas fa-paper-plane"></i> Contact Me</a>
+      <div class="hero-btns">
+        <a href="#" class="btn-p"><i class="fas fa-download"></i>Download Resume</a>
+        <a href="#contact" class="btn-s"><i class="fas fa-paper-plane"></i>Contact Me</a>
       </div>
     </div>
     <div class="hero-visual">
-      <div class="profile-frame">
-        <div class="profile-ring"></div>
-        <div class="profile-ring-inner"></div>
-        <img src="{profile_src}" alt="S. Parameshwari" class="profile-img">
-        <div class="profile-badge">
-          <div class="profile-badge-num">7+</div>
-          <div class="profile-badge-label">Years of<br>Excellence</div>
+      <div class="pframe">
+        <div class="pring"></div>
+        <div class="pring-inner"></div>
+        <img src="PROFILE_SRC" alt="S. Parameshwari" class="pimg">
+        <div class="pbadge">
+          <div class="pbadge-num">7+</div>
+          <div class="pbadge-lbl">Years of<br>Excellence</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ ABOUT ═══ -->
+<!-- ABOUT -->
 <section id="about">
-  <div class="section-label">Who I Am</div>
-  <div class="section-divider"></div>
-  <div class="section-title">About <span>Me</span></div>
+  <div class="s-label">Who I Am</div>
+  <div class="s-div"></div>
+  <div class="s-title">About <span>Me</span></div>
   <div class="about-grid">
-    <div class="about-cover" data-aos="fade-right">
-      <img src="{cover_src}" alt="Professional Banner">
-      <div class="about-cover-overlay"></div>
+    <div class="about-cover">
+      <img src="COVER_SRC" alt="S. Parameshwari Professional">
+      <div class="about-cover-ov"></div>
     </div>
-    <div class="about-text" data-aos="fade-left">
+    <div class="about-text">
       <p>A seasoned banking professional with over 7 years of progressive leadership experience in branch operations, customer relationship management, and regulatory compliance. Recognized for transforming operational efficiency and building high-performing teams.</p>
-      <p>As Branch Operations Manager, I lead strategic initiatives that align with organizational goals while maintaining the highest standards of integrity and service excellence. My data-driven approach to problem-solving has consistently delivered measurable results.</p>
-      <p>Holding an MCA from Bharathiar University, I combine strong academic foundations with practical banking acumen — bringing both analytical depth and human-centered leadership to every challenge.</p>
-      <div class="about-traits">
-        <div class="trait-card" data-aos="zoom-in" data-aos-delay="100">
-          <div class="trait-icon">📊</div>
-          <div class="trait-title">Analytical Mindset</div>
-          <div class="trait-desc">Data-driven decisions backed by deep financial analysis</div>
-        </div>
-        <div class="trait-card" data-aos="zoom-in" data-aos-delay="200">
-          <div class="trait-icon">🎯</div>
-          <div class="trait-title">Results Oriented</div>
-          <div class="trait-desc">Consistent delivery of targets and operational excellence</div>
-        </div>
-        <div class="trait-card" data-aos="zoom-in" data-aos-delay="300">
-          <div class="trait-icon">👥</div>
-          <div class="trait-title">People Leadership</div>
-          <div class="trait-desc">Mentoring teams to realize their highest potential</div>
-        </div>
-        <div class="trait-card" data-aos="zoom-in" data-aos-delay="400">
-          <div class="trait-icon">🛡️</div>
-          <div class="trait-title">Compliance Focus</div>
-          <div class="trait-desc">Zero-tolerance approach to regulatory and ethical standards</div>
-        </div>
+      <p>As Branch Operations Manager, I lead strategic initiatives that align with organizational goals while maintaining the highest standards of integrity and service excellence. My data-driven approach consistently delivers measurable results.</p>
+      <p>Holding an MCA from Bharathiar University, I combine strong academic foundations with practical banking acumen — bringing analytical depth and human-centered leadership to every challenge.</p>
+      <div class="traits">
+        <div class="trait"><div class="trait-ico">📊</div><div class="trait-t">Analytical Mindset</div><div class="trait-d">Data-driven decisions backed by deep financial analysis</div></div>
+        <div class="trait"><div class="trait-ico">🎯</div><div class="trait-t">Results Oriented</div><div class="trait-d">Consistent delivery of targets and operational excellence</div></div>
+        <div class="trait"><div class="trait-ico">👥</div><div class="trait-t">People Leadership</div><div class="trait-d">Mentoring teams to realize their highest potential</div></div>
+        <div class="trait"><div class="trait-ico">🛡️</div><div class="trait-t">Compliance Focus</div><div class="trait-d">Zero-tolerance approach to regulatory and ethical standards</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ STATS ═══ -->
-<div class="stats-section section-full">
+<!-- STATS BAND -->
+<div class="stats-band s-full">
   <div class="stats-grid">
-    <div class="stat-card" data-aos="fade-up" data-aos-delay="0">
-      <div class="stat-number" data-target="7">0</div>
-      <div class="stat-label">Years of Experience</div>
+    <div class="stat"><div class="stat-n" data-target="7">0</div><div class="stat-l">Years of Experience</div></div>
+    <div class="stat"><div class="stat-n" data-target="5000">0</div><div class="stat-l">Customers Served</div></div>
+    <div class="stat"><div class="stat-n" data-target="3">0</div><div class="stat-l">Branches Led</div></div>
+    <div class="stat"><div class="stat-n" data-target="25">0</div><div class="stat-l">Team Members Mentored</div></div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="s-label">Career Journey</div>
+  <div class="s-div"></div>
+  <div class="s-title">Professional <span>Experience</span></div>
+  <p class="s-sub">A track record of progressive growth and measurable impact across banking operations leadership.</p>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-card">
+        <div class="tl-role">Assistant Manager</div>
+        <div class="tl-org">Banking Institution · 2019 – 2021</div>
+        <div class="tl-desc">Led daily branch operations ensuring seamless customer service delivery. Supervised teller operations, vault management, and compliance adherence. Initiated process improvements that reduced transaction time by 18%.</div>
+        <div class="tl-tags"><span class="tl-tag">Operations</span><span class="tl-tag">Customer Service</span><span class="tl-tag">Compliance</span></div>
+      </div>
+      <div class="tl-side"><div class="tl-year">2019</div></div>
+      <div class="tl-dot"></div>
     </div>
-    <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
-      <div class="stat-number" data-target="5000">0</div>
-      <div class="stat-label">Customers Served</div>
+    <div class="tl-item">
+      <div class="tl-side"><div class="tl-year">2021</div></div>
+      <div class="tl-card">
+        <div class="tl-role">Deputy Manager</div>
+        <div class="tl-org">Banking Institution · 2021 – 2026</div>
+        <div class="tl-desc">Managed 15+ professionals across multiple departments. Drove CASA growth by 22% YoY. Oversaw credit appraisal, loan processing, and NPA management. Received Best Branch Award in 2023.</div>
+        <div class="tl-tags"><span class="tl-tag">Team Leadership</span><span class="tl-tag">CASA Growth</span><span class="tl-tag">Best Branch Award</span></div>
+      </div>
+      <div class="tl-dot"></div>
     </div>
-    <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
-      <div class="stat-number" data-target="3">0</div>
-      <div class="stat-label">Branch Operations Led</div>
+    <div class="tl-item">
+      <div class="tl-card">
+        <div class="tl-role">Branch Operations Manager</div>
+        <div class="tl-org">Banking Institution · 2026 – Present</div>
+        <div class="tl-desc">Spearheading complete branch transformation — digital adoption, operational efficiency, and customer experience elevation. Overseeing 25+ team members while driving strategic alignment with organizational KPIs.</div>
+        <div class="tl-tags"><span class="tl-tag">Digital Transformation</span><span class="tl-tag">Strategic Planning</span><span class="tl-tag">KPI Management</span></div>
+      </div>
+      <div class="tl-side"><div class="tl-year">2026</div></div>
+      <div class="tl-dot"></div>
     </div>
-    <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
-      <div class="stat-number" data-target="25">0</div>
-      <div class="stat-label">Team Members Mentored</div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="s-label">Expertise</div>
+  <div class="s-div"></div>
+  <div class="s-title">Skills & <span>Competencies</span></div>
+  <p class="s-sub">A blend of banking domain expertise and modern technical capabilities.</p>
+  <div class="skills-grid">
+    <div>
+      <div class="sg-title">Banking & Professional Skills</div>
+      <div class="ski"><div class="ski-hd"><span>Banking Operations</span><span class="ski-pct">95%</span></div><div class="ski-bar"><div class="ski-fill" data-width="95"></div></div></div>
+      <div class="ski"><div class="ski-hd"><span>Regulatory Compliance</span><span class="ski-pct">90%</span></div><div class="ski-bar"><div class="ski-fill" data-width="90"></div></div></div>
+      <div class="ski"><div class="ski-hd"><span>Customer Relationship Mgmt</span><span class="ski-pct">92%</span></div><div class="ski-bar"><div class="ski-fill" data-width="92"></div></div></div>
+      <div class="ski"><div class="ski-hd"><span>Team Leadership</span><span class="ski-pct">88%</span></div><div class="ski-bar"><div class="ski-fill" data-width="88"></div></div></div>
+      <div class="ski"><div class="ski-hd"><span>Financial Analysis</span><span class="ski-pct">85%</span></div><div class="ski-bar"><div class="ski-fill" data-width="85"></div></div></div>
+    </div>
+    <div>
+      <div class="sg-title">Technical Skills</div>
+      <div class="chips">
+        <div class="chip"><i class="fab fa-microsoft"></i>Microsoft Office</div>
+        <div class="chip"><i class="fas fa-cloud"></i>Cloud Computing</div>
+        <div class="chip"><i class="fab fa-java"></i>Java</div>
+        <div class="chip"><i class="fas fa-code"></i>C++</div>
+        <div class="chip"><i class="fab fa-html5"></i>HTML</div>
+        <div class="chip"><i class="fas fa-database"></i>Database Mgmt</div>
+        <div class="chip"><i class="fas fa-chart-bar"></i>Excel & Analytics</div>
+        <div class="chip"><i class="fas fa-shield-alt"></i>Cybersecurity Basics</div>
+        <div class="chip"><i class="fas fa-network-wired"></i>Core Banking Systems</div>
+        <div class="chip"><i class="fas fa-file-invoice-dollar"></i>Tally & Accounting SW</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="s-label">Academic Background</div>
+  <div class="s-div"></div>
+  <div class="s-title">Education & <span>Qualifications</span></div>
+  <p class="s-sub">A strong academic foundation that complements real-world banking expertise.</p>
+  <div class="edu-grid">
+    <div class="edu-card"><div class="edu-ico"><i class="fas fa-graduation-cap"></i></div><div class="edu-deg">Master of Computer Applications (MCA)</div><div class="edu-uni">Bharathiar University, Coimbatore</div><div class="edu-yr">Postgraduate · Technology & Management</div></div>
+    <div class="edu-card"><div class="edu-ico"><i class="fas fa-university"></i></div><div class="edu-deg">Bachelor of Computer Applications (BCA)</div><div class="edu-uni">Bharathiar University, Coimbatore</div><div class="edu-yr">Undergraduate · Computer Science</div></div>
+    <div class="edu-card"><div class="edu-ico"><i class="fas fa-school"></i></div><div class="edu-deg">Higher Secondary Certificate (HSC)</div><div class="edu-uni">Tamil Nadu State Board</div><div class="edu-yr">Class XII · Science Stream</div></div>
+    <div class="edu-card"><div class="edu-ico"><i class="fas fa-book-open"></i></div><div class="edu-deg">Secondary School Leaving Certificate (SSLC)</div><div class="edu-uni">Tamil Nadu State Board</div><div class="edu-yr">Class X · All Subjects</div></div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="s-label">Honours & Recognition</div>
+  <div class="s-div"></div>
+  <div class="s-title">Achievements & <span>Awards</span></div>
+  <p class="s-sub">Excellence beyond the boardroom — a champion in spirit, sport, and service.</p>
+  <div class="ach-grid">
+    <div class="ach-card"><span class="ach-ico">🏃‍♀️</span><div class="ach-t">State Level Athletics</div><div class="ach-d">Represented at State Level Athletics Championship, demonstrating discipline, perseverance, and competitive excellence in track events.</div></div>
+    <div class="ach-card"><span class="ach-ico">🏑</span><div class="ach-t">Hockey Achievement</div><div class="ach-d">Honored for outstanding performance in Hockey tournaments at the district and state levels, showcasing exceptional teamwork and athletic ability.</div></div>
+    <div class="ach-card"><span class="ach-ico">🏆</span><div class="ach-t">Best Branch Award</div><div class="ach-d">Awarded Best Branch recognition in 2023 for achieving highest customer satisfaction scores, operational targets, and zero compliance deficiencies.</div></div>
+    <div class="ach-card"><span class="ach-ico">⭐</span><div class="ach-t">Star Performer</div><div class="ach-d">Recognized as Star Performer of the Year for consistently exceeding KPIs across CASA mobilization, loan disbursement, and digital onboarding.</div></div>
+    <div class="ach-card"><span class="ach-ico">🎗️</span><div class="ach-t">Leadership Excellence</div><div class="ach-d">Felicitated for exemplary leadership during branch audit and regulatory review — achieving satisfactory rating with zero critical findings.</div></div>
+    <div class="ach-card"><span class="ach-ico">💡</span><div class="ach-t">Innovation Champion</div><div class="ach-d">Spearheaded digital adoption campaign that enrolled 1,200+ customers onto mobile banking in a single quarter — highest in the region.</div></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<div class="gal-section s-full">
+  <div class="gal-inner">
+    <div class="s-label">Visual Journey</div>
+    <div class="s-div"></div>
+    <div class="s-title">Professional <span>Gallery</span></div>
+    <p class="s-sub">Moments of excellence, leadership, and achievement.</p>
+    <div class="gal-grid">
+      <div class="gal-item">
+        <img src="PROFILE_SRC" alt="Professional Portrait">
+        <div class="gal-ov"><i class="fas fa-expand"></i></div>
+      </div>
+      <div class="gal-item">
+        <img src="COVER_SRC" alt="Professional">
+        <div class="gal-ov"><i class="fas fa-expand"></i></div>
+      </div>
+      <div class="gal-item" style="background:linear-gradient(135deg,var(--navy-mid),var(--navy-light))">
+        <div class="gal-ph"><i class="fas fa-certificate"></i><span>Certificate of Excellence</span></div>
+        <div class="gal-ov"><i class="fas fa-expand"></i></div>
+      </div>
+      <div class="gal-item" style="background:linear-gradient(135deg,var(--navy-light),#1a3060)">
+        <div class="gal-ph"><i class="fas fa-trophy"></i><span>Best Branch Award</span></div>
+        <div class="gal-ov"><i class="fas fa-expand"></i></div>
+      </div>
+      <div class="gal-item" style="background:linear-gradient(135deg,#0d1e3a,var(--navy-mid))">
+        <div class="gal-ph"><i class="fas fa-users"></i><span>Team Events</span></div>
+        <div class="gal-ov"><i class="fas fa-expand"></i></div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ═══ EXPERIENCE ═══ -->
-<section id="experience">
-  <div class="section-label">Career Journey</div>
-  <div class="section-divider"></div>
-  <div class="section-title">Professional <span>Experience</span></div>
-  <p class="section-subtitle">A track record of progressive growth and measurable impact across banking operations leadership.</p>
-  <div class="timeline">
-    <div class="timeline-item" data-aos="fade-up">
-      <div class="timeline-card">
-        <div class="timeline-role">Assistant Manager</div>
-        <div class="timeline-org">Banking Institution · 2019 – 2021</div>
-        <div class="timeline-desc">Led daily branch operations ensuring seamless customer service delivery. Supervised teller operations, vault management, and compliance adherence. Initiated process improvements that reduced transaction time by 18%.</div>
-        <div class="timeline-achievements">
-          <span class="achievement-tag">Operations</span>
-          <span class="achievement-tag">Customer Service</span>
-          <span class="achievement-tag">Compliance</span>
-        </div>
-      </div>
-      <div class="timeline-side">
-        <div class="timeline-year">2019</div>
-      </div>
-      <div class="timeline-dot"></div>
-    </div>
-    <div class="timeline-item" data-aos="fade-up">
-      <div class="timeline-side">
-        <div class="timeline-year">2021</div>
-      </div>
-      <div class="timeline-card">
-        <div class="timeline-role">Deputy Manager</div>
-        <div class="timeline-org">Banking Institution · 2021 – 2026</div>
-        <div class="timeline-desc">Managed a team of 15+ professionals across multiple departments. Drove CASA growth by 22% YoY. Oversaw credit appraisal, loan processing, and NPA management. Received Best Branch Award in 2023.</div>
-        <div class="timeline-achievements">
-          <span class="achievement-tag">Team Leadership</span>
-          <span class="achievement-tag">CASA Growth</span>
-          <span class="achievement-tag">Best Branch Award</span>
-        </div>
-      </div>
-      <div class="timeline-dot"></div>
-    </div>
-    <div class="timeline-item" data-aos="fade-up">
-      <div class="timeline-card">
-        <div class="timeline-role">Branch Operations Manager</div>
-        <div class="timeline-org">Banking Institution · 2026 – Present</div>
-        <div class="timeline-desc">Spearheading complete branch transformation — digital adoption, operational efficiency, and customer experience elevation. Driving strategic alignment between branch performance and organizational KPIs. Currently overseeing 25+ team members.</div>
-        <div class="timeline-achievements">
-          <span class="achievement-tag">Digital Transformation</span>
-          <span class="achievement-tag">Strategic Planning</span>
-          <span class="achievement-tag">KPI Management</span>
-        </div>
-      </div>
-      <div class="timeline-side">
-        <div class="timeline-year">2026</div>
-      </div>
-      <div class="timeline-dot"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ SKILLS ═══ -->
-<section id="skills">
-  <div class="section-label">Expertise</div>
-  <div class="section-divider"></div>
-  <div class="section-title">Skills & <span>Competencies</span></div>
-  <p class="section-subtitle">A blend of banking domain expertise and modern technical capabilities.</p>
-  <div class="skills-grid">
-    <div data-aos="fade-right">
-      <div class="skill-group-title">Banking & Professional Skills</div>
-      <div class="skill-item">
-        <div class="skill-header"><span>Banking Operations</span><span class="skill-pct">95%</span></div>
-        <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-header"><span>Regulatory Compliance</span><span class="skill-pct">90%</span></div>
-        <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-header"><span>Customer Relationship Mgmt</span><span class="skill-pct">92%</span></div>
-        <div class="skill-bar"><div class="skill-fill" data-width="92"></div></div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-header"><span>Team Leadership</span><span class="skill-pct">88%</span></div>
-        <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
-      </div>
-      <div class="skill-item">
-        <div class="skill-header"><span>Financial Analysis</span><span class="skill-pct">85%</span></div>
-        <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
-      </div>
-    </div>
-    <div data-aos="fade-left">
-      <div class="skill-group-title">Technical Skills</div>
-      <div class="tech-chips">
-        <div class="tech-chip"><i class="fab fa-microsoft"></i> Microsoft Office</div>
-        <div class="tech-chip"><i class="fas fa-cloud"></i> Cloud Computing</div>
-        <div class="tech-chip"><i class="fab fa-java"></i> Java</div>
-        <div class="tech-chip"><i class="fas fa-code"></i> C++</div>
-        <div class="tech-chip"><i class="fab fa-html5"></i> HTML</div>
-        <div class="tech-chip"><i class="fas fa-database"></i> Database Mgmt</div>
-        <div class="tech-chip"><i class="fas fa-chart-bar"></i> Excel & Analytics</div>
-        <div class="tech-chip"><i class="fas fa-shield-alt"></i> Cybersecurity Basics</div>
-        <div class="tech-chip"><i class="fas fa-network-wired"></i> Core Banking Systems</div>
-        <div class="tech-chip"><i class="fas fa-file-invoice-dollar"></i> Tally & Accounting SW</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ EDUCATION ═══ -->
-<section id="education">
-  <div class="section-label">Academic Background</div>
-  <div class="section-divider"></div>
-  <div class="section-title">Education & <span>Qualifications</span></div>
-  <p class="section-subtitle">A strong academic foundation that complements real-world banking expertise.</p>
-  <div class="edu-grid">
-    <div class="edu-card" data-aos="fade-up" data-aos-delay="0">
-      <div class="edu-icon"><i class="fas fa-graduation-cap"></i></div>
-      <div class="edu-degree">Master of Computer Applications (MCA)</div>
-      <div class="edu-uni">Bharathiar University, Coimbatore</div>
-      <div class="edu-year">Postgraduate · Technology & Management</div>
-    </div>
-    <div class="edu-card" data-aos="fade-up" data-aos-delay="100">
-      <div class="edu-icon"><i class="fas fa-university"></i></div>
-      <div class="edu-degree">Bachelor of Computer Applications (BCA)</div>
-      <div class="edu-uni">Bharathiar University, Coimbatore</div>
-      <div class="edu-year">Undergraduate · Computer Science</div>
-    </div>
-    <div class="edu-card" data-aos="fade-up" data-aos-delay="200">
-      <div class="edu-icon"><i class="fas fa-school"></i></div>
-      <div class="edu-degree">Higher Secondary Certificate (HSC)</div>
-      <div class="edu-uni">Tamil Nadu State Board</div>
-      <div class="edu-year">Class XII · Science Stream</div>
-    </div>
-    <div class="edu-card" data-aos="fade-up" data-aos-delay="300">
-      <div class="edu-icon"><i class="fas fa-book-open"></i></div>
-      <div class="edu-degree">Secondary School Leaving Certificate (SSLC)</div>
-      <div class="edu-uni">Tamil Nadu State Board</div>
-      <div class="edu-year">Class X · All Subjects</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ ACHIEVEMENTS ═══ -->
-<section id="achievements">
-  <div class="section-label">Honours & Recognition</div>
-  <div class="section-divider"></div>
-  <div class="section-title">Achievements & <span>Awards</span></div>
-  <p class="section-subtitle">Excellence beyond the boardroom — a champion in spirit, sport, and service.</p>
-  <div class="achievements-grid">
-    <div class="achievement-card" data-aos="zoom-in" data-aos-delay="0">
-      <span class="achievement-icon">🏃‍♀️</span>
-      <div class="achievement-title">State Level Athletics</div>
-      <div class="achievement-desc">Represented at the State Level Athletics Championship, demonstrating discipline, perseverance, and competitive excellence in track events.</div>
-    </div>
-    <div class="achievement-card" data-aos="zoom-in" data-aos-delay="100">
-      <span class="achievement-icon">🏑</span>
-      <div class="achievement-title">Hockey Achievement</div>
-      <div class="achievement-desc">Honored for outstanding performance in Hockey tournaments at the district and state levels, showcasing exceptional teamwork and athletic ability.</div>
-    </div>
-    <div class="achievement-card" data-aos="zoom-in" data-aos-delay="200">
-      <span class="achievement-icon">🏆</span>
-      <div class="achievement-title">Best Branch Award</div>
-      <div class="achievement-desc">Awarded Best Branch recognition in 2023 for achieving highest customer satisfaction scores, operational targets, and zero compliance deficiencies.</div>
-    </div>
-    <div class="achievement-card" data-aos="zoom-in" data-aos-delay="300">
-      <span class="achievement-icon">⭐</span>
-      <div class="achievement-title">Star Performer</div>
-      <div class="achievement-desc">Recognized as Star Performer of the Year for consistently exceeding KPIs across CASA mobilization, loan disbursement, and digital onboarding.</div>
-    </div>
-    <div class="achievement-card" data-aos="zoom-in" data-aos-delay="400">
-      <span class="achievement-icon">🎗️</span>
-      <div class="achievement-title">Leadership Excellence</div>
-      <div class="achievement-desc">Felicitated for exemplary leadership during branch audit and regulatory review — achieving satisfactory rating with zero critical findings.</div>
-    </div>
-    <div class="achievement-card" data-aos="zoom-in" data-aos-delay="500">
-      <span class="achievement-icon">💡</span>
-      <div class="achievement-title">Innovation Champion</div>
-      <div class="achievement-desc">Spearheaded digital adoption campaign that enrolled 1,200+ customers onto mobile banking in a single quarter — highest in the region.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ GALLERY ═══ -->
-<section id="gallery" class="gallery-section" style="max-width:100%;">
-  <div class="section-inner">
-    <div class="section-label">Visual Journey</div>
-    <div class="section-divider"></div>
-    <div class="section-title">Professional <span>Gallery</span></div>
-    <p class="section-subtitle">Moments of excellence, leadership, and achievement.</p>
-    <div class="gallery-grid">
-      <div class="gallery-item" data-aos="fade-up">
-        <img src="{profile_src}" alt="Professional Portrait">
-        <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
-      </div>
-      <div class="gallery-item" data-aos="fade-up" data-aos-delay="100">
-        <img src="{cover_src}" alt="Professional Banner">
-        <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
-      </div>
-      <div class="gallery-item" data-aos="fade-up" data-aos-delay="150" style="background:linear-gradient(135deg,var(--navy-mid),var(--navy-light));">
-        <div class="gallery-placeholder"><i class="fas fa-certificate"></i><span style="font-size:0.8rem;color:var(--text-muted)">Certificate of Excellence</span></div>
-        <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
-      </div>
-      <div class="gallery-item" data-aos="fade-up" data-aos-delay="200" style="background:linear-gradient(135deg,var(--navy-light),#1a3060);">
-        <div class="gallery-placeholder"><i class="fas fa-trophy"></i><span style="font-size:0.8rem;color:var(--text-muted)">Best Branch Award</span></div>
-        <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
-      </div>
-      <div class="gallery-item" data-aos="fade-up" data-aos-delay="250" style="background:linear-gradient(135deg,#0d1e3a,var(--navy-mid));">
-        <div class="gallery-placeholder"><i class="fas fa-users"></i><span style="font-size:0.8rem;color:var(--text-muted)">Team Events</span></div>
-        <div class="gallery-overlay"><i class="fas fa-expand"></i></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ TESTIMONIALS ═══ -->
+<!-- TESTIMONIALS -->
 <section id="testimonials">
-  <div class="section-label">What Others Say</div>
-  <div class="section-divider"></div>
-  <div class="section-title">Colleague <span>Testimonials</span></div>
-  <p class="section-subtitle">Recognition from those who have worked alongside and witnessed excellence firsthand.</p>
-  <div class="testimonials-track">
-    <div class="testimonials-wrapper" id="testimonialsWrapper">
-      <div class="testimonial-card">
-        <div class="testimonial-quote">"</div>
-        <div class="testimonial-text">Parameshwari leads with an exceptional blend of analytical rigor and genuine empathy. Under her guidance, our branch achieved record CASA mobilization while maintaining flawless compliance standards. A true banking professional.</div>
-        <div class="testimonial-author">
-          <div class="author-avatar">RK</div>
-          <div><div class="author-name">R. Krishnamurthy</div><div class="author-role">Regional Manager, Banking Operations</div></div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-quote">"</div>
-        <div class="testimonial-text">What sets Parameshwari apart is her ability to remain calm under pressure while simultaneously motivating her team to excel. She transformed our branch culture entirely — from reactive to proactively customer-first.</div>
-        <div class="testimonial-author">
-          <div class="author-avatar">SP</div>
-          <div><div class="author-name">S. Prabhakaran</div><div class="author-role">Senior Manager, Credit Division</div></div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-quote">"</div>
-        <div class="testimonial-text">I've worked with many operations leaders, but Parameshwari's grasp of both micro-operations and macro strategy is rare. She identifies process inefficiencies before they become problems and solves them elegantly.</div>
-        <div class="testimonial-author">
-          <div class="author-avatar">MV</div>
-          <div><div class="author-name">M. Vijayalakshmi</div><div class="author-role">Head of Compliance, Zonal Office</div></div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-quote">"</div>
-        <div class="testimonial-text">As a junior officer under her mentorship, I grew more in one year than in my entire previous career. She invests genuinely in people development and creates an environment where everyone wants to perform at their best.</div>
-        <div class="testimonial-author">
-          <div class="author-avatar">AT</div>
-          <div><div class="author-name">A. Thenmozhi</div><div class="author-role">Branch Officer</div></div>
-        </div>
-      </div>
+  <div class="s-label">What Others Say</div>
+  <div class="s-div"></div>
+  <div class="s-title">Colleague <span>Testimonials</span></div>
+  <p class="s-sub">Recognition from those who have worked alongside and witnessed excellence firsthand.</p>
+  <div class="t-track">
+    <div class="t-wrap" id="tw">
+      <div class="t-card"><div class="t-q">"</div><div class="t-text">Parameshwari leads with an exceptional blend of analytical rigor and genuine empathy. Under her guidance, our branch achieved record CASA mobilization while maintaining flawless compliance standards. A true banking professional.</div><div class="t-auth"><div class="t-av">RK</div><div><div class="t-name">R. Krishnamurthy</div><div class="t-role">Regional Manager, Banking Operations</div></div></div></div>
+      <div class="t-card"><div class="t-q">"</div><div class="t-text">What sets Parameshwari apart is her ability to remain calm under pressure while simultaneously motivating her team to excel. She transformed our branch culture entirely — from reactive to proactively customer-first.</div><div class="t-auth"><div class="t-av">SP</div><div><div class="t-name">S. Prabhakaran</div><div class="t-role">Senior Manager, Credit Division</div></div></div></div>
+      <div class="t-card"><div class="t-q">"</div><div class="t-text">I've worked with many operations leaders, but Parameshwari's grasp of both micro-operations and macro strategy is rare. She identifies process inefficiencies before they become problems and solves them elegantly.</div><div class="t-auth"><div class="t-av">MV</div><div><div class="t-name">M. Vijayalakshmi</div><div class="t-role">Head of Compliance, Zonal Office</div></div></div></div>
+      <div class="t-card"><div class="t-q">"</div><div class="t-text">As a junior officer under her mentorship, I grew more in one year than in my entire previous career. She invests genuinely in people development and creates an environment where everyone wants to perform at their best.</div><div class="t-auth"><div class="t-av">AT</div><div><div class="t-name">A. Thenmozhi</div><div class="t-role">Branch Officer</div></div></div></div>
     </div>
   </div>
-  <div class="testimonials-nav">
-    <button class="tNav-btn" id="tPrev"><i class="fas fa-chevron-left"></i></button>
-    <button class="tNav-btn" id="tNext"><i class="fas fa-chevron-right"></i></button>
+  <div class="t-nav">
+    <button class="tnbtn" id="tprev"><i class="fas fa-chevron-left"></i></button>
+    <button class="tnbtn" id="tnext"><i class="fas fa-chevron-right"></i></button>
   </div>
 </section>
 
-<!-- ═══ CONTACT ═══ -->
-<section id="contact" style="background:linear-gradient(135deg,var(--navy-mid) 0%,var(--navy) 100%); max-width:100%; padding:100px 5%;">
-  <div style="max-width:1400px;margin:0 auto;">
-    <div class="section-label">Get In Touch</div>
-    <div class="section-divider"></div>
-    <div class="section-title">Let's <span>Connect</span></div>
-    <p class="section-subtitle">Whether it's a professional opportunity, collaboration, or simply a conversation — I'm always open.</p>
-    <div class="contact-wrapper">
-      <div data-aos="fade-right">
-        <div class="contact-info-item">
-          <div class="contact-icon"><i class="fas fa-phone"></i></div>
-          <div><div class="contact-label">Phone</div><div class="contact-value">+91 98765 43210</div></div>
-        </div>
-        <div class="contact-info-item">
-          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
-          <div><div class="contact-label">Email</div><div class="contact-value">parameshwari@example.com</div></div>
-        </div>
-        <div class="contact-info-item">
-          <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
-          <div><div class="contact-label">Location</div><div class="contact-value">Coimbatore, Tamil Nadu, India</div></div>
-        </div>
-        <div class="contact-info-item">
-          <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
-          <div><div class="contact-label">LinkedIn</div><div class="contact-value">linkedin.com/in/s-parameshwari</div></div>
-        </div>
-        <div style="margin-top:32px;border-radius:16px;overflow:hidden;border:1px solid var(--glass-border);">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125324.07195917463!2d76.8890534!3d11.0168445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859af2f971cb5%3A0x2fc1c81e183ed282!2sCoimbatore%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1720000000000!5m2!1sen!2sin" 
-            width="100%" height="220" style="border:0;display:block;filter:invert(0.85) hue-rotate(180deg);" allowfullscreen loading="lazy"></iframe>
-        </div>
-      </div>
-      <div data-aos="fade-left">
-        <div class="contact-form">
-          <div class="form-row">
-            <div class="form-group"><label>Your Name</label><input type="text" placeholder="Full Name"></div>
-            <div class="form-group"><label>Email Address</label><input type="email" placeholder="you@example.com"></div>
+<!-- CONTACT -->
+<div class="s-full" style="background:linear-gradient(135deg,var(--navy-mid),var(--navy));padding:100px 6%">
+  <div style="max-width:1400px;margin:0 auto">
+    <section id="contact" style="padding:0;max-width:100%">
+      <div class="s-label">Get In Touch</div>
+      <div class="s-div"></div>
+      <div class="s-title">Let's <span>Connect</span></div>
+      <p class="s-sub">Whether it's a professional opportunity, collaboration, or simply a conversation — I'm always open.</p>
+      <div class="contact-wrap">
+        <div>
+          <div class="ci"><div class="ci-ico"><i class="fas fa-phone"></i></div><div><div class="ci-lbl">Phone</div><div class="ci-val">+91 98765 43210</div></div></div>
+          <div class="ci"><div class="ci-ico"><i class="fas fa-envelope"></i></div><div><div class="ci-lbl">Email</div><div class="ci-val">parameshwari@example.com</div></div></div>
+          <div class="ci"><div class="ci-ico"><i class="fas fa-map-marker-alt"></i></div><div><div class="ci-lbl">Location</div><div class="ci-val">Coimbatore, Tamil Nadu, India</div></div></div>
+          <div class="ci"><div class="ci-ico"><i class="fab fa-linkedin-in"></i></div><div><div class="ci-lbl">LinkedIn</div><div class="ci-val">linkedin.com/in/s-parameshwari</div></div></div>
+          <div style="margin-top:28px;border-radius:16px;overflow:hidden;border:1px solid var(--glass-border)">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125324.07195917463!2d76.8890534!3d11.0168445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859af2f971cb5%3A0x2fc1c81e183ed282!2sCoimbatore%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1720000000000!5m2!1sen!2sin" width="100%" height="200" style="border:0;display:block;filter:invert(.85) hue-rotate(180deg)" allowfullscreen loading="lazy"></iframe>
           </div>
-          <div class="form-group"><label>Subject</label><input type="text" placeholder="Purpose of Contact"></div>
-          <div class="form-group"><label>Message</label><textarea placeholder="Write your message here..."></textarea></div>
-          <button class="btn-primary" style="align-self:flex-start;" onclick="handleContact(this)">
-            <i class="fas fa-paper-plane"></i> Send Message
-          </button>
+        </div>
+        <div>
+          <div class="cform">
+            <div class="frow">
+              <div class="fg"><label>Your Name</label><input type="text" placeholder="Full Name"></div>
+              <div class="fg"><label>Email</label><input type="email" placeholder="you@example.com"></div>
+            </div>
+            <div class="fg"><label>Subject</label><input type="text" placeholder="Purpose of contact"></div>
+            <div class="fg"><label>Message</label><textarea placeholder="Write your message here..."></textarea></div>
+            <button class="btn-p" style="align-self:flex-start" onclick="sendMsg(this)"><i class="fas fa-paper-plane"></i>Send Message</button>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   </div>
-</section>
+</div>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">S. Parameshwari</div>
-  <div class="footer-tagline">"Driven by Purpose. Committed to Excellence."</div>
-  <div class="footer-socials">
-    <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
-    <a href="mailto:parameshwari@example.com" class="social-btn"><i class="fas fa-envelope"></i></a>
-    <a href="tel:+919876543210" class="social-btn"><i class="fas fa-phone"></i></a>
-    <a href="#" class="social-btn"><i class="fab fa-whatsapp"></i></a>
+  <div class="ft-logo">S. Parameshwari</div>
+  <div class="ft-tag">"Driven by Purpose. Committed to Excellence."</div>
+  <div class="ft-soc">
+    <a href="#" class="soc-btn"><i class="fab fa-linkedin-in"></i></a>
+    <a href="mailto:parameshwari@example.com" class="soc-btn"><i class="fas fa-envelope"></i></a>
+    <a href="tel:+919876543210" class="soc-btn"><i class="fas fa-phone"></i></a>
+    <a href="#" class="soc-btn"><i class="fab fa-whatsapp"></i></a>
   </div>
-  <div class="footer-bottom">
-    © 2026 S. Parameshwari · Banking Professional & Branch Operations Manager · All Rights Reserved
-  </div>
+  <div class="ft-copy">© 2026 S. Parameshwari · Banking Professional & Branch Operations Manager · All Rights Reserved</div>
 </footer>
 
-<!-- AOS -->
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-// ─── LOADER
-window.addEventListener('load', () => {{
-  setTimeout(() => {{
-    const loader = document.getElementById('loader');
-    loader.style.opacity = '0';
-    loader.style.transition = 'opacity 0.5s';
-    setTimeout(() => loader.style.display = 'none', 500);
-  }}, 2200);
-}});
+// LOADER
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    const l=document.getElementById('loader');
+    l.style.opacity='0';
+    setTimeout(()=>l.style.display='none',500);
+  },2300);
+});
 
-// ─── AOS
-AOS.init({{ duration: 700, once: true, offset: 80 }});
+// PARTICLES
+const canvas=document.getElementById('pc');
+const ctx=canvas.getContext('2d');
+function rsz(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
+rsz();window.addEventListener('resize',rsz);
+class P{
+  constructor(){this.r()}
+  r(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.s=Math.random()*1.5+.3;this.o=Math.random()*.4+.1;this.vx=(Math.random()-.5)*.3;this.vy=-Math.random()*.5-.1}
+  u(){this.x+=this.vx;this.y+=this.vy;if(this.y<-5||this.x<-5||this.x>canvas.width+5)this.r()}
+  d(){ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fillStyle=`rgba(201,168,76,${this.o})`;ctx.fill()}
+}
+const ps=Array.from({length:130},()=>new P());
+(function anim(){ctx.clearRect(0,0,canvas.width,canvas.height);ps.forEach(p=>{p.u();p.d()});requestAnimationFrame(anim)})();
 
-// ─── PARTICLES
-const canvas = document.getElementById('particles-canvas');
-const ctx = canvas.getContext('2d');
-let particles = [];
-function resizeCanvas() {{
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-class Particle {{
-  constructor() {{ this.reset(); }}
-  reset() {{
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.size = Math.random() * 1.5 + 0.3;
-    this.opacity = Math.random() * 0.5 + 0.1;
-    this.vx = (Math.random() - 0.5) * 0.3;
-    this.vy = -Math.random() * 0.5 - 0.1;
-  }}
-  update() {{
-    this.x += this.vx; this.y += this.vy;
-    if (this.y < -5 || this.x < -5 || this.x > canvas.width + 5) this.reset();
-  }}
-  draw() {{
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(201,168,76,${{this.opacity}})`;
-    ctx.fill();
-  }}
-}}
-
-for (let i = 0; i < 120; i++) particles.push(new Particle());
-
-function animateParticles() {{
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => {{ p.update(); p.draw(); }});
-  requestAnimationFrame(animateParticles);
-}}
-animateParticles();
-
-// ─── TYPING EFFECT
-const phrases = [
-  'Delivering Operational Excellence.',
-  'Building Stronger Branches.',
-  'Creating Lasting Impact.',
-  'Empowering People. Strengthening Banking.'
-];
-let pi = 0, ci = 0, del = false;
-const typedEl = document.getElementById('typed-text');
-function type() {{
-  const current = phrases[pi];
-  if (!del) {{
-    typedEl.textContent = current.slice(0, ci + 1);
-    ci++;
-    if (ci === current.length) {{ del = true; setTimeout(type, 1800); return; }}
-  }} else {{
-    typedEl.textContent = current.slice(0, ci - 1);
-    ci--;
-    if (ci === 0) {{ del = false; pi = (pi + 1) % phrases.length; }}
-  }}
-  setTimeout(type, del ? 40 : 80);
-}}
+// TYPING
+const phrases=['Delivering Operational Excellence.','Building Stronger Branches.','Creating Lasting Impact.','Empowering People. Strengthening Banking.'];
+let pi=0,ci=0,del=false;
+const tel=document.getElementById('typed');
+function type(){
+  const cur=phrases[pi];
+  if(!del){tel.textContent=cur.slice(0,++ci);if(ci===cur.length){del=true;setTimeout(type,1900);return}}
+  else{tel.textContent=cur.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length}}
+  setTimeout(type,del?38:78);
+}
 type();
 
-// ─── THEME TOGGLE
-const themeBtn = document.getElementById('themeToggle');
-themeBtn.addEventListener('click', () => {{
-  const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  themeBtn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-}});
+// MOBILE MENU
+document.getElementById('hbg').addEventListener('click',()=>document.getElementById('mm').classList.toggle('open'));
+function closeMM(){document.getElementById('mm').classList.remove('open')}
 
-// ─── MOBILE MENU
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
-hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-function closeMobile() {{ mobileMenu.classList.remove('open'); }}
+// BACK TO TOP
+window.addEventListener('scroll',()=>{
+  document.getElementById('btt').classList.toggle('show',window.scrollY>500);
+  document.getElementById('nav').style.padding=window.scrollY>50?'10px 6%':'16px 6%';
+});
 
-// ─── BACK TO TOP
-const backTop = document.getElementById('back-top');
-window.addEventListener('scroll', () => {{
-  backTop.classList.toggle('show', window.scrollY > 500);
-}});
+// COUNTERS
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const el=e.target,t=+el.dataset.target,inc=t/60;
+    let c=0;
+    const tm=setInterval(()=>{c+=inc;if(c>=t){c=t;clearInterval(tm)}el.textContent=Math.floor(c).toLocaleString()+'+';},28);
+    obs.unobserve(el);
+  });
+},{threshold:.5});
+document.querySelectorAll('[data-target]').forEach(el=>obs.observe(el));
 
-// ─── ANIMATED COUNTERS
-const counters = document.querySelectorAll('[data-target]');
-const countObserver = new IntersectionObserver((entries) => {{
-  entries.forEach(entry => {{
-    if (!entry.isIntersecting) return;
-    const el = entry.target;
-    const target = parseInt(el.dataset.target);
-    const suffix = target >= 1000 ? '+' : '+';
-    let current = 0;
-    const increment = target / 60;
-    const timer = setInterval(() => {{
-      current += increment;
-      if (current >= target) {{ current = target; clearInterval(timer); }}
-      el.textContent = Math.floor(current).toLocaleString() + suffix;
-    }}, 30);
-    countObserver.unobserve(el);
-  }});
-}}, {{ threshold: 0.5 }});
-counters.forEach(c => countObserver.observe(c));
+// SKILL BARS
+const sobs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    e.target.style.width=e.target.dataset.width+'%';
+    sobs.unobserve(e.target);
+  });
+},{threshold:.3});
+document.querySelectorAll('.ski-fill').forEach(s=>sobs.observe(s));
 
-// ─── SKILL BARS
-const skillFills = document.querySelectorAll('.skill-fill');
-const skillObserver = new IntersectionObserver((entries) => {{
-  entries.forEach(entry => {{
-    if (!entry.isIntersecting) return;
-    const el = entry.target;
-    el.style.width = el.dataset.width + '%';
-    skillObserver.unobserve(el);
-  }});
-}}, {{ threshold: 0.3 }});
-skillFills.forEach(s => skillObserver.observe(s));
+// TESTIMONIALS
+let ti=0;
+const tw=document.getElementById('tw');
+function sw(){
+  const cw=tw.querySelector('.t-card').offsetWidth+24;
+  tw.style.transform=`translateX(-${ti*cw}px)`;
+}
+document.getElementById('tnext').addEventListener('click',()=>{
+  const max=tw.children.length-(window.innerWidth>1024?3:window.innerWidth>768?2:1);
+  ti=Math.min(ti+1,max);sw();
+});
+document.getElementById('tprev').addEventListener('click',()=>{ti=Math.max(ti-1,0);sw()});
+setInterval(()=>{
+  const max=tw.children.length-(window.innerWidth>1024?3:window.innerWidth>768?2:1);
+  ti=ti>=max?0:ti+1;sw();
+},4200);
 
-// ─── TESTIMONIALS
-let tIdx = 0;
-const wrapper = document.getElementById('testimonialsWrapper');
-function getSlideWidth() {{
-  const card = wrapper.querySelector('.testimonial-card');
-  return card ? card.offsetWidth + 24 : 0;
-}}
-function updateCarousel() {{
-  wrapper.style.transform = `translateX(-${{tIdx * getSlideWidth()}}px)`;
-}}
-document.getElementById('tNext').addEventListener('click', () => {{
-  const maxIdx = wrapper.children.length - (window.innerWidth > 1024 ? 3 : window.innerWidth > 768 ? 2 : 1);
-  tIdx = Math.min(tIdx + 1, maxIdx);
-  updateCarousel();
-}});
-document.getElementById('tPrev').addEventListener('click', () => {{
-  tIdx = Math.max(tIdx - 1, 0);
-  updateCarousel();
-}});
-setInterval(() => {{
-  const maxIdx = wrapper.children.length - (window.innerWidth > 1024 ? 3 : window.innerWidth > 768 ? 2 : 1);
-  tIdx = tIdx >= maxIdx ? 0 : tIdx + 1;
-  updateCarousel();
-}}, 4000);
+// CONTACT
+function sendMsg(b){
+  b.innerHTML='<i class="fas fa-check"></i> Sent!';
+  b.style.background='linear-gradient(135deg,#28a745,#34ce57)';
+  setTimeout(()=>{b.innerHTML='<i class="fas fa-paper-plane"></i> Send Message';b.style.background=''},3000);
+}
 
-// ─── CONTACT FORM
-function handleContact(btn) {{
-  btn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-  btn.style.background = 'linear-gradient(135deg, #28a745, #34ce57)';
-  setTimeout(() => {{
-    btn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-    btn.style.background = '';
-  }}, 3000);
-}}
-
-// ─── NAV SCROLL
-window.addEventListener('scroll', () => {{
-  const nav = document.getElementById('navbar');
-  nav.style.padding = window.scrollY > 50 ? '10px 5%' : '16px 5%';
-}});
+// SCROLL ANIMATIONS (simple fade-in)
+const fadeObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';fadeObs.unobserve(e.target)}
+  });
+},{threshold:.1});
+document.querySelectorAll('.tl-card,.edu-card,.ach-card,.trait,.stat,.t-card').forEach(el=>{
+  el.style.opacity='0';el.style.transform='translateY(20px)';
+  el.style.transition='opacity .6s ease, transform .6s ease';
+  fadeObs.observe(el);
+});
 </script>
 </body>
 </html>"""
-
-with open('/mnt/user-data/outputs/parameshwari_portfolio.html', 'w', encoding='utf-8') as f:
-    f.write(html)
-
-print("Done!", len(html), "chars")
-PYEOF
-python3 /home/claude/build_portfolio.py
