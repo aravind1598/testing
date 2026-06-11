@@ -1,669 +1,422 @@
-html = """<!DOCTYPE html>
+
+profile_src = f"data:image/png;base64,{profile_b64}"
+cover_src = f"data:image/png;base64,{cover_b64}"
+
+html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>S. Parameshwari | Banking Professional</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-:root{
-  --navy:#0a1628;--navy-mid:#122040;--navy-light:#1a3060;
-  --gold:#c9a84c;--gold-light:#e8c97a;--gold-pale:#f5e6b8;
-  --white:#fff;--glass:rgba(255,255,255,0.06);
-  --glass-border:rgba(201,168,76,0.25);
-  --text-muted:rgba(255,255,255,0.60);
-  --shadow-gold:0 0 40px rgba(201,168,76,0.18);
-}
-body{font-family:'Inter',sans-serif;background:var(--navy);color:#fff;overflow-x:hidden}
+  :root {{
+    --navy: #0B1F3A;
+    --navy-mid: #142d52;
+    --gold: #C9922A;
+    --gold-light: #e8b85c;
+    --white: #F8F6F1;
+    --slate: #4A5568;
+    --light-bg: #f0ede7;
+  }}
+  *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+  html {{ scroll-behavior: smooth; }}
+  body {{ font-family: 'Inter', sans-serif; background: var(--white); color: var(--navy); overflow-x: hidden; }}
 
-/* LOADER */
-#loader{position:fixed;inset:0;z-index:9999;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .5s}
-.ld-logo{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:var(--gold);letter-spacing:4px}
-.ld-bar{width:200px;height:3px;background:rgba(201,168,76,.2);border-radius:10px;overflow:hidden}
-.ld-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:10px;animation:lf 2.2s ease forwards}
-@keyframes lf{to{width:100%}}
+  /* NAV */
+  nav {{
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    background: rgba(11,31,58,0.96);
+    backdrop-filter: blur(12px);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    border-bottom: 1px solid rgba(201,146,42,0.2);
+  }}
+  .nav-logo {{ font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.15rem; font-weight: 700; letter-spacing: 0.05em; }}
+  .nav-links {{ display: flex; gap: 2rem; list-style: none; }}
+  .nav-links a {{ color: rgba(248,246,241,0.7); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; }}
+  .nav-links a:hover {{ color: var(--gold); }}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 6%;display:flex;align-items:center;justify-content:space-between;background:rgba(10,22,40,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--glass-border);transition:padding .3s}
-.nav-logo{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--gold);text-decoration:none;letter-spacing:1px}
-.nav-logo span{color:#fff}
-.nav-links{display:flex;gap:28px;list-style:none}
-.nav-links a{color:rgba(255,255,255,.8);text-decoration:none;font-size:.85rem;font-weight:500;letter-spacing:.5px;position:relative;transition:color .3s}
-.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--gold);transition:width .3s}
-.nav-links a:hover{color:var(--gold)}
-.nav-links a:hover::after{width:100%}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
-.hamburger span{display:block;width:24px;height:2px;background:var(--gold);border-radius:2px;transition:all .3s}
-.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(10,22,40,.97);backdrop-filter:blur(20px);padding:24px 6%;border-bottom:1px solid var(--glass-border);z-index:999}
-.mobile-menu.open{display:block}
-.mobile-menu a{display:block;padding:13px 0;color:rgba(255,255,255,.85);text-decoration:none;font-size:1rem;border-bottom:1px solid rgba(255,255,255,.07);transition:color .3s}
-.mobile-menu a:hover{color:var(--gold)}
+  /* COVER BANNER */
+  .cover-banner {{
+    margin-top: 64px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    max-height: 420px;
+    display: block;
+  }}
+  .cover-banner img {{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }}
+  .cover-overlay {{
+    position: absolute; inset: 0;
+    background: linear-gradient(to right, rgba(11,31,58,0.15) 0%, transparent 50%, rgba(11,31,58,0.05) 100%);
+  }}
 
-/* HERO */
-.hero{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden;padding-top:70px}
-#pc{position:absolute;inset:0;z-index:0}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(201,168,76,.1) 0%,transparent 60%),linear-gradient(135deg,#0a1628 0%,#122040 55%,#0d1e3a 100%);z-index:1}
-.hero-content{position:relative;z-index:2;max-width:1400px;margin:0 auto;padding:80px 6%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:100px;padding:6px 18px;font-size:.72rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:22px}
-.hero-eyebrow::before{content:'';width:7px;height:7px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
-.hero-name{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,5vw,4.8rem);font-weight:900;line-height:1.1;margin-bottom:10px;background:linear-gradient(135deg,#fff 0%,var(--gold-light) 50%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-role{font-size:clamp(.9rem,1.5vw,1.1rem);color:var(--gold);font-weight:600;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:14px}
-.typing-wrap{font-size:clamp(1rem,1.8vw,1.2rem);color:rgba(255,255,255,.7);min-height:2.2em;margin-bottom:26px;font-weight:300}
-#typed{border-right:2px solid var(--gold);padding-right:4px}
-.hero-tags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:34px}
-.htag{background:var(--glass);border:1px solid var(--glass-border);border-radius:100px;padding:6px 16px;font-size:.8rem;color:rgba(255,255,255,.8);backdrop-filter:blur(10px)}
-.htag i{color:var(--gold);margin-right:5px}
-.hero-btns{display:flex;gap:14px;flex-wrap:wrap}
-.btn-p{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);border:none;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;text-decoration:none;transition:all .3s;box-shadow:0 4px 20px rgba(201,168,76,.35)}
-.btn-p:hover{transform:translateY(-3px);box-shadow:0 10px 32px rgba(201,168,76,.5)}
-.btn-s{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:transparent;color:var(--gold);border:1.5px solid var(--gold);border-radius:8px;font-weight:600;font-size:.9rem;cursor:pointer;text-decoration:none;transition:all .3s}
-.btn-s:hover{background:rgba(201,168,76,.1);transform:translateY(-3px)}
+  /* PROFILE PHOTO OVERLAP */
+  .profile-overlap-wrap {{
+    background: var(--white);
+    padding: 0 8%;
+    display: flex;
+    align-items: flex-end;
+    gap: 2rem;
+    position: relative;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(11,31,58,0.07);
+  }}
+  .profile-photo-circle {{
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    border: 4px solid var(--white);
+    box-shadow: 0 4px 24px rgba(11,31,58,0.18);
+    margin-top: -80px;
+    flex-shrink: 0;
+    overflow: hidden;
+    background: var(--navy);
+    position: relative;
+    z-index: 2;
+  }}
+  .profile-photo-circle img {{
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }}
+  .profile-name-block {{
+    padding-bottom: 0.5rem;
+    flex: 1;
+  }}
+  .profile-name {{
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 900;
+    color: var(--navy);
+    line-height: 1.1;
+  }}
+  .profile-name .gold-part {{ color: var(--gold); position: relative; display: inline-block; }}
+  .profile-name .gold-part::after {{
+    content: '';
+    position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 2px; background: var(--gold);
+    animation: uline 1.2s 0.4s ease forwards;
+  }}
+  @keyframes uline {{ to {{ width: 100%; }} }}
+  .profile-title {{
+    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold); margin-top: 0.4rem; font-weight: 500;
+  }}
+  .profile-pills {{
+    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem;
+  }}
+  .pill {{
+    border: 1px solid rgba(201,146,42,0.35); color: var(--slate);
+    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.3rem 0.8rem; border-radius: 2px; transition: all 0.2s;
+  }}
+  .pill:hover {{ border-color: var(--gold); color: var(--gold); }}
 
-/* PROFILE FRAME */
-.hero-visual{display:flex;justify-content:center;align-items:center}
-.pframe{position:relative;width:clamp(260px,34vw,400px);height:clamp(260px,34vw,400px)}
-.pring{position:absolute;inset:-14px;border-radius:50%;background:conic-gradient(var(--gold),var(--gold-light),rgba(255,255,255,.1),var(--gold));animation:spin 8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.pring-inner{position:absolute;inset:-7px;border-radius:50%;background:var(--navy-mid)}
-.pimg{position:relative;z-index:1;width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:top;border:4px solid var(--navy-mid)}
-.pbadge{position:absolute;bottom:18px;right:-10px;z-index:2;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);border-radius:14px;padding:10px 16px;text-align:center;box-shadow:0 8px 24px rgba(201,168,76,.45)}
-.pbadge-num{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:900;line-height:1}
-.pbadge-lbl{font-size:.62rem;font-weight:700;letter-spacing:.5px;white-space:nowrap}
+  /* STATS BAR */
+  .stats-bar {{
+    background: var(--gold);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+  }}
+  .stat {{ padding: 1.3rem 2rem; text-align: center; border-right: 1px solid rgba(11,31,58,0.15); }}
+  .stat:last-child {{ border-right: none; }}
+  .stat-num {{ font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; color: var(--navy); line-height: 1; }}
+  .stat-label {{ font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(11,31,58,0.6); margin-top: 0.25rem; }}
 
-/* SECTIONS */
-section{padding:100px 6%;max-width:1400px;margin:0 auto}
-.s-full{max-width:100%;padding:0}
-.s-label{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
-.s-label::before{content:'';width:28px;height:1px;background:var(--gold)}
-.s-div{width:55px;height:3px;background:linear-gradient(90deg,var(--gold),transparent);border-radius:3px;margin-bottom:16px}
-.s-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.2;margin-bottom:14px}
-.s-title span{color:var(--gold)}
-.s-sub{font-size:1rem;color:var(--text-muted);max-width:540px;line-height:1.7;margin-bottom:56px}
+  /* SECTIONS */
+  section {{ padding: 72px 8%; }}
+  .section-label {{ font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }}
+  .section-title {{ font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 2.5vw, 2.3rem); font-weight: 700; color: var(--navy); line-height: 1.15; }}
+  .title-rule {{ width: 44px; height: 2px; background: var(--gold); margin: 0.9rem 0 2.8rem; }}
 
-/* ABOUT */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-.about-cover{border-radius:24px;overflow:hidden;position:relative;box-shadow:0 24px 70px rgba(0,0,0,.45)}
-.about-cover img{width:100%;display:block;filter:brightness(.9)}
-.about-cover-ov{position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,22,40,.25),rgba(201,168,76,.08))}
-.about-text p{color:rgba(255,255,255,.75);line-height:1.85;margin-bottom:18px;font-size:1rem}
-.traits{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
-.trait{background:var(--glass);border:1px solid var(--glass-border);border-radius:14px;padding:18px;backdrop-filter:blur(12px);transition:all .3s;cursor:default}
-.trait:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:var(--shadow-gold)}
-.trait-ico{font-size:1.4rem;margin-bottom:8px}
-.trait-t{font-weight:600;font-size:.9rem;margin-bottom:4px}
-.trait-d{font-size:.76rem;color:var(--text-muted)}
+  /* ABOUT */
+  .about {{ background: var(--white); }}
+  .about-grid {{ display: grid; grid-template-columns: 3fr 2fr; gap: 4rem; align-items: start; }}
+  .about-text p {{ font-size: 0.97rem; line-height: 1.85; color: var(--slate); margin-bottom: 1.1rem; font-weight: 300; }}
+  .about-text strong {{ color: var(--navy); font-weight: 600; }}
+  .contact-card {{ background: var(--navy); padding: 1.8rem; border-left: 3px solid var(--gold); }}
+  .contact-card h3 {{ font-family: 'Playfair Display', serif; color: var(--white); font-size: 0.95rem; margin-bottom: 1.3rem; }}
+  .contact-item {{ display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.9rem; }}
+  .contact-icon {{ width: 30px; height: 30px; background: rgba(201,146,42,0.12); border: 1px solid rgba(201,146,42,0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.8rem; }}
+  .contact-detail {{ font-size: 0.78rem; color: rgba(248,246,241,0.7); line-height: 1.5; }}
+  .contact-detail span {{ display: block; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.1rem; }}
 
-/* STATS BAND */
-.stats-band{background:linear-gradient(135deg,var(--navy-mid),var(--navy-light));padding:80px 6%}
-.stats-grid{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
-.stat{text-align:center;background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:40px 20px;backdrop-filter:blur(10px);transition:all .3s;cursor:default}
-.stat:hover{transform:translateY(-8px);box-shadow:var(--shadow-gold);border-color:var(--gold)}
-.stat-n{font-family:'Playfair Display',serif;font-size:3rem;font-weight:900;color:var(--gold);line-height:1;margin-bottom:8px}
-.stat-l{font-size:.82rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px}
+  /* EXPERIENCE */
+  .experience {{ background: var(--light-bg); }}
+  .timeline {{ position: relative; padding-left: 2.5rem; }}
+  .timeline::before {{ content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(to bottom, var(--gold), transparent); }}
+  .timeline-item {{ position: relative; margin-bottom: 3rem; }}
+  .timeline-item:last-child {{ margin-bottom: 0; }}
+  .timeline-dot {{ position: absolute; left: -2.5rem; top: 7px; width: 12px; height: 12px; border: 2px solid var(--gold); background: var(--light-bg); border-radius: 50%; }}
+  .timeline-item.current .timeline-dot {{ background: var(--gold); }}
+  .timeline-meta {{ display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.3rem; }}
+  .timeline-role {{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--navy); }}
+  .timeline-company {{ font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 500; }}
+  .timeline-period {{ margin-left: auto; font-size: 0.72rem; color: var(--slate); font-weight: 300; }}
+  .timeline-desc {{ font-size: 0.88rem; line-height: 1.7; color: var(--slate); font-weight: 300; max-width: 660px; }}
 
-/* TIMELINE */
-.timeline{position:relative;padding:20px 0}
-.timeline::before{content:'';position:absolute;left:50%;transform:translateX(-50%);top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--gold),transparent)}
-.tl-item{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:60px;position:relative;align-items:start}
-.tl-item:nth-child(odd) .tl-card{order:1;text-align:right}
-.tl-item:nth-child(odd) .tl-side{order:2}
-.tl-item:nth-child(even) .tl-card{order:2}
-.tl-item:nth-child(even) .tl-side{order:1}
-.tl-dot{position:absolute;left:50%;transform:translateX(-50%);top:24px;width:20px;height:20px;background:var(--gold);border-radius:50%;border:4px solid var(--navy-mid);box-shadow:0 0 20px rgba(201,168,76,.5);z-index:1}
-.tl-year{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:900;color:rgba(201,168,76,.2);line-height:1}
-.tl-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:18px;padding:28px;backdrop-filter:blur(10px);transition:all .3s}
-.tl-card:hover{border-color:var(--gold);box-shadow:var(--shadow-gold);transform:translateY(-4px)}
-.tl-role{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--gold);margin-bottom:4px}
-.tl-org{font-size:.82rem;color:var(--text-muted);margin-bottom:12px}
-.tl-desc{font-size:.87rem;color:rgba(255,255,255,.7);line-height:1.75}
-.tl-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
-.tl-tag{background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.25);border-radius:100px;padding:4px 12px;font-size:.7rem;color:var(--gold-light)}
-.tl-item:nth-child(odd) .tl-tags{justify-content:flex-end}
+  /* VALUES BANNER */
+  .values-banner {{ background: var(--gold); padding: 2.5rem 8%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; text-align: center; }}
+  .value-icon {{ font-size: 1.5rem; margin-bottom: 0.4rem; }}
+  .value-name {{ font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--navy); font-weight: 600; }}
+  .value-desc {{ font-size: 0.72rem; color: rgba(11,31,58,0.6); margin-top: 0.25rem; }}
 
-/* SKILLS */
-.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
-.sg-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:26px;color:var(--gold)}
-.ski{margin-bottom:22px}
-.ski-hd{display:flex;justify-content:space-between;margin-bottom:8px;font-size:.87rem;font-weight:500}
-.ski-pct{color:var(--gold);font-weight:700}
-.ski-bar{height:6px;background:rgba(255,255,255,.1);border-radius:100px;overflow:hidden}
-.ski-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));border-radius:100px;width:0;transition:width 1.6s cubic-bezier(.25,.46,.45,.94)}
-.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
-.chip{background:var(--glass);border:1px solid var(--glass-border);border-radius:10px;padding:10px 16px;font-size:.82rem;font-weight:500;display:flex;align-items:center;gap:8px;transition:all .3s;cursor:default}
-.chip:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
-.chip i{color:var(--gold);font-size:1rem}
+  /* SKILLS */
+  .skills-section {{ background: var(--navy); }}
+  .skills-section .section-title {{ color: var(--white); }}
+  .skills-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.05); }}
+  .skill-box {{ padding: 1.4rem; background: rgba(20,45,82,0.5); display: flex; align-items: center; gap: 0.9rem; transition: background 0.2s; }}
+  .skill-box:hover {{ background: rgba(201,146,42,0.1); }}
+  .skill-icon {{ font-size: 1.3rem; flex-shrink: 0; }}
+  .skill-name {{ font-size: 0.78rem; color: rgba(248,246,241,0.8); font-weight: 400; }}
 
-/* EDU */
-.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.edu-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:32px;backdrop-filter:blur(10px);position:relative;overflow:hidden;transition:all .3s}
-.edu-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light))}
-.edu-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-gold);border-color:var(--gold)}
-.edu-ico{width:50px;height:50px;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:var(--gold);margin-bottom:16px}
-.edu-deg{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:6px}
-.edu-uni{font-size:.85rem;color:var(--gold);margin-bottom:4px;font-weight:500}
-.edu-yr{font-size:.76rem;color:var(--text-muted)}
+  /* EDUCATION */
+  .education {{ background: var(--white); }}
+  .edu-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.4rem; }}
+  .edu-card {{ border: 1px solid rgba(11,31,58,0.1); padding: 1.6rem; position: relative; transition: border-color 0.2s, transform 0.15s; }}
+  .edu-card:hover {{ border-color: var(--gold); transform: translateY(-2px); }}
+  .edu-card::before {{ content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--gold); transition: height 0.3s; }}
+  .edu-card:hover::before {{ height: 100%; }}
+  .edu-degree {{ font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.25rem; }}
+  .edu-institution {{ font-size: 0.72rem; color: var(--slate); margin-bottom: 0.75rem; }}
+  .edu-meta {{ display: flex; justify-content: space-between; align-items: center; }}
+  .edu-year {{ font-size: 0.68rem; color: var(--slate); }}
+  .edu-score {{ font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--gold); }}
 
-/* ACHIEVEMENTS */
-.ach-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.ach-card{background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:30px;backdrop-filter:blur(10px);text-align:center;transition:all .3s;position:relative;overflow:hidden;cursor:default}
-.ach-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .3s}
-.ach-card:hover::after{transform:scaleX(1)}
-.ach-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-gold);border-color:var(--gold)}
-.ach-ico{font-size:2.4rem;margin-bottom:14px;display:block}
-.ach-t{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:8px}
-.ach-d{font-size:.8rem;color:var(--text-muted);line-height:1.65}
+  /* ACHIEVEMENTS */
+  .achievements {{ background: var(--light-bg); }}
+  .ach-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 1.8rem; }}
+  .ach-card {{ display: flex; gap: 1.4rem; padding: 1.8rem; background: var(--white); border-bottom: 2px solid transparent; transition: border-color 0.2s; }}
+  .ach-card:hover {{ border-color: var(--gold); }}
+  .ach-trophy {{ font-size: 1.8rem; flex-shrink: 0; }}
+  .ach-title {{ font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }}
+  .ach-desc {{ font-size: 0.82rem; color: var(--slate); line-height: 1.6; font-weight: 300; }}
 
-/* GALLERY */
-.gal-section{background:linear-gradient(180deg,transparent,var(--navy-mid) 50%,transparent);padding:100px 6%}
-.gal-inner{max-width:1400px;margin:0 auto}
-.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:260px 260px;gap:16px}
-.gal-item{border-radius:18px;overflow:hidden;cursor:pointer;position:relative;background:var(--glass);border:1px solid var(--glass-border);transition:all .3s}
-.gal-item:first-child{grid-column:span 2;grid-row:span 2}
-.gal-item img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;transition:transform .4s}
-.gal-item:hover img{transform:scale(1.05)}
-.gal-ov{position:absolute;inset:0;background:rgba(10,22,40,.65);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s}
-.gal-item:hover .gal-ov{opacity:1}
-.gal-item:hover{border-color:var(--gold)}
-.gal-ov i{font-size:2rem;color:var(--gold)}
-.gal-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:10px;color:var(--text-muted)}
-.gal-ph i{font-size:2rem;color:var(--gold)}
-.gal-ph span{font-size:.78rem}
+  /* FOOTER */
+  footer {{ background: var(--navy); padding: 2.2rem 8%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }}
+  .footer-quote {{ font-family: 'Playfair Display', serif; font-style: italic; color: rgba(248,246,241,0.5); font-size: 0.88rem; }}
+  .footer-quote em {{ color: var(--gold); font-style: normal; }}
+  .footer-copy {{ font-size: 0.68rem; color: rgba(248,246,241,0.3); letter-spacing: 0.1em; }}
 
-/* TESTIMONIALS */
-.t-track{overflow:hidden;position:relative}
-.t-wrap{display:flex;gap:24px;transition:transform .5s ease}
-.t-card{min-width:calc(33.333% - 16px);background:var(--glass);border:1px solid var(--glass-border);border-radius:20px;padding:32px;backdrop-filter:blur(10px);flex-shrink:0}
-.t-q{font-size:3rem;color:var(--gold);font-family:'Playfair Display',serif;line-height:.4;margin-bottom:14px}
-.t-text{font-size:.9rem;color:rgba(255,255,255,.8);line-height:1.75;margin-bottom:22px;font-style:italic}
-.t-auth{display:flex;align-items:center;gap:12px}
-.t-av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--navy-light));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1rem;color:var(--navy)}
-.t-name{font-weight:600;font-size:.88rem}
-.t-role{font-size:.74rem;color:var(--gold)}
-.t-nav{display:flex;justify-content:center;gap:10px;margin-top:30px}
-.tnbtn{width:40px;height:40px;border-radius:50%;background:var(--glass);border:1px solid var(--glass-border);color:var(--gold);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .3s}
-.tnbtn:hover{background:var(--gold);color:var(--navy)}
+  /* ANIMATIONS */
+  .fade-up {{ opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }}
+  .fade-up.visible {{ opacity: 1; transform: translateY(0); }}
 
-/* CONTACT */
-.contact-wrap{display:grid;grid-template-columns:1fr 1.5fr;gap:60px}
-.ci{display:flex;align-items:flex-start;gap:16px;margin-bottom:26px}
-.ci-ico{width:48px;height:48px;flex-shrink:0;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--gold)}
-.ci-lbl{font-size:.73rem;color:var(--text-muted);margin-bottom:2px;text-transform:uppercase;letter-spacing:1px}
-.ci-val{font-weight:600;font-size:.93rem}
-.cform{display:flex;flex-direction:column;gap:14px}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.fg{display:flex;flex-direction:column;gap:5px}
-.fg label{font-size:.78rem;font-weight:500;color:var(--text-muted)}
-.fg input,.fg textarea{background:var(--glass);border:1px solid var(--glass-border);border-radius:10px;padding:13px 16px;color:#fff;font-family:'Inter',sans-serif;font-size:.9rem;outline:none;transition:border-color .3s;backdrop-filter:blur(10px)}
-.fg input:focus,.fg textarea:focus{border-color:var(--gold)}
-.fg textarea{resize:vertical;min-height:130px}
-
-/* FOOTER */
-footer{background:linear-gradient(180deg,var(--navy-mid) 0%,#060d1a 100%);border-top:1px solid var(--glass-border);padding:60px 6% 28px;text-align:center}
-.ft-logo{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--gold);margin-bottom:10px}
-.ft-tag{font-size:.88rem;color:var(--text-muted);font-style:italic;margin-bottom:30px}
-.ft-soc{display:flex;justify-content:center;gap:14px;margin-bottom:36px}
-.soc-btn{width:44px;height:44px;border-radius:50%;background:var(--glass);border:1px solid var(--glass-border);color:var(--gold);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:1rem;transition:all .3s}
-.soc-btn:hover{background:var(--gold);color:var(--navy);transform:translateY(-3px)}
-.ft-copy{border-top:1px solid rgba(255,255,255,.07);padding-top:22px;font-size:.78rem;color:rgba(255,255,255,.28)}
-
-/* FLOAT */
-.float-s{position:fixed;left:18px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:10px;z-index:100}
-.float-s a{width:40px;height:40px;border-radius:50%;background:rgba(10,22,40,.85);border:1px solid var(--glass-border);color:var(--gold);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:.88rem;transition:all .3s;backdrop-filter:blur(12px)}
-.float-s a:hover{background:var(--gold);color:var(--navy);transform:scale(1.15)}
-#btt{position:fixed;bottom:28px;right:28px;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:var(--navy);border:none;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(201,168,76,.4);opacity:0;transform:translateY(20px);transition:all .3s;z-index:100}
-#btt.show{opacity:1;transform:translateY(0)}
-#btt:hover{transform:translateY(-4px) scale(1.07)}
-
-/* RESPONSIVE */
-@media(max-width:1024px){
-  .hero-content{grid-template-columns:1fr;text-align:center;gap:40px}
-  .hero-visual{order:-1}
-  .hero-tags,.hero-btns{justify-content:center}
-  .about-grid,.skills-grid,.contact-wrap{grid-template-columns:1fr}
-  .stats-grid{grid-template-columns:repeat(2,1fr)}
-  .timeline::before{left:22px}
-  .tl-item{grid-template-columns:1fr;padding-left:50px}
-  .tl-item:nth-child(odd) .tl-card,.tl-item:nth-child(even) .tl-card{order:2;text-align:left}
-  .tl-item:nth-child(odd) .tl-tags{justify-content:flex-start}
-  .tl-item:nth-child(odd) .tl-side,.tl-item:nth-child(even) .tl-side{order:1}
-  .tl-dot{left:22px;transform:none}
-  .ach-grid{grid-template-columns:1fr 1fr}
-  .gal-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto}
-  .gal-item:first-child{grid-column:span 2;height:300px}
-  .t-card{min-width:calc(50% - 12px)}
-  .float-s{display:none}
-}
-@media(max-width:768px){
-  .nav-links{display:none}
-  .hamburger{display:flex}
-  section{padding:70px 5%}
-  .edu-grid,.ach-grid{grid-template-columns:1fr}
-  .frow{grid-template-columns:1fr}
-  .gal-grid{grid-template-columns:1fr;grid-template-rows:auto}
-  .gal-item:first-child{grid-column:span 1;height:260px}
-  .t-card{min-width:100%}
-  .stats-grid{grid-template-columns:1fr 1fr}
-  .pframe{width:260px;height:260px}
-}
+  /* RESPONSIVE */
+  @media (max-width: 900px) {{
+    .about-grid {{ grid-template-columns: 1fr; gap: 2rem; }}
+    .ach-grid {{ grid-template-columns: 1fr; }}
+    .values-banner {{ grid-template-columns: 1fr; }}
+    .stats-bar {{ grid-template-columns: repeat(2, 1fr); }}
+    .nav-links {{ display: none; }}
+    .profile-overlap-wrap {{ flex-direction: column; align-items: flex-start; padding-top: 1rem; }}
+    .profile-photo-circle {{ margin-top: -60px; width: 120px; height: 120px; }}
+  }}
+  @media (max-width: 600px) {{
+    section {{ padding: 52px 5%; }}
+    .cover-banner {{ max-height: 200px; }}
+    .stat {{ padding: 1rem 0.8rem; }}
+    .stat-num {{ font-size: 1.3rem; }}
+  }}
 </style>
 </head>
 <body>
 
-<div id="loader">
-  <div class="ld-logo">SP</div>
-  <div class="ld-bar"><div class="ld-fill"></div></div>
-  <p style="color:var(--text-muted);font-size:.82rem;letter-spacing:2px">LOADING PORTFOLIO...</p>
-</div>
-
-<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fas fa-chevron-up"></i></button>
-
-<div class="float-s">
-  <a href="mailto:parameshwari@example.com" title="Email"><i class="fas fa-envelope"></i></a>
-  <a href="tel:+919876543210" title="Call"><i class="fas fa-phone"></i></a>
-  <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-</div>
-
 <!-- NAV -->
-<nav id="nav">
-  <a href="#hero" class="nav-logo">S<span>.</span>Parameshwari</a>
+<nav>
+  <div class="nav-logo">S. Parameshwari</div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#education">Education</a></li>
-    <li><a href="#achievements">Achievements</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button class="hamburger" id="hbg"><span></span><span></span><span></span></button>
 </nav>
-<div class="mobile-menu" id="mm">
-  <a href="#about" onclick="closeMM()">About</a>
-  <a href="#experience" onclick="closeMM()">Experience</a>
-  <a href="#skills" onclick="closeMM()">Skills</a>
-  <a href="#education" onclick="closeMM()">Education</a>
-  <a href="#achievements" onclick="closeMM()">Achievements</a>
-  <a href="#contact" onclick="closeMM()">Contact</a>
+
+<!-- COVER BANNER -->
+<div class="cover-banner">
+  <img src="{cover_src}" alt="S. Parameshwari Cover">
+  <div class="cover-overlay"></div>
 </div>
 
-<!-- HERO -->
-<section id="hero" style="padding:0;max-width:100%">
-  <canvas id="pc"></canvas>
-  <div class="hero-bg"></div>
-  <div class="hero-content">
-    <div class="hero-text">
-      <div class="hero-eyebrow">Banking Professional</div>
-      <h1 class="hero-name">S. Parameshwari</h1>
-      <p class="hero-role">Branch Operations Manager</p>
-      <div class="typing-wrap"><span id="typed"></span></div>
-      <div class="hero-tags">
-        <span class="htag"><i class="fas fa-chart-line"></i>Analytical Thinker</span>
-        <span class="htag"><i class="fas fa-puzzle-piece"></i>Problem Solver</span>
-        <span class="htag"><i class="fas fa-users"></i>Team Leader</span>
-        <span class="htag"><i class="fas fa-bullseye"></i>Results Driven</span>
-      </div>
-      <div class="hero-btns">
-        <a href="#" class="btn-p"><i class="fas fa-download"></i>Download Resume</a>
-        <a href="#contact" class="btn-s"><i class="fas fa-paper-plane"></i>Contact Me</a>
-      </div>
-    </div>
-    <div class="hero-visual">
-      <div class="pframe">
-        <div class="pring"></div>
-        <div class="pring-inner"></div>
-        <img src="PROFILE_SRC" alt="S. Parameshwari" class="pimg">
-        <div class="pbadge">
-          <div class="pbadge-num">7+</div>
-          <div class="pbadge-lbl">Years of<br>Excellence</div>
-        </div>
-      </div>
+<!-- PROFILE PHOTO OVERLAP -->
+<div class="profile-overlap-wrap">
+  <div class="profile-photo-circle">
+    <img src="{profile_src}" alt="S. Parameshwari">
+  </div>
+  <div class="profile-name-block">
+    <div class="profile-name">S. <span class="gold-part">Parameshwari</span></div>
+    <div class="profile-title">Manager &nbsp;|&nbsp; Branch Operations &nbsp;|&nbsp; Axis Bank</div>
+    <div class="profile-pills">
+      <span class="pill">Analytical Thinker</span>
+      <span class="pill">Problem Solver</span>
+      <span class="pill">Team Leader</span>
+      <span class="pill">Results Driven</span>
     </div>
   </div>
-</section>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">7+</div><div class="stat-label">Years Experience</div></div>
+  <div class="stat"><div class="stat-num">3</div><div class="stat-label">Leadership Roles</div></div>
+  <div class="stat"><div class="stat-num">84%</div><div class="stat-label">MCA Score</div></div>
+  <div class="stat"><div class="stat-num">Axis</div><div class="stat-label">Bank</div></div>
+</div>
 
 <!-- ABOUT -->
-<section id="about">
-  <div class="s-label">Who I Am</div>
-  <div class="s-div"></div>
-  <div class="s-title">About <span>Me</span></div>
-  <div class="about-grid">
-    <div class="about-cover">
-      <img src="COVER_SRC" alt="S. Parameshwari Professional">
-      <div class="about-cover-ov"></div>
-    </div>
+<section class="about" id="about">
+  <div class="section-label">Who I Am</div>
+  <div class="section-title">About Me</div>
+  <div class="title-rule"></div>
+  <div class="about-grid fade-up">
     <div class="about-text">
-      <p>A seasoned banking professional with over 7 years of progressive leadership experience in branch operations, customer relationship management, and regulatory compliance. Recognized for transforming operational efficiency and building high-performing teams.</p>
-      <p>As Branch Operations Manager, I lead strategic initiatives that align with organizational goals while maintaining the highest standards of integrity and service excellence. My data-driven approach consistently delivers measurable results.</p>
-      <p>Holding an MCA from Bharathiar University, I combine strong academic foundations with practical banking acumen — bringing analytical depth and human-centered leadership to every challenge.</p>
-      <div class="traits">
-        <div class="trait"><div class="trait-ico">📊</div><div class="trait-t">Analytical Mindset</div><div class="trait-d">Data-driven decisions backed by deep financial analysis</div></div>
-        <div class="trait"><div class="trait-ico">🎯</div><div class="trait-t">Results Oriented</div><div class="trait-d">Consistent delivery of targets and operational excellence</div></div>
-        <div class="trait"><div class="trait-ico">👥</div><div class="trait-t">People Leadership</div><div class="trait-d">Mentoring teams to realize their highest potential</div></div>
-        <div class="trait"><div class="trait-ico">🛡️</div><div class="trait-t">Compliance Focus</div><div class="trait-d">Zero-tolerance approach to regulatory and ethical standards</div></div>
+      <p>I am a <strong>highly analytical banking professional</strong> with a strong foundation in computer applications and financial operations. Currently serving as <strong>Branch Manager at Axis Bank, Avinashi Branch</strong>, I bring a results-oriented approach to every challenge I take on.</p>
+      <p>My career at Axis Bank spans over seven years, progressing from <strong>Assistant Manager to Deputy Manager to Manager</strong> — each step built on a commitment to regulatory excellence, team development, and customer acquisition.</p>
+      <p>Beyond banking, I am a <strong>state-level athlete</strong> — competing in 800m and relay events — which has instilled in me the discipline, teamwork, and resilience I bring to the branch floor every day.</p>
+      <p><em style="color:var(--gold); font-style:normal; font-weight:500;">"Driven by purpose. Committed to excellence."</em></p>
+    </div>
+    <div class="contact-card" id="contact">
+      <h3>Contact Details</h3>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-detail"><span>Phone</span>+91 73970 88613</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div class="contact-detail"><span>Email</span>paramesh.hockey@gmail.com</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div class="contact-detail"><span>Address</span>184/221, Bhavanisagar Road,<br>Ganesapuram, P. Pulampatti,<br>Sathyamangalam (Tk), Erode – 638459</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🏦</div>
+        <div class="contact-detail"><span>Current Branch</span>Axis Bank, Avinashi Branch</div>
       </div>
     </div>
   </div>
 </section>
-
-<!-- STATS BAND -->
-<div class="stats-band s-full">
-  <div class="stats-grid">
-    <div class="stat"><div class="stat-n" data-target="7">0</div><div class="stat-l">Years of Experience</div></div>
-    <div class="stat"><div class="stat-n" data-target="5000">0</div><div class="stat-l">Customers Served</div></div>
-    <div class="stat"><div class="stat-n" data-target="3">0</div><div class="stat-l">Branches Led</div></div>
-    <div class="stat"><div class="stat-n" data-target="25">0</div><div class="stat-l">Team Members Mentored</div></div>
-  </div>
-</div>
 
 <!-- EXPERIENCE -->
-<section id="experience">
-  <div class="s-label">Career Journey</div>
-  <div class="s-div"></div>
-  <div class="s-title">Professional <span>Experience</span></div>
-  <p class="s-sub">A track record of progressive growth and measurable impact across banking operations leadership.</p>
-  <div class="timeline">
-    <div class="tl-item">
-      <div class="tl-card">
-        <div class="tl-role">Assistant Manager</div>
-        <div class="tl-org">Banking Institution · 2019 – 2021</div>
-        <div class="tl-desc">Led daily branch operations ensuring seamless customer service delivery. Supervised teller operations, vault management, and compliance adherence. Initiated process improvements that reduced transaction time by 18%.</div>
-        <div class="tl-tags"><span class="tl-tag">Operations</span><span class="tl-tag">Customer Service</span><span class="tl-tag">Compliance</span></div>
+<section class="experience" id="experience">
+  <div class="section-label">Career Path</div>
+  <div class="section-title">Professional Experience</div>
+  <div class="title-rule"></div>
+  <div class="timeline fade-up">
+    <div class="timeline-item current">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta">
+        <div class="timeline-role">Manager</div>
+        <div class="timeline-company">Axis Bank</div>
+        <div class="timeline-period">2026 – Present</div>
       </div>
-      <div class="tl-side"><div class="tl-year">2019</div></div>
-      <div class="tl-dot"></div>
+      <p class="timeline-desc">Managing end-to-end branch operations at Avinashi Branch, ensuring strict regulatory compliance, optimised workflow efficiency, and maintaining the highest standards of customer service excellence.</p>
     </div>
-    <div class="tl-item">
-      <div class="tl-side"><div class="tl-year">2021</div></div>
-      <div class="tl-card">
-        <div class="tl-role">Deputy Manager</div>
-        <div class="tl-org">Banking Institution · 2021 – 2026</div>
-        <div class="tl-desc">Managed 15+ professionals across multiple departments. Drove CASA growth by 22% YoY. Oversaw credit appraisal, loan processing, and NPA management. Received Best Branch Award in 2023.</div>
-        <div class="tl-tags"><span class="tl-tag">Team Leadership</span><span class="tl-tag">CASA Growth</span><span class="tl-tag">Best Branch Award</span></div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta">
+        <div class="timeline-role">Deputy Manager</div>
+        <div class="timeline-company">Axis Bank</div>
+        <div class="timeline-period">2021 – 2026</div>
       </div>
-      <div class="tl-dot"></div>
+      <p class="timeline-desc">Spearheaded daily branch operations at Annur Branch, ensuring regulatory compliance and service excellence while actively driving growth in retail liabilities and customer acquisition targets.</p>
     </div>
-    <div class="tl-item">
-      <div class="tl-card">
-        <div class="tl-role">Branch Operations Manager</div>
-        <div class="tl-org">Banking Institution · 2026 – Present</div>
-        <div class="tl-desc">Spearheading complete branch transformation — digital adoption, operational efficiency, and customer experience elevation. Overseeing 25+ team members while driving strategic alignment with organizational KPIs.</div>
-        <div class="tl-tags"><span class="tl-tag">Digital Transformation</span><span class="tl-tag">Strategic Planning</span><span class="tl-tag">KPI Management</span></div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-meta">
+        <div class="timeline-role">Assistant Manager</div>
+        <div class="timeline-company">Axis Bank</div>
+        <div class="timeline-period">2019 – 2021</div>
       </div>
-      <div class="tl-side"><div class="tl-year">2026</div></div>
-      <div class="tl-dot"></div>
+      <p class="timeline-desc">Managed end-to-end branch operations at Sathyamangalam Branch, ensuring strict compliance, optimising cash management processes, and delivering high-quality customer service to drive branch efficiency.</p>
     </div>
   </div>
 </section>
 
+<!-- VALUES BANNER -->
+<div class="values-banner fade-up">
+  <div class="value-item"><div class="value-icon">📊</div><div class="value-name">Operations Excellence</div><div class="value-desc">End-to-end branch management with precision</div></div>
+  <div class="value-item"><div class="value-icon">🛡️</div><div class="value-name">Integrity &amp; Commitment</div><div class="value-desc">Regulatory compliance as a non-negotiable standard</div></div>
+  <div class="value-item"><div class="value-icon">🤝</div><div class="value-name">Customer Focus</div><div class="value-desc">Service excellence that builds lasting trust</div></div>
+</div>
+
 <!-- SKILLS -->
-<section id="skills">
-  <div class="s-label">Expertise</div>
-  <div class="s-div"></div>
-  <div class="s-title">Skills & <span>Competencies</span></div>
-  <p class="s-sub">A blend of banking domain expertise and modern technical capabilities.</p>
-  <div class="skills-grid">
-    <div>
-      <div class="sg-title">Banking & Professional Skills</div>
-      <div class="ski"><div class="ski-hd"><span>Banking Operations</span><span class="ski-pct">95%</span></div><div class="ski-bar"><div class="ski-fill" data-width="95"></div></div></div>
-      <div class="ski"><div class="ski-hd"><span>Regulatory Compliance</span><span class="ski-pct">90%</span></div><div class="ski-bar"><div class="ski-fill" data-width="90"></div></div></div>
-      <div class="ski"><div class="ski-hd"><span>Customer Relationship Mgmt</span><span class="ski-pct">92%</span></div><div class="ski-bar"><div class="ski-fill" data-width="92"></div></div></div>
-      <div class="ski"><div class="ski-hd"><span>Team Leadership</span><span class="ski-pct">88%</span></div><div class="ski-bar"><div class="ski-fill" data-width="88"></div></div></div>
-      <div class="ski"><div class="ski-hd"><span>Financial Analysis</span><span class="ski-pct">85%</span></div><div class="ski-bar"><div class="ski-fill" data-width="85"></div></div></div>
-    </div>
-    <div>
-      <div class="sg-title">Technical Skills</div>
-      <div class="chips">
-        <div class="chip"><i class="fab fa-microsoft"></i>Microsoft Office</div>
-        <div class="chip"><i class="fas fa-cloud"></i>Cloud Computing</div>
-        <div class="chip"><i class="fab fa-java"></i>Java</div>
-        <div class="chip"><i class="fas fa-code"></i>C++</div>
-        <div class="chip"><i class="fab fa-html5"></i>HTML</div>
-        <div class="chip"><i class="fas fa-database"></i>Database Mgmt</div>
-        <div class="chip"><i class="fas fa-chart-bar"></i>Excel & Analytics</div>
-        <div class="chip"><i class="fas fa-shield-alt"></i>Cybersecurity Basics</div>
-        <div class="chip"><i class="fas fa-network-wired"></i>Core Banking Systems</div>
-        <div class="chip"><i class="fas fa-file-invoice-dollar"></i>Tally & Accounting SW</div>
-      </div>
-    </div>
+<section class="skills-section" id="skills">
+  <div class="section-label">Competencies</div>
+  <div class="section-title">Skills &amp; Expertise</div>
+  <div class="title-rule"></div>
+  <div class="skills-grid fade-up">
+    <div class="skill-box"><span class="skill-icon">💻</span><span class="skill-name">Visual Basic &amp; .NET</span></div>
+    <div class="skill-box"><span class="skill-icon">🌐</span><span class="skill-name">HTML &amp; Web Basics</span></div>
+    <div class="skill-box"><span class="skill-icon">☕</span><span class="skill-name">C, C++ &amp; Java</span></div>
+    <div class="skill-box"><span class="skill-icon">📋</span><span class="skill-name">Microsoft Office Suite</span></div>
+    <div class="skill-box"><span class="skill-icon">🧾</span><span class="skill-name">Tally ERP9</span></div>
+    <div class="skill-box"><span class="skill-icon">☁️</span><span class="skill-name">Cloud Computing</span></div>
+    <div class="skill-box"><span class="skill-icon">🔤</span><span class="skill-name">Tamil Type Writing</span></div>
+    <div class="skill-box"><span class="skill-icon">🏦</span><span class="skill-name">Branch Operations</span></div>
+    <div class="skill-box"><span class="skill-icon">📈</span><span class="skill-name">Retail Liabilities</span></div>
+    <div class="skill-box"><span class="skill-icon">✅</span><span class="skill-name">Regulatory Compliance</span></div>
+    <div class="skill-box"><span class="skill-icon">👥</span><span class="skill-name">Team Leadership</span></div>
+    <div class="skill-box"><span class="skill-icon">💰</span><span class="skill-name">Cash Management</span></div>
   </div>
 </section>
 
 <!-- EDUCATION -->
-<section id="education">
-  <div class="s-label">Academic Background</div>
-  <div class="s-div"></div>
-  <div class="s-title">Education & <span>Qualifications</span></div>
-  <p class="s-sub">A strong academic foundation that complements real-world banking expertise.</p>
-  <div class="edu-grid">
-    <div class="edu-card"><div class="edu-ico"><i class="fas fa-graduation-cap"></i></div><div class="edu-deg">Master of Computer Applications (MCA)</div><div class="edu-uni">Bharathiar University, Coimbatore</div><div class="edu-yr">Postgraduate · Technology & Management</div></div>
-    <div class="edu-card"><div class="edu-ico"><i class="fas fa-university"></i></div><div class="edu-deg">Bachelor of Computer Applications (BCA)</div><div class="edu-uni">Bharathiar University, Coimbatore</div><div class="edu-yr">Undergraduate · Computer Science</div></div>
-    <div class="edu-card"><div class="edu-ico"><i class="fas fa-school"></i></div><div class="edu-deg">Higher Secondary Certificate (HSC)</div><div class="edu-uni">Tamil Nadu State Board</div><div class="edu-yr">Class XII · Science Stream</div></div>
-    <div class="edu-card"><div class="edu-ico"><i class="fas fa-book-open"></i></div><div class="edu-deg">Secondary School Leaving Certificate (SSLC)</div><div class="edu-uni">Tamil Nadu State Board</div><div class="edu-yr">Class X · All Subjects</div></div>
+<section class="education" id="education">
+  <div class="section-label">Academic Background</div>
+  <div class="section-title">Education</div>
+  <div class="title-rule"></div>
+  <div class="edu-grid fade-up">
+    <div class="edu-card"><div class="edu-degree">Master of Computer Applications</div><div class="edu-institution">Bharathiar University, Coimbatore</div><div class="edu-meta"><span class="edu-year">2016 – 2018</span><span class="edu-score">84%</span></div></div>
+    <div class="edu-card"><div class="edu-degree">Bachelor of Computer Applications</div><div class="edu-institution">Bharathiar University, Coimbatore</div><div class="edu-meta"><span class="edu-year">2013 – 2016</span><span class="edu-score">73%</span></div></div>
+    <div class="edu-card"><div class="edu-degree">HSC (+2)</div><div class="edu-institution">State Board of Tamil Nadu</div><div class="edu-meta"><span class="edu-year">2010 – 2012</span><span class="edu-score">72%</span></div></div>
+    <div class="edu-card"><div class="edu-degree">SSLC (10th)</div><div class="edu-institution">State Board of Tamil Nadu</div><div class="edu-meta"><span class="edu-year">2009 – 2010</span><span class="edu-score">72%</span></div></div>
   </div>
 </section>
 
 <!-- ACHIEVEMENTS -->
-<section id="achievements">
-  <div class="s-label">Honours & Recognition</div>
-  <div class="s-div"></div>
-  <div class="s-title">Achievements & <span>Awards</span></div>
-  <p class="s-sub">Excellence beyond the boardroom — a champion in spirit, sport, and service.</p>
-  <div class="ach-grid">
-    <div class="ach-card"><span class="ach-ico">🏃‍♀️</span><div class="ach-t">State Level Athletics</div><div class="ach-d">Represented at State Level Athletics Championship, demonstrating discipline, perseverance, and competitive excellence in track events.</div></div>
-    <div class="ach-card"><span class="ach-ico">🏑</span><div class="ach-t">Hockey Achievement</div><div class="ach-d">Honored for outstanding performance in Hockey tournaments at the district and state levels, showcasing exceptional teamwork and athletic ability.</div></div>
-    <div class="ach-card"><span class="ach-ico">🏆</span><div class="ach-t">Best Branch Award</div><div class="ach-d">Awarded Best Branch recognition in 2023 for achieving highest customer satisfaction scores, operational targets, and zero compliance deficiencies.</div></div>
-    <div class="ach-card"><span class="ach-ico">⭐</span><div class="ach-t">Star Performer</div><div class="ach-d">Recognized as Star Performer of the Year for consistently exceeding KPIs across CASA mobilization, loan disbursement, and digital onboarding.</div></div>
-    <div class="ach-card"><span class="ach-ico">🎗️</span><div class="ach-t">Leadership Excellence</div><div class="ach-d">Felicitated for exemplary leadership during branch audit and regulatory review — achieving satisfactory rating with zero critical findings.</div></div>
-    <div class="ach-card"><span class="ach-ico">💡</span><div class="ach-t">Innovation Champion</div><div class="ach-d">Spearheaded digital adoption campaign that enrolled 1,200+ customers onto mobile banking in a single quarter — highest in the region.</div></div>
+<section class="achievements">
+  <div class="section-label">Beyond the Office</div>
+  <div class="section-title">Achievements</div>
+  <div class="title-rule"></div>
+  <div class="ach-grid fade-up">
+    <div class="ach-card"><div class="ach-trophy">🏆</div><div><div class="ach-title">Athletic Excellence</div><p class="ach-desc">Secured first place in multiple state-level events including the 800m run. Competed in 400m, 800m, 4×100m, and 4×400m relay events at Bharathiar University inter-collegiate championships.</p></div></div>
+    <div class="ach-card"><div class="ach-trophy">🥇</div><div><div class="ach-title">Hockey Excellence</div><p class="ach-desc">Achieved numerous top finishes across university, state, and national tournaments — including first-place finishes at the inter-collegiate level and the prestigious Chief Minister's Trophy.</p></div></div>
   </div>
 </section>
-
-<!-- GALLERY -->
-<div class="gal-section s-full">
-  <div class="gal-inner">
-    <div class="s-label">Visual Journey</div>
-    <div class="s-div"></div>
-    <div class="s-title">Professional <span>Gallery</span></div>
-    <p class="s-sub">Moments of excellence, leadership, and achievement.</p>
-    <div class="gal-grid">
-      <div class="gal-item">
-        <img src="PROFILE_SRC" alt="Professional Portrait">
-        <div class="gal-ov"><i class="fas fa-expand"></i></div>
-      </div>
-      <div class="gal-item">
-        <img src="COVER_SRC" alt="Professional">
-        <div class="gal-ov"><i class="fas fa-expand"></i></div>
-      </div>
-      <div class="gal-item" style="background:linear-gradient(135deg,var(--navy-mid),var(--navy-light))">
-        <div class="gal-ph"><i class="fas fa-certificate"></i><span>Certificate of Excellence</span></div>
-        <div class="gal-ov"><i class="fas fa-expand"></i></div>
-      </div>
-      <div class="gal-item" style="background:linear-gradient(135deg,var(--navy-light),#1a3060)">
-        <div class="gal-ph"><i class="fas fa-trophy"></i><span>Best Branch Award</span></div>
-        <div class="gal-ov"><i class="fas fa-expand"></i></div>
-      </div>
-      <div class="gal-item" style="background:linear-gradient(135deg,#0d1e3a,var(--navy-mid))">
-        <div class="gal-ph"><i class="fas fa-users"></i><span>Team Events</span></div>
-        <div class="gal-ov"><i class="fas fa-expand"></i></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- TESTIMONIALS -->
-<section id="testimonials">
-  <div class="s-label">What Others Say</div>
-  <div class="s-div"></div>
-  <div class="s-title">Colleague <span>Testimonials</span></div>
-  <p class="s-sub">Recognition from those who have worked alongside and witnessed excellence firsthand.</p>
-  <div class="t-track">
-    <div class="t-wrap" id="tw">
-      <div class="t-card"><div class="t-q">"</div><div class="t-text">Parameshwari leads with an exceptional blend of analytical rigor and genuine empathy. Under her guidance, our branch achieved record CASA mobilization while maintaining flawless compliance standards. A true banking professional.</div><div class="t-auth"><div class="t-av">RK</div><div><div class="t-name">R. Krishnamurthy</div><div class="t-role">Regional Manager, Banking Operations</div></div></div></div>
-      <div class="t-card"><div class="t-q">"</div><div class="t-text">What sets Parameshwari apart is her ability to remain calm under pressure while simultaneously motivating her team to excel. She transformed our branch culture entirely — from reactive to proactively customer-first.</div><div class="t-auth"><div class="t-av">SP</div><div><div class="t-name">S. Prabhakaran</div><div class="t-role">Senior Manager, Credit Division</div></div></div></div>
-      <div class="t-card"><div class="t-q">"</div><div class="t-text">I've worked with many operations leaders, but Parameshwari's grasp of both micro-operations and macro strategy is rare. She identifies process inefficiencies before they become problems and solves them elegantly.</div><div class="t-auth"><div class="t-av">MV</div><div><div class="t-name">M. Vijayalakshmi</div><div class="t-role">Head of Compliance, Zonal Office</div></div></div></div>
-      <div class="t-card"><div class="t-q">"</div><div class="t-text">As a junior officer under her mentorship, I grew more in one year than in my entire previous career. She invests genuinely in people development and creates an environment where everyone wants to perform at their best.</div><div class="t-auth"><div class="t-av">AT</div><div><div class="t-name">A. Thenmozhi</div><div class="t-role">Branch Officer</div></div></div></div>
-    </div>
-  </div>
-  <div class="t-nav">
-    <button class="tnbtn" id="tprev"><i class="fas fa-chevron-left"></i></button>
-    <button class="tnbtn" id="tnext"><i class="fas fa-chevron-right"></i></button>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<div class="s-full" style="background:linear-gradient(135deg,var(--navy-mid),var(--navy));padding:100px 6%">
-  <div style="max-width:1400px;margin:0 auto">
-    <section id="contact" style="padding:0;max-width:100%">
-      <div class="s-label">Get In Touch</div>
-      <div class="s-div"></div>
-      <div class="s-title">Let's <span>Connect</span></div>
-      <p class="s-sub">Whether it's a professional opportunity, collaboration, or simply a conversation — I'm always open.</p>
-      <div class="contact-wrap">
-        <div>
-          <div class="ci"><div class="ci-ico"><i class="fas fa-phone"></i></div><div><div class="ci-lbl">Phone</div><div class="ci-val">+91 98765 43210</div></div></div>
-          <div class="ci"><div class="ci-ico"><i class="fas fa-envelope"></i></div><div><div class="ci-lbl">Email</div><div class="ci-val">parameshwari@example.com</div></div></div>
-          <div class="ci"><div class="ci-ico"><i class="fas fa-map-marker-alt"></i></div><div><div class="ci-lbl">Location</div><div class="ci-val">Coimbatore, Tamil Nadu, India</div></div></div>
-          <div class="ci"><div class="ci-ico"><i class="fab fa-linkedin-in"></i></div><div><div class="ci-lbl">LinkedIn</div><div class="ci-val">linkedin.com/in/s-parameshwari</div></div></div>
-          <div style="margin-top:28px;border-radius:16px;overflow:hidden;border:1px solid var(--glass-border)">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125324.07195917463!2d76.8890534!3d11.0168445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859af2f971cb5%3A0x2fc1c81e183ed282!2sCoimbatore%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1720000000000!5m2!1sen!2sin" width="100%" height="200" style="border:0;display:block;filter:invert(.85) hue-rotate(180deg)" allowfullscreen loading="lazy"></iframe>
-          </div>
-        </div>
-        <div>
-          <div class="cform">
-            <div class="frow">
-              <div class="fg"><label>Your Name</label><input type="text" placeholder="Full Name"></div>
-              <div class="fg"><label>Email</label><input type="email" placeholder="you@example.com"></div>
-            </div>
-            <div class="fg"><label>Subject</label><input type="text" placeholder="Purpose of contact"></div>
-            <div class="fg"><label>Message</label><textarea placeholder="Write your message here..."></textarea></div>
-            <button class="btn-p" style="align-self:flex-start" onclick="sendMsg(this)"><i class="fas fa-paper-plane"></i>Send Message</button>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
-</div>
 
 <!-- FOOTER -->
 <footer>
-  <div class="ft-logo">S. Parameshwari</div>
-  <div class="ft-tag">"Driven by Purpose. Committed to Excellence."</div>
-  <div class="ft-soc">
-    <a href="#" class="soc-btn"><i class="fab fa-linkedin-in"></i></a>
-    <a href="mailto:parameshwari@example.com" class="soc-btn"><i class="fas fa-envelope"></i></a>
-    <a href="tel:+919876543210" class="soc-btn"><i class="fas fa-phone"></i></a>
-    <a href="#" class="soc-btn"><i class="fab fa-whatsapp"></i></a>
-  </div>
-  <div class="ft-copy">© 2026 S. Parameshwari · Banking Professional & Branch Operations Manager · All Rights Reserved</div>
+  <div class="footer-quote"><em>"Driven by purpose."</em> &nbsp;Committed to excellence.</div>
+  <div class="footer-copy">S. Parameshwari &nbsp;·&nbsp; Banking Professional &nbsp;·&nbsp; Tamil Nadu</div>
 </footer>
 
 <script>
-// LOADER
-window.addEventListener('load',()=>{
-  setTimeout(()=>{
-    const l=document.getElementById('loader');
-    l.style.opacity='0';
-    setTimeout(()=>l.style.display='none',500);
-  },2300);
-});
+  const observer = new IntersectionObserver((entries) => {{
+    entries.forEach((entry, i) => {{
+      if (entry.isIntersecting) setTimeout(() => entry.target.classList.add('visible'), i * 80);
+    }});
+  }}, {{ threshold: 0.1 }});
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-// PARTICLES
-const canvas=document.getElementById('pc');
-const ctx=canvas.getContext('2d');
-function rsz(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
-rsz();window.addEventListener('resize',rsz);
-class P{
-  constructor(){this.r()}
-  r(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.s=Math.random()*1.5+.3;this.o=Math.random()*.4+.1;this.vx=(Math.random()-.5)*.3;this.vy=-Math.random()*.5-.1}
-  u(){this.x+=this.vx;this.y+=this.vy;if(this.y<-5||this.x<-5||this.x>canvas.width+5)this.r()}
-  d(){ctx.beginPath();ctx.arc(this.x,this.y,this.s,0,Math.PI*2);ctx.fillStyle=`rgba(201,168,76,${this.o})`;ctx.fill()}
-}
-const ps=Array.from({length:130},()=>new P());
-(function anim(){ctx.clearRect(0,0,canvas.width,canvas.height);ps.forEach(p=>{p.u();p.d()});requestAnimationFrame(anim)})();
-
-// TYPING
-const phrases=['Delivering Operational Excellence.','Building Stronger Branches.','Creating Lasting Impact.','Empowering People. Strengthening Banking.'];
-let pi=0,ci=0,del=false;
-const tel=document.getElementById('typed');
-function type(){
-  const cur=phrases[pi];
-  if(!del){tel.textContent=cur.slice(0,++ci);if(ci===cur.length){del=true;setTimeout(type,1900);return}}
-  else{tel.textContent=cur.slice(0,--ci);if(ci===0){del=false;pi=(pi+1)%phrases.length}}
-  setTimeout(type,del?38:78);
-}
-type();
-
-// MOBILE MENU
-document.getElementById('hbg').addEventListener('click',()=>document.getElementById('mm').classList.toggle('open'));
-function closeMM(){document.getElementById('mm').classList.remove('open')}
-
-// BACK TO TOP
-window.addEventListener('scroll',()=>{
-  document.getElementById('btt').classList.toggle('show',window.scrollY>500);
-  document.getElementById('nav').style.padding=window.scrollY>50?'10px 6%':'16px 6%';
-});
-
-// COUNTERS
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(!e.isIntersecting)return;
-    const el=e.target,t=+el.dataset.target,inc=t/60;
-    let c=0;
-    const tm=setInterval(()=>{c+=inc;if(c>=t){c=t;clearInterval(tm)}el.textContent=Math.floor(c).toLocaleString()+'+';},28);
-    obs.unobserve(el);
-  });
-},{threshold:.5});
-document.querySelectorAll('[data-target]').forEach(el=>obs.observe(el));
-
-// SKILL BARS
-const sobs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(!e.isIntersecting)return;
-    e.target.style.width=e.target.dataset.width+'%';
-    sobs.unobserve(e.target);
-  });
-},{threshold:.3});
-document.querySelectorAll('.ski-fill').forEach(s=>sobs.observe(s));
-
-// TESTIMONIALS
-let ti=0;
-const tw=document.getElementById('tw');
-function sw(){
-  const cw=tw.querySelector('.t-card').offsetWidth+24;
-  tw.style.transform=`translateX(-${ti*cw}px)`;
-}
-document.getElementById('tnext').addEventListener('click',()=>{
-  const max=tw.children.length-(window.innerWidth>1024?3:window.innerWidth>768?2:1);
-  ti=Math.min(ti+1,max);sw();
-});
-document.getElementById('tprev').addEventListener('click',()=>{ti=Math.max(ti-1,0);sw()});
-setInterval(()=>{
-  const max=tw.children.length-(window.innerWidth>1024?3:window.innerWidth>768?2:1);
-  ti=ti>=max?0:ti+1;sw();
-},4200);
-
-// CONTACT
-function sendMsg(b){
-  b.innerHTML='<i class="fas fa-check"></i> Sent!';
-  b.style.background='linear-gradient(135deg,#28a745,#34ce57)';
-  setTimeout(()=>{b.innerHTML='<i class="fas fa-paper-plane"></i> Send Message';b.style.background=''},3000);
-}
-
-// SCROLL ANIMATIONS (simple fade-in)
-const fadeObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';fadeObs.unobserve(e.target)}
-  });
-},{threshold:.1});
-document.querySelectorAll('.tl-card,.edu-card,.ach-card,.trait,.stat,.t-card').forEach(el=>{
-  el.style.opacity='0';el.style.transform='translateY(20px)';
-  el.style.transition='opacity .6s ease, transform .6s ease';
-  fadeObs.observe(el);
-});
+  window.addEventListener('scroll', () => {{
+    let cur = '';
+    document.querySelectorAll('section[id]').forEach(s => {{
+      if (window.scrollY >= s.offsetTop - 80) cur = s.id;
+    }});
+    document.querySelectorAll('.nav-links a').forEach(a => {{
+      a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--gold)' : '';
+    }});
+  }});
 </script>
 </body>
 </html>"""
