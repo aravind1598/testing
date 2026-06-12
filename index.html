@@ -1,3 +1,4 @@
+HTMLEOF'
 <!DOCTYPE html>
 <html lang="ta">
 <head>
@@ -6,199 +7,49 @@
 <title>தமிழ் விடைகள் - AI Reader</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@300;400;600;700&family=Inter:wght@300;400;600;700&display=swap');
-
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   :root {
-    --bg: #0c0c14;
-    --surface: #13131f;
-    --card: #1a1a2e;
-    --border: #2a2a45;
-    --accent: #8b5cf6;
-    --accent2: #a78bfa;
-    --gold: #f59e0b;
-    --text: #e2d9f3;
-    --muted: #7c7a9a;
-    --reading: #c4b5fd;
-    --answered: #10b981;
-    --en-accent: #38bdf8;
+    --bg: #0c0c14; --surface: #13131f; --card: #1a1a2e; --border: #2a2a45;
+    --accent: #8b5cf6; --accent2: #a78bfa; --gold: #f59e0b;
+    --text: #e2d9f3; --muted: #7c7a9a; --reading: #c4b5fd;
+    --answered: #10b981; --en-accent: #38bdf8;
   }
-
-  body {
-    font-family: 'Noto Sans Tamil', 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    line-height: 1.8;
-  }
-
-  /* TOP BAR */
-  .topbar {
-    background: linear-gradient(90deg, #0f0a20, #1e1040, #0f0a20);
-    border-bottom: 1px solid var(--accent);
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 200;
-    gap: 10px;
-  }
+  body { font-family: 'Noto Sans Tamil', 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.8; }
+  .topbar { background: linear-gradient(90deg, #0f0a20, #1e1040, #0f0a20); border-bottom: 1px solid var(--accent); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 200; gap: 10px; }
   .topbar h1 { font-size: 0.92rem; color: var(--accent2); font-weight: 600; flex-shrink: 0; }
   .topbar-right { display: flex; align-items: center; gap: 8px; }
   .topbar .stats { font-size: 0.75rem; color: var(--muted); }
-
-  /* LANG TOGGLE */
-  .lang-toggle {
-    display: flex;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    overflow: hidden;
-    flex-shrink: 0;
-  }
-  .lang-btn {
-    padding: 5px 12px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    background: transparent;
-    color: var(--muted);
-    font-family: inherit;
-    transition: all 0.2s;
-    letter-spacing: 0.3px;
-  }
+  .lang-toggle { display: flex; background: var(--card); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; flex-shrink: 0; }
+  .lang-btn { padding: 5px 12px; font-size: 0.75rem; font-weight: 600; cursor: pointer; border: none; background: transparent; color: var(--muted); font-family: inherit; transition: all 0.2s; letter-spacing: 0.3px; }
   .lang-btn.active { background: var(--accent); color: white; }
   .lang-btn:hover:not(.active) { color: var(--accent2); }
-
-  .progress-bar {
-    height: 3px;
-    background: var(--border);
-    position: sticky;
-    top: 51px;
-    z-index: 199;
-  }
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--gold));
-    transition: width 0.4s ease;
-    width: 0%;
-  }
-
-  /* UNIT TABS */
-  .unit-tabs {
-    display: flex;
-    gap: 8px;
-    padding: 12px 14px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
+  .progress-bar { height: 3px; background: var(--border); position: sticky; top: 51px; z-index: 199; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--gold)); transition: width 0.4s ease; width: 0%; }
+  .unit-tabs { display: flex; gap: 8px; padding: 12px 14px; background: var(--surface); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; }
   .unit-tabs::-webkit-scrollbar { display: none; }
-  .tab-btn {
-    background: var(--card);
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 7px 14px;
-    border-radius: 20px;
-    font-size: 0.78rem;
-    cursor: pointer;
-    white-space: nowrap;
-    font-family: inherit;
-    transition: all 0.2s;
-    flex-shrink: 0;
-  }
+  .tab-btn { background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 7px 14px; border-radius: 20px; font-size: 0.78rem; cursor: pointer; white-space: nowrap; font-family: inherit; transition: all 0.2s; flex-shrink: 0; }
   .tab-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
   .tab-btn:hover:not(.active) { border-color: var(--accent2); color: var(--accent2); }
-
-  /* FILTER ROW */
-  .filter-row {
-    display: flex;
-    gap: 8px;
-    padding: 9px 14px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    align-items: center;
-  }
-  .filter-btn {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 5px 12px;
-    border-radius: 14px;
-    font-size: 0.75rem;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all 0.2s;
-  }
+  .filter-row { display: flex; gap: 8px; padding: 9px 14px; background: var(--surface); border-bottom: 1px solid var(--border); align-items: center; flex-wrap: wrap; }
+  .filter-btn { background: transparent; border: 1px solid var(--border); color: var(--muted); padding: 5px 12px; border-radius: 14px; font-size: 0.75rem; cursor: pointer; font-family: inherit; transition: all 0.2s; }
   .filter-btn.active { background: var(--gold); color: #111; border-color: var(--gold); font-weight: 600; }
   .filter-btn:hover:not(.active) { border-color: var(--gold); color: var(--gold); }
   .filter-label { font-size: 0.75rem; color: var(--muted); margin-right: 4px; }
-
-  /* MAIN AREA */
   .main { max-width: 760px; margin: 0 auto; padding: 14px; }
-
-  /* READER CARD */
-  .reader-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    margin-bottom: 10px;
-    transition: border-color 0.3s;
-  }
+  .reader-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; margin-bottom: 10px; transition: border-color 0.3s; }
   .reader-card.state-reading { border-color: var(--accent); }
   .reader-card.state-answered { border-color: var(--answered); }
   .reader-card.type-16 { border-left: 4px solid var(--gold); }
   .reader-card.type-2 { border-left: 4px solid var(--accent); }
-
-  /* QUESTION HEADER */
-  .q-header {
-    padding: 13px 14px;
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    cursor: pointer;
-  }
-  .q-meta {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    flex-shrink: 0;
-    align-items: center;
-  }
-  .q-num {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.78rem;
-    font-weight: 700;
-  }
+  .q-header { padding: 13px 14px; display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
+  .q-meta { display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; align-items: center; }
+  .q-num { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; }
   .type-2 .q-num { background: var(--accent); color: white; }
   .type-16 .q-num { background: var(--gold); color: #111; }
-
-  .mark-badge {
-    font-size: 0.6rem;
-    padding: 2px 6px;
-    border-radius: 8px;
-    font-weight: 600;
-  }
+  .mark-badge { font-size: 0.6rem; padding: 2px 6px; border-radius: 8px; font-weight: 600; }
   .type-2 .mark-badge { background: rgba(139,92,246,0.2); color: var(--accent2); }
   .type-16 .mark-badge { background: rgba(245,158,11,0.2); color: var(--gold); }
-
-  .q-text {
-    flex: 1;
-    font-size: 0.92rem;
-    color: var(--text);
-    padding-top: 5px;
-    font-weight: 500;
-  }
+  .q-text { flex: 1; font-size: 0.92rem; color: var(--text); padding-top: 5px; font-weight: 500; }
   .q-text .en { font-family: 'Inter', sans-serif; font-size: 0.82rem; color: var(--en-accent); margin-top: 3px; display: none; }
   body.lang-en .q-text .ta { display: none; }
   body.lang-en .q-text .en { display: block; }
@@ -206,297 +57,76 @@
   body.lang-ta .q-text .en { display: none; }
   body.lang-both .q-text .en { display: block; }
   body.lang-both .q-text .ta { display: block; }
-
-  .q-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    flex-shrink: 0;
-    margin-left: 6px;
-  }
-
-  /* SPEAK BUTTON */
-  .speak-btn {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    border: 1px solid var(--accent);
-    background: rgba(139,92,246,0.15);
-    color: var(--accent2);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.95rem;
-    transition: all 0.2s;
-    flex-shrink: 0;
-  }
+  .q-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; margin-left: 6px; }
+  .speak-btn { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--accent); background: rgba(139,92,246,0.15); color: var(--accent2); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; transition: all 0.2s; flex-shrink: 0; }
   .speak-btn:hover { background: var(--accent); color: white; }
   .speak-btn.speaking { background: var(--accent); color: white; animation: pulse 1s infinite; }
   @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
-
-  .status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--border);
-    margin: auto;
-    margin-top: 2px;
-    transition: background 0.3s;
-  }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); margin: auto; margin-top: 2px; transition: background 0.3s; }
   .state-reading .status-dot { background: var(--accent); }
   .state-answered .status-dot { background: var(--answered); }
-
-  /* ANSWER AREA */
-  .answer-area {
-    padding: 0 14px 14px 54px;
-    display: none;
-    border-top: 1px solid var(--border);
-    animation: slideDown 0.25s ease;
-  }
+  .answer-area { padding: 0 14px 14px 54px; display: none; border-top: 1px solid var(--border); animation: slideDown 0.25s ease; }
   .answer-area.show { display: block; }
   @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
-
-  /* Answer language switching */
   .ans-ta { display: block; }
   .ans-en { display: none; font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #bae6fd; }
   body.lang-en .ans-ta { display: none; }
   body.lang-en .ans-en { display: block; }
   body.lang-both .ans-ta { display: block; }
-  body.lang-both .ans-en { display: block; }
-  body.lang-both .ans-en { border-top: 1px solid rgba(56,189,248,0.2); margin-top: 10px; padding-top: 10px; }
-
-  .answer-toggle {
-    width: 100%;
-    padding: 9px 14px;
-    background: transparent;
-    border: none;
-    border-top: 1px solid var(--border);
-    color: var(--muted);
-    font-family: inherit;
-    font-size: 0.8rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    transition: all 0.2s;
-  }
+  body.lang-both .ans-en { display: block; border-top: 1px solid rgba(56,189,248,0.2); margin-top: 10px; padding-top: 10px; }
+  .answer-toggle { width: 100%; padding: 9px 14px; background: transparent; border: none; border-top: 1px solid var(--border); color: var(--muted); font-family: inherit; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s; }
   .answer-toggle:hover { background: rgba(139,92,246,0.08); color: var(--accent2); }
   .answer-toggle .arrow { transition: transform 0.2s; }
   .answer-area.show ~ .answer-toggle .arrow { transform: rotate(180deg); }
-
   .answer-area p { margin-bottom: 8px; font-size: 0.88rem; color: #c4b5fd; }
   .answer-area strong { color: #e9d5ff; }
   .answer-area ul { padding-left: 18px; }
   .answer-area ul li { margin-bottom: 5px; font-size: 0.88rem; }
   .answer-area ol { padding-left: 18px; }
   .answer-area ol li { margin-bottom: 5px; font-size: 0.88rem; }
-
-  /* READ ALOUD ANSWER BUTTON */
-  .read-answer-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: 12px;
-    padding: 6px 13px;
-    border-radius: 20px;
-    border: 1px solid var(--answered);
-    background: rgba(16,185,129,0.1);
-    color: var(--answered);
-    cursor: pointer;
-    font-size: 0.75rem;
-    font-family: inherit;
-    transition: all 0.2s;
-  }
+  .read-answer-btn { display: inline-flex; align-items: center; gap: 5px; margin-top: 12px; padding: 6px 13px; border-radius: 20px; border: 1px solid var(--answered); background: rgba(16,185,129,0.1); color: var(--answered); cursor: pointer; font-size: 0.75rem; font-family: inherit; transition: all 0.2s; }
   .read-answer-btn:hover { background: rgba(16,185,129,0.2); }
   .read-answer-btn.speaking { animation: pulse 1s infinite; }
-
-  /* MARK DONE */
-  .mark-done-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: 10px;
-    margin-left: 8px;
-    padding: 6px 13px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    font-size: 0.75rem;
-    font-family: inherit;
-    transition: all 0.2s;
-  }
+  .mark-done-btn { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; margin-left: 8px; padding: 6px 13px; border-radius: 20px; border: 1px solid var(--border); background: transparent; color: var(--muted); cursor: pointer; font-size: 0.75rem; font-family: inherit; transition: all 0.2s; }
   .mark-done-btn:hover { border-color: var(--answered); color: var(--answered); }
   .mark-done-btn.done { background: rgba(16,185,129,0.15); border-color: var(--answered); color: var(--answered); }
-
-  /* SPEAKING WAVE */
-  .wave-indicator {
-    display: none;
-    align-items: center;
-    gap: 3px;
-    padding: 4px 0;
-  }
+  .wave-indicator { display: none; align-items: center; gap: 3px; padding: 4px 0; }
   .wave-indicator.active { display: flex; }
-  .wave-bar {
-    width: 3px;
-    height: 11px;
-    background: var(--accent);
-    border-radius: 2px;
-    animation: wave 0.8s ease infinite;
-  }
+  .wave-bar { width: 3px; height: 11px; background: var(--accent); border-radius: 2px; animation: wave 0.8s ease infinite; }
   .wave-bar:nth-child(2) { animation-delay: 0.1s; }
   .wave-bar:nth-child(3) { animation-delay: 0.2s; }
   .wave-bar:nth-child(4) { animation-delay: 0.3s; }
   @keyframes wave { 0%,100% { transform: scaleY(0.5); opacity: 0.5; } 50% { transform: scaleY(1.4); opacity: 1; } }
-
-  /* SECTION LABEL */
-  .section-label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 18px 0 10px;
-  }
-  .section-label span {
-    font-size: 0.72rem;
-    font-weight: 700;
-    padding: 4px 13px;
-    border-radius: 20px;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-  }
+  .section-label { display: flex; align-items: center; gap: 10px; margin: 18px 0 10px; }
+  .section-label span { font-size: 0.72rem; font-weight: 700; padding: 4px 13px; border-radius: 20px; letter-spacing: 0.5px; white-space: nowrap; }
   .section-label.type-2 span { background: rgba(139,92,246,0.2); color: var(--accent2); border: 1px solid var(--accent); }
   .section-label.type-16 span { background: rgba(245,158,11,0.15); color: var(--gold); border: 1px solid var(--gold); }
   .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-  /* UNIT TITLE */
-  .unit-title {
-    background: linear-gradient(135deg, #1a1040, #0f1630);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 18px;
-    margin: 0 0 14px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .unit-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, var(--accent), #7c3aed);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    flex-shrink: 0;
-  }
+  .unit-title { background: linear-gradient(135deg, #1a1040, #0f1630); border: 1px solid var(--border); border-radius: 12px; padding: 14px 18px; margin: 0 0 14px; display: flex; align-items: center; gap: 12px; }
+  .unit-icon { width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), #7c3aed); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
   .unit-title h2 { font-size: 0.72rem; color: var(--muted); margin-bottom: 2px; }
   .unit-title h3 { font-size: 0.95rem; color: var(--reading); }
   .unit-title .unit-title-en { font-size: 0.75rem; color: var(--en-accent); font-family: 'Inter', sans-serif; margin-top: 2px; display: none; }
   body.lang-en .unit-title h3 { display: none; }
   body.lang-en .unit-title .unit-title-en { display: block; }
   body.lang-both .unit-title .unit-title-en { display: block; }
-
-  /* EMPTY STATE */
-  .empty-state {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--muted);
-  }
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); }
   .empty-state .icon { font-size: 3rem; margin-bottom: 12px; }
-
-  /* BOTTOM HINT */
-  .hint-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(13,13,20,0.95);
-    border-top: 1px solid var(--border);
-    padding: 9px 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    font-size: 0.72rem;
-    color: var(--muted);
-    backdrop-filter: blur(8px);
-  }
+  .hint-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(13,13,20,0.95); border-top: 1px solid var(--border); padding: 9px 14px; display: flex; align-items: center; justify-content: center; gap: 18px; font-size: 0.72rem; color: var(--muted); backdrop-filter: blur(8px); }
   .hint-bar span { display: flex; align-items: center; gap: 4px; }
-
   .content-area { padding-bottom: 60px; }
-
-  /* SEARCH */
-  .search-wrap {
-    padding: 9px 14px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-  }
-  .search-input {
-    width: 100%;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 8px 13px;
-    color: var(--text);
-    font-family: inherit;
-    font-size: 0.85rem;
-    outline: none;
-    transition: border-color 0.2s;
-  }
+  .search-wrap { padding: 9px 14px; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .search-input { width: 100%; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 8px 13px; color: var(--text); font-family: inherit; font-size: 0.85rem; outline: none; transition: border-color 0.2s; }
   .search-input:focus { border-color: var(--accent); }
   .search-input::placeholder { color: var(--muted); }
-
-  /* CONTROLS */
-  .controls-bar {
-    display: flex;
-    gap: 7px;
-    padding: 9px 14px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-  /* SCORE BADGE */
-  .score-area {
-    padding: 10px 14px;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    gap: 14px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
+  .score-area { padding: 10px 14px; background: var(--surface); border-bottom: 1px solid var(--border); display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
   .score-pill { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; }
   .score-num { font-size: 1.05rem; font-weight: 700; color: var(--accent2); }
   .score-label { color: var(--muted); }
-
-  .ctrl-btn {
-    background: var(--card);
-    border: 1px solid var(--border);
-    color: var(--muted);
-    padding: 5px 11px;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    cursor: pointer;
-    font-family: inherit;
-    transition: all 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
+  .ctrl-btn { background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 5px 11px; border-radius: 8px; font-size: 0.75rem; cursor: pointer; font-family: inherit; transition: all 0.2s; display: flex; align-items: center; gap: 4px; }
   .ctrl-btn:hover { border-color: var(--accent2); color: var(--accent2); }
   .ctrl-btn.danger:hover { border-color: #ef4444; color: #ef4444; }
-
-  @media (max-width: 480px) {
-    .q-text { font-size: 0.84rem; }
-    .topbar h1 { font-size: 0.8rem; }
-    .hint-bar { gap: 12px; font-size: 0.68rem; }
-  }
+  @media (max-width: 480px) { .q-text { font-size: 0.84rem; } .topbar h1 { font-size: 0.8rem; } .hint-bar { gap: 12px; font-size: 0.68rem; } }
 </style>
 </head>
 <body class="lang-ta">
@@ -513,321 +143,383 @@
   </div>
 </div>
 <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-
-<!-- UNIT TABS -->
 <div class="unit-tabs" id="unitTabs"></div>
-
-<!-- SEARCH -->
 <div class="search-wrap">
   <input type="text" class="search-input" id="searchInput" placeholder="🔍 கேள்வி தேடுங்கள் / Search questions..." oninput="filterCards()">
 </div>
-
-<!-- FILTERS -->
 <div class="filter-row">
   <span class="filter-label">மதிப்பெண்:</span>
   <button class="filter-btn active" onclick="setFilter('all', this)">அனைத்தும்</button>
   <button class="filter-btn" onclick="setFilter('2', this)">2 மதிப்பெண்</button>
   <button class="filter-btn" onclick="setFilter('16', this)">16 மதிப்பெண்</button>
 </div>
-
-<!-- SCORE + CONTROLS -->
 <div class="score-area">
-  <div class="score-pill">
-    <div class="score-num" id="doneCount">0</div>
-    <div class="score-label">படித்தது</div>
-  </div>
-  <div class="score-pill">
-    <div class="score-num" id="totalCount">0</div>
-    <div class="score-label">மொத்தம்</div>
-  </div>
+  <div class="score-pill"><div class="score-num" id="doneCount">0</div><div class="score-label">படித்தது</div></div>
+  <div class="score-pill"><div class="score-num" id="totalCount">0</div><div class="score-label">மொத்தம்</div></div>
   <div style="margin-left: auto; display: flex; gap: 7px; flex-wrap: wrap;">
     <button class="ctrl-btn" onclick="expandAll()">📖 திற</button>
     <button class="ctrl-btn" onclick="collapseAll()">📕 மூடு</button>
     <button class="ctrl-btn danger" onclick="resetDone()">🔄 மீட்டமை</button>
   </div>
 </div>
-
-<!-- MAIN CONTENT -->
 <div class="main content-area" id="mainContent"></div>
-
-<!-- BOTTOM HINT -->
 <div class="hint-bar">
-  <span>🔊 கேளு</span>
-  <span>👁️ விடை காண்</span>
-  <span>✅ குறி</span>
-  <span>🌐 மொழி மாற்று</span>
+  <span>🔊 கேளு</span><span>👁️ விடை காண்</span><span>✅ குறி</span><span>🌐 மொழி மாற்று</span>
 </div>
 
 <script>
-// ─────────────────────────────────────────────
-// DATA — Tamil + English
-// ─────────────────────────────────────────────
 const data = {
   units: [
     {
-      id: 'u1',
-      label: 'அலகு I',
-      labelEn: 'Unit I',
-      title: 'நெசவு மற்றும் பானை தொழில்நுட்பம்',
-      titleEn: 'Weaving & Pottery Technology',
-      icon: '🏺',
+      id: 'u1', label: 'அலகு I', labelEn: 'Unit I',
+      title: 'நெசவு மற்றும் பானை தொழில்நுட்பம்', titleEn: 'Weaving & Pottery Technology', icon: '🏺',
       questions: [
-        {
-          type: 2,
-          q: 'பருத்திப்பெண்டீர் யார்?',
-          qEn: 'Who are Paruththippendir?',
+        { type: 2, q: 'பருத்திப்பெண்டீர் யார்?', qEn: 'Who are Paruththippendir?',
           a: '<p><strong>பருத்திப்பெண்டீர்</strong> என்பவர் சங்க கால நூல்களில் குறிப்பிடப்படும் <strong>பெண் நெசவாளர்கள்</strong> ஆவர். இவர்கள் பருத்தியை நூலாக நூற்று ஆடை நெய்யும் பணியை செய்தனர்.</p>',
-          aEn: '<p><strong>Paruththippendir</strong> refers to the <strong>women weavers</strong> mentioned in Sangam literature. They spun cotton into thread and wove it into cloth, playing a key role in the textile industry of ancient Tamilnadu.</p>'
-        },
-        {
-          type: 2,
-          q: 'பா அல்லது பாவோட்டுதல் என்றால் என்ன?',
-          qEn: 'What is "Paa" or "Paavottuthal"?',
+          aEn: '<p><strong>Paruththippendir</strong> refers to the <strong>women weavers</strong> mentioned in Sangam literature. They spun cotton into thread and wove it into cloth.</p>' },
+        { type: 2, q: 'பா அல்லது பாவோட்டுதல் என்றால் என்ன?', qEn: 'What is "Paa" or "Paavottuthal"?',
           a: '<p><strong>பா</strong> என்பது நெசவின் ஓர் அடிப்படை நுட்பம். நூல்களை ஒழுங்காக வரிசைப்படுத்தி நெசவுத் தறியில் கட்டும் முறையே <strong>பாவோட்டுதல்</strong> எனப்படும்.</p>',
-          aEn: '<p><strong>Paa</strong> is a basic technique in weaving. The process of systematically arranging threads and setting them on the loom is called <strong>Paavottuthal</strong>. It determines the structure and pattern of the cloth.</p>'
-        },
-        {
-          type: 2,
-          q: 'நெசவின் வகைகள் யாவை?',
-          qEn: 'What are the types of weaving?',
+          aEn: '<p><strong>Paa</strong> is a basic weaving technique. Arranging threads systematically on the loom is called <strong>Paavottuthal</strong>. It determines the structure and pattern of the cloth.</p>' },
+        { type: 2, q: 'நெசவின் வகைகள் யாவை?', qEn: 'What are the types of weaving?',
           a: '<ul><li><strong>மேல் நெசவு</strong> – கைத்தறி நெசவு</li><li><strong>கீழ் நெசவு</strong> – காலால் இயக்கும் தறி நெசவு</li><li><strong>கம்பளி நெசவு</strong> – ஆட்டு உரோமம் கொண்டு நெய்தல்</li><li><strong>பட்டு நெசவு</strong> – பட்டுப் புழு நூல் கொண்டு நெய்தல்</li></ul>',
-          aEn: '<ul><li><strong>Upper weaving</strong> – Hand loom weaving</li><li><strong>Lower weaving</strong> – Foot-operated loom weaving</li><li><strong>Wool weaving</strong> – Using sheep wool</li><li><strong>Silk weaving</strong> – Using silkworm thread</li></ul>'
-        },
-        {
-          type: 2,
-          q: 'நெசவுத்தறியின் பகுதிகளில் ஏதேனும் இரண்டின் பெயர்களை எழுதுக.',
-          qEn: 'Write the names of any two parts of the weaving loom.',
-          a: '<ul><li><strong>ஆப்பு (Reed)</strong> – நூல்களை ஒழுங்குபடுத்தும் பகுதி</li><li><strong>தரி (Shuttle)</strong> – கிடையிலாக நூலை கொண்டு செல்லும் பகுதி</li><li><strong>கழுத்தாணி</strong> – நூல்களை நிலைப்படுத்தும் பகுதி</li></ul>',
-          aEn: '<ul><li><strong>Reed (Aappu)</strong> – Part that organizes the threads in order</li><li><strong>Shuttle (Thari)</strong> – Part that carries the thread horizontally</li><li><strong>Kazhutthaani</strong> – Part that stabilizes the threads</li></ul>'
-        },
-        {
-          type: 2,
-          q: 'சங்க காலத்தில் நெசவு செய்த ஆடைகளை எவ்வாறு விற்றனர்?',
-          qEn: 'How were woven garments sold during the Sangam period?',
+          aEn: '<ul><li><strong>Upper weaving</strong> – Hand loom weaving</li><li><strong>Lower weaving</strong> – Foot-operated loom</li><li><strong>Wool weaving</strong> – Using sheep wool</li><li><strong>Silk weaving</strong> – Using silkworm thread</li></ul>' },
+        { type: 2, q: 'நெசவுத்தறியின் பகுதிகளில் ஏதேனும் இரண்டின் பெயர்களை எழுதுக.', qEn: 'Write the names of any two parts of the weaving loom.',
+          a: '<ul><li><strong>ஆப்பு (Reed)</strong> – நூல்களை ஒழுங்குபடுத்தும் பகுதி</li><li><strong>தரி (Shuttle)</strong> – கிடையிலாக நூலை கொண்டு செல்லும் பகுதி</li></ul>',
+          aEn: '<ul><li><strong>Reed (Aappu)</strong> – Part that organizes threads</li><li><strong>Shuttle (Thari)</strong> – Part that carries thread horizontally</li></ul>' },
+        { type: 2, q: 'சங்க காலத்தில் நெசவு செய்த ஆடைகளை எவ்வாறு விற்றனர்?', qEn: 'How were woven garments sold during the Sangam period?',
           a: '<p>சங்க காலத்தில் நெசவு ஆடைகளை <strong>சந்தைகளில் (பேட்டை)</strong> விற்பனை செய்தனர். மேலும் <strong>ஏற்றுமதி</strong> மூலம் வெளிநாடுகளுக்கும் அனுப்பினர்.</p>',
-          aEn: '<p>During the Sangam period, woven garments were sold in <strong>markets (Pettai)</strong>. They were also <strong>exported</strong> to foreign countries. Merchants bought them and transported them over long distances for sale.</p>'
-        },
-        {
-          type: 2,
-          q: 'எங்கு சாயத்தொட்டிகள் கண்டெடுக்கப்பட்டன?',
-          qEn: 'Where were dyeing vats discovered?',
+          aEn: '<p>Woven garments were sold in <strong>markets (Pettai)</strong> and also <strong>exported</strong> to foreign countries via merchant traders.</p>' },
+        { type: 2, q: 'எங்கு சாயத்தொட்டிகள் கண்டெடுக்கப்பட்டன?', qEn: 'Where were dyeing vats discovered?',
           a: '<p>சாயத்தொட்டிகள் <strong>அரிக்கமேடு</strong> (புதுச்சேரி அருகே) என்னும் இடத்தில் கண்டெடுக்கப்பட்டன. இங்கு உரோமானிய வணிகர்களுடன் தமிழர்கள் வணிகம் செய்ததற்கான சான்றுகளும் கிடைத்துள்ளன.</p>',
-          aEn: '<p>Dyeing vats were discovered at <strong>Arikamedu</strong> (near Puducherry). Evidence of trade between Tamils and Roman merchants was also found here, making it a significant archaeological site.</p>'
-        },
-        {
-          type: 2,
-          q: 'மதுரையில் எவ்வகை மட்பாண்டங்கள் சிறந்தவையாகக் கருதப்படுகின்றது?',
-          qEn: 'What type of pottery is considered finest in Madurai?',
-          a: '<p>மதுரையில் <strong>கருப்பு மற்றும் சிவப்பு மட்பாண்டங்கள் (Black and Red Ware)</strong> சிறந்தவையாகக் கருதப்படுகின்றன. இவை மிகவும் திண்மையாகவும் அழகாகவும் செய்யப்பட்டு வெளிநாடுகளுக்கும் ஏற்றுமதி செய்யப்பட்டன.</p>',
-          aEn: '<p>In Madurai, <strong>Black and Red Ware pottery</strong> is considered the finest. These were made with great precision and beauty, and were also exported to foreign countries.</p>'
-        },
-        {
-          type: 2,
-          q: 'வேலூர் கரிகிரி மட்பாண்டங்களின் சிறப்பு என்ன?',
-          qEn: 'What is special about Vellore Karigiri pottery?',
+          aEn: '<p>Dyeing vats were discovered at <strong>Arikamedu</strong> (near Puducherry), along with evidence of trade between Tamils and Roman merchants.</p>' },
+        { type: 2, q: 'மதுரையில் எவ்வகை மட்பாண்டங்கள் சிறந்தவையாகக் கருதப்படுகின்றது?', qEn: 'What type of pottery is considered finest in Madurai?',
+          a: '<p>மதுரையில் <strong>கருப்பு மற்றும் சிவப்பு மட்பாண்டங்கள் (Black and Red Ware)</strong> சிறந்தவையாகக் கருதப்படுகின்றன. இவை மிகவும் திண்மையாகவும் அழகாகவும் செய்யப்பட்டன.</p>',
+          aEn: '<p>In Madurai, <strong>Black and Red Ware pottery</strong> is considered the finest – made with great precision and beauty, also exported to foreign countries.</p>' },
+        { type: 2, q: 'வேலூர் கரிகிரி மட்பாண்டங்களின் சிறப்பு என்ன?', qEn: 'What is special about Vellore Karigiri pottery?',
           a: '<p>வேலூர் கரிகிரி மட்பாண்டங்கள் <strong>மிகவும் மெல்லியதாகவும் ஒளி ஊடுருவக்கூடியதாகவும்</strong> (egg-shell thin) இருக்கும். இவற்றின் தயாரிப்பு நுட்பம் மிகவும் தனித்துவமானது.</p>',
-          aEn: '<p>Vellore Karigiri pottery is known for being <strong>extremely thin and translucent</strong> (egg-shell thin). Their manufacturing technique is very unique and distinctive among ancient Indian pottery traditions.</p>'
-        },
-        {
-          type: 2,
-          q: 'மட்பாண்டங்களின் இரு பிரிவுகள் என்ன?',
-          qEn: 'What are the two categories of pottery?',
+          aEn: '<p>Vellore Karigiri pottery is extremely <strong>thin and translucent</strong> (egg-shell thin), with a very unique manufacturing technique.</p>' },
+        { type: 2, q: 'மட்பாண்டங்களின் இரு பிரிவுகள் என்ன?', qEn: 'What are the two categories of pottery?',
           a: '<ul><li><strong>பளபளப்பான மட்பாண்டங்கள் (Polished Ware)</strong> – மேற்பரப்பை மெருகேற்றி தயாரிக்கப்படும்</li><li><strong>மெருகூட்டப்படாத மட்பாண்டங்கள் (Unpolished Ware)</strong> – இயற்கையான முரடான தோற்றமுடையவை</li></ul>',
-          aEn: '<ul><li><strong>Polished Ware</strong> – Made by burnishing the surface to a shine</li><li><strong>Unpolished Ware</strong> – Natural rough appearance, used for everyday purposes</li></ul>'
-        },
-        {
-          type: 2,
-          q: 'மட்பாண்டங்களில் காணப்படும் குறியீடுகள் யாவை?',
-          qEn: 'What symbols are found on pottery?',
-          a: '<p>மட்பாண்டங்களில் <strong>தமிழி எழுத்துகள், சின்னங்கள், வடிவங்கள்</strong> ஆகியவை காணப்படுகின்றன. இவை உரிமையாளர் அல்லது தயாரிப்பாளரை குறிக்கும் <strong>குயவன் குறியீடுகள்</strong> (potter\'s marks) ஆகும்.</p>',
-          aEn: '<p>Pottery contains <strong>Tamil Brahmi letters, symbols, and designs</strong>. These are known as <strong>potter\'s marks</strong> — identifying marks of the owner or the maker of the vessel.</p>'
-        },
-        {
-          type: 16,
-          q: 'சங்க காலத்தில் நெசவுத் தொழில் எப்படி இருந்தது? ஆடைகள் தயாரிப்பதில் உள்ள பல்வேறு படிநிலைகளை விரிவாக விளக்கவும்.',
-          qEn: 'How was the weaving industry during the Sangam period? Explain the various stages in garment production.',
+          aEn: '<ul><li><strong>Polished Ware</strong> – Burnished surface to a shine</li><li><strong>Unpolished Ware</strong> – Natural rough appearance for everyday use</li></ul>' },
+        { type: 2, q: 'மட்பாண்டங்களில் காணப்படும் குறியீடுகள் யாவை?', qEn: 'What symbols are found on pottery?',
+          a: '<p>மட்பாண்டங்களில் <strong>தமிழி எழுத்துகள், சின்னங்கள், வடிவங்கள்</strong> ஆகியவை காணப்படுகின்றன. இவை <strong>குயவன் குறியீடுகள்</strong> (potter\'s marks) ஆகும்.</p>',
+          aEn: '<p>Pottery contains <strong>Tamil Brahmi letters, symbols, and designs</strong> known as <strong>potter\'s marks</strong> – identifying marks of the maker.</p>' },
+        { type: 2, q: 'மண்பாண்டங்களில் துண்கலைப் படைப்பு என்றால் என்ன?', qEn: 'What is the microbead technique in pottery?',
+          a: '<p><strong>துண்கலைப் படைப்பு</strong> என்பது மட்பாண்டங்களில் மிகவும் நுணுக்கமான வேலைப்பாடுகள் செய்யும் கலை நுட்பம். இந்த முறையில் நுட்பமான வடிவங்களை களிமண்ணில் பொறிக்கின்றனர்.</p>',
+          aEn: '<p>The <strong>microbead technique</strong> is a fine craft technique of making intricate patterns on pottery. Delicate designs are etched into clay using special tools.</p>' },
+        { type: 2, q: 'கல்விக் கலையில் மண்பாண்டங்களின் பயன்கள் யாவை?', qEn: 'What are the uses of pottery in the art of medicine?',
+          a: '<ul><li>மருந்துகளை சேமிக்க பயன்படுத்தினர்</li><li>நீரை சுத்திகரித்து சேமிக்க பயன்பட்டன</li><li>மூலிகைகளை அரைக்கவும் கலக்கவும் பயன்பட்டன</li><li>சிறப்பு சிகிச்சை பாண்டங்கள் தயாரிக்கப்பட்டன</li></ul>',
+          aEn: '<ul><li>Used to store medicines and herbal preparations</li><li>Used to purify and store water</li><li>Used to grind and mix herbs</li><li>Special therapeutic vessels were made</li></ul>' },
+        { type: 2, q: 'மருத்துவக் கலையில் மட்பாண்டங்களின் பயன்கள் யாவை?', qEn: 'What are the uses of pottery in medical art?',
+          a: '<ul><li>மருந்துச் சட்டிகள் – மருந்துகள் காய்ச்சுதல்</li><li>மூலிகை எண்ணெய் சேமிப்பு</li><li>நோயாளிக்கு வெந்நீர் ஒத்தடம் கொடுக்க</li><li>மருத்துவ கசாயம் தயாரிக்க</li></ul>',
+          aEn: '<ul><li>Medicine pots – for boiling medicines</li><li>Storage of herbal oils</li><li>Hot water compresses for patients</li><li>Preparation of medicinal decoctions</li></ul>' },
+        { type: 2, q: 'கருப்பு சிவப்பு மட்பாண்டங்களில் காணப்படும் பொருட்கள் யாவை?', qEn: 'What items are found in Black and Red Ware pottery?',
+          a: '<ul><li>கிண்ணங்கள் (bowls)</li><li>குடங்கள் (pots)</li><li>கலசங்கள் (urns)</li><li>தட்டுகள் (plates)</li><li>குவளைகள் (cups)</li></ul>',
+          aEn: '<ul><li>Bowls</li><li>Pots</li><li>Urns</li><li>Plates</li><li>Cups</li></ul>' },
+        { type: 2, q: 'தமிழகத்தில் ஸ்வஸ்திக் குறியீடு உள்ள மண்பாண்டங்கள் எங்கு காணப்பட்டன?', qEn: 'Where were pottery with Swastika symbols found in Tamilnadu?',
+          a: '<p>தமிழகத்தில் ஸ்வஸ்திக் குறியீடு உள்ள மண்பாண்டங்கள் <strong>கீழடி</strong> அகழ்வாராய்ச்சியில் காணப்பட்டன. இவை தமிழர்களின் பண்டைய வழிபாட்டு சின்னங்களை காட்டுகின்றன.</p>',
+          aEn: '<p>Pottery with Swastika symbols were found in the <strong>Keeladi</strong> excavations in Tamilnadu, revealing ancient Tamil religious symbols.</p>' },
+        { type: 2, q: 'எக்காலத்து மக்கள் தங்கள் எண்ணங்களை வெளிப்படுத்த குறியீடுகளைப் பயன்படுத்தினர்?', qEn: 'Which era people used symbols to express their thoughts?',
+          a: '<p><strong>பழங்கால / சங்க கால மக்கள்</strong> தங்கள் எண்ணங்களையும் நம்பிக்கைகளையும் வெளிப்படுத்த மட்பாண்டங்களில் குறியீடுகளை பயன்படுத்தினர். எழுத்தறிவு பரவலாக இல்லாத காலத்தில் குறியீடுகளே தகவல் தெரிவிக்கும் ஊடகமாக இருந்தன.</p>',
+          aEn: '<p><strong>Ancient/Sangam era people</strong> used symbols on pottery to express their thoughts and beliefs. In times when literacy was limited, symbols served as the medium of communication.</p>' },
+        { type: 16, q: 'சங்க காலத்தில் நெசவுத் தொழில் எப்படி இருந்தது? ஆடைகள் தயாரிப்பதில் உள்ள பல்வேறு படிநிலைகளை விரிவாக விளக்கவும்.', qEn: 'How was the weaving industry during the Sangam period? Explain the various stages in garment production.',
           a: '<p><strong>சங்க காலத்தில் நெசவுத் தொழில்:</strong></p><p>சங்க காலத்தில் நெசவுத் தொழில் மிகவும் வளர்ச்சியடைந்திருந்தது. தமிழகம் ஆடைத் தயாரிப்பில் உலகப் புகழ் பெற்றிருந்தது.</p><p><strong>ஆடை தயாரிப்பு படிநிலைகள்:</strong></p><ul><li><strong>1. பஞ்சு சேகரிப்பு</strong> – பருத்திக் காய்களிலிருந்து பஞ்சை பிரித்தெடுத்தல்</li><li><strong>2. நூற்றல் (Spinning)</strong> – பஞ்சை நூலாக நூற்பது. இதை <strong>பருத்திப்பெண்டீர்</strong> செய்தனர்</li><li><strong>3. சாயமிடுதல் (Dyeing)</strong> – இயற்கை வேர்கள், பூக்கள் மூலம் நிறமிடுதல்</li><li><strong>4. நெசவு (Weaving)</strong> – தறியில் நூலை நெய்து ஆடை தயாரித்தல்</li><li><strong>5. அலங்காரம்</strong> – ஆடையில் வண்ணமயமான வேலைப்பாடுகள் செய்தல்</li></ul><p><strong>சிறப்புகள்:</strong></p><ul><li>மதுரை மெல்லிய முசுவன் ஆடை மிகவும் மெல்லியது</li><li>ஆடைகளை வெளிநாடுகளுக்கு ஏற்றுமதி செய்தனர்</li><li>உரோமானிய வணிகர்கள் தமிழக ஆடைகளை வாங்கினர்</li></ul>',
-          aEn: '<p><strong>Weaving Industry in the Sangam Period:</strong></p><p>The weaving industry was highly advanced in the Sangam era. Tamilnadu gained world fame for cloth production.</p><p><strong>Stages of Garment Production:</strong></p><ul><li><strong>1. Cotton Collection</strong> – Separating cotton from cotton bolls</li><li><strong>2. Spinning</strong> – Spinning cotton into thread, done by Paruththippendir (women weavers)</li><li><strong>3. Dyeing</strong> – Adding color using natural roots and flowers</li><li><strong>4. Weaving</strong> – Weaving thread into cloth on the loom</li><li><strong>5. Decoration</strong> – Adding colorful embroidery and designs</li></ul><p><strong>Highlights:</strong></p><ul><li>Madurai\'s fine muslin cloth was extremely thin</li><li>Garments were exported to foreign countries</li><li>Roman merchants purchased Tamil textiles</li></ul>'
-        },
-        {
-          type: 16,
-          q: 'பளபளப்பான மற்றும் மெருகூட்டப்படாத மட்பாண்டங்கள் என்றால் என்ன? மட்பாண்டங்கள் செய்யும் முறையை விவரிக்கவும்.',
-          qEn: 'What are polished and unpolished pottery? Describe the method of making pottery.',
+          aEn: '<p><strong>Weaving Industry in the Sangam Period:</strong></p><ul><li><strong>1. Cotton Collection</strong> – Separating cotton from bolls</li><li><strong>2. Spinning</strong> – Women weavers (Paruththippendir) spun cotton into thread</li><li><strong>3. Dyeing</strong> – Natural roots and flowers used for color</li><li><strong>4. Weaving</strong> – Thread woven into cloth on the loom</li><li><strong>5. Decoration</strong> – Colorful embroidery and designs added</li></ul><p><strong>Highlights:</strong></p><ul><li>Madurai muslin was extremely thin</li><li>Garments were exported to foreign countries</li><li>Roman merchants purchased Tamil textiles</li></ul>' },
+        { type: 16, q: 'பளபளப்பான மற்றும் மெருகூட்டப்படாத மட்பாண்டங்கள் என்றால் என்ன? மட்பாண்டங்கள் செய்யும் முறையை விவரிக்கவும்.', qEn: 'What are polished and unpolished pottery? Describe the method of making pottery.',
           a: '<p><strong>1. பளபளப்பான மட்பாண்டங்கள்:</strong> மேற்பரப்பை மெருகேற்றி தயாரிக்கப்படும். கருப்பு மற்றும் சிவப்பு வண்ணங்களில் காணப்படும்.</p><p><strong>2. மெருகூட்டப்படாத மட்பாண்டங்கள்:</strong> இயற்கையான முரடான தோற்றமுடையவை. அன்றாட பயன்பாட்டிற்கு பயன்படும்.</p><p><strong>மட்பாண்டம் செய்யும் முறை:</strong></p><ul><li>மண் தேர்வு – களிமண்ணை தேர்ந்தெடுத்தல்</li><li>மண் பதனிடுதல் – மண்ணை நன்றாக பிசைந்து தயார் செய்தல்</li><li>வடிவமைத்தல் – குயவன் சக்கரத்தில் சுற்றி வடிவமைத்தல்</li><li>சூளை சுடுதல் (Kiln firing) – உயர் வெப்பத்தில் சுட்டு உறுதிப்படுத்துதல்</li><li>சாயமிடுதல் – தேவையான நிறங்களை இடுதல்</li></ul>',
-          aEn: '<p><strong>1. Polished Pottery:</strong> Made by burnishing the surface to a shine. Found in black and red colors.</p><p><strong>2. Unpolished Pottery:</strong> Has a natural rough appearance. Used for everyday household needs.</p><p><strong>Method of Making Pottery:</strong></p><ul><li>Clay Selection – Choosing the right clay</li><li>Clay Preparation – Kneading clay thoroughly</li><li>Shaping – Molding on the potter\'s wheel</li><li>Kiln Firing – Hardening at high temperature in a kiln</li><li>Coloring – Applying required pigments and glazes</li></ul>'
-        },
-        {
-          type: 16,
-          q: 'கருப்பு மற்றும் சிவப்பு மட்பாண்டங்கள் பற்றி விரிவாக விளக்கவும்.',
-          qEn: 'Explain in detail about Black and Red Ware pottery.',
+          aEn: '<p><strong>1. Polished Pottery:</strong> Burnished surface in black and red colors.</p><p><strong>2. Unpolished Pottery:</strong> Natural rough appearance for everyday use.</p><p><strong>Method of Making Pottery:</strong></p><ul><li>Clay Selection – Choosing the right clay</li><li>Clay Preparation – Kneading clay thoroughly</li><li>Shaping – Molding on the potter\'s wheel</li><li>Kiln Firing – Hardening at high temperature</li><li>Coloring – Applying pigments and glazes</li></ul>' },
+        { type: 16, q: 'கருப்பு மற்றும் சிவப்பு மட்பாண்டங்கள் பற்றி விரிவாக விளக்கவும்.', qEn: 'Explain in detail about Black and Red Ware pottery.',
           a: '<p><strong>கருப்பு மற்றும் சிவப்பு மட்பாண்டங்கள் (Black and Red Ware):</strong></p><p><strong>தனித்துவம்:</strong> பாண்டத்தின் வெளிப்புறம் <strong>கருப்பு நிறம்</strong>, உட்புறம் <strong>சிவப்பு நிறம்</strong>. கவிழ்த்து சுடும் முறையில் தயாரிக்கப்படும்.</p><p><strong>கண்டுபிடிக்கப்பட்ட இடங்கள்:</strong> கீழடி, அரிக்கமேடு, கொற்கை, மதுரை</p><p><strong>சிறப்புகள்:</strong></p><ul><li>மிகவும் மெல்லிய சுவர்கள்</li><li>உயர்தர தொழில்நுட்பம்</li><li>வெளிநாடுகளுக்கு ஏற்றுமதி செய்யப்பட்டன</li></ul>',
-          aEn: '<p><strong>Black and Red Ware Pottery:</strong></p><p><strong>Uniqueness:</strong> The outside is <strong>black</strong>, the inside is <strong>red</strong>. Made using the inverted firing technique in a kiln.</p><p><strong>Discovery Sites:</strong> Keeladi, Arikamedu, Korkai, Madurai</p><p><strong>Features:</strong></p><ul><li>Very thin walls</li><li>High-quality craftsmanship</li><li>Exported to foreign countries</li></ul>'
-        },
+          aEn: '<p><strong>Black and Red Ware Pottery:</strong></p><p>Outside is <strong>black</strong>, inside is <strong>red</strong>. Made using inverted firing technique.</p><p><strong>Discovery Sites:</strong> Keeladi, Arikamedu, Korkai, Madurai</p><p><strong>Features:</strong> Very thin walls, high-quality craftsmanship, exported to foreign countries.</p>' },
+        { type: 16, q: 'பண்டைய இந்தியாவில் மட்பாண்டங்களில் பொறிக்கப்பட்ட கீரல் குறிகளை விரிவாக எழுதுங்கள்.', qEn: 'Write in detail about the graffiti marks found on pottery in ancient India.',
+          a: '<p><strong>கீரல் குறிகள் (Graffiti Marks):</strong></p><p>பண்டைய தமிழகத்தில் மட்பாண்டங்களில் <strong>கீரல் குறிகள்</strong> என்று அழைக்கப்படும் சிறப்பு குறியீடுகள் காணப்படுகின்றன.</p><p><strong>வகைகள்:</strong></p><ul><li><strong>உரிமை குறிகள்</strong> – பொருளின் உரிமையாளரை குறிக்கும்</li><li><strong>தயாரிப்பாளர் குறிகள்</strong> – குயவரை அடையாளம் காட்டும்</li><li><strong>இலக்க குறிகள்</strong> – எண்களை குறிக்கும்</li><li><strong>மொழி குறிகள்</strong> – தமிழி எழுத்துகள்</li></ul><p><strong>முக்கியத்துவம்:</strong></p><ul><li>தமிழ் எழுத்தின் தொடக்கத்தை காட்டுகின்றன</li><li>வணிக முறைகளை புரிந்துகொள்ள உதவுகின்றன</li></ul>',
+          aEn: '<p><strong>Graffiti Marks on Pottery:</strong></p><p>Special symbols called <strong>graffiti marks</strong> are found on ancient Tamil pottery.</p><p><strong>Types:</strong></p><ul><li><strong>Ownership marks</strong> – Identify the owner</li><li><strong>Maker marks</strong> – Identify the potter</li><li><strong>Numerical marks</strong> – Represent numbers</li><li><strong>Script marks</strong> – Tamil Brahmi letters</li></ul><p><strong>Significance:</strong> Show the early development of Tamil script and help understand ancient trade practices.</p>' },
+        { type: 16, q: 'பழங்கால நெசவு மற்றும் குயவர் தொழில்நுட்பங்களைப் பாதுகாக்கும் முயற்சிகள் குறித்து விளக்குக.', qEn: 'Explain efforts to preserve ancient weaving and pottery technologies.',
+          a: '<p><strong>நெசவு தொழில் பாதுகாப்பு முயற்சிகள்:</strong></p><ul><li><strong>கைத்தறி கழகங்கள்</strong> – நெசவாளர்களுக்கு அரசு உதவி</li><li><strong>GI பட்டம்</strong> – காஞ்சிபுரம் பட்டு, மதுரை சுங்கடி போன்றவற்றிற்கு</li><li><strong>பயிற்சி நிலையங்கள்</strong> – புதிய நெசவாளர்களுக்கு பயிற்சி</li></ul><p><strong>குயவர் தொழில் பாதுகாப்பு முயற்சிகள்:</strong></p><ul><li><strong>அருங்காட்சியகங்கள்</strong> – பழைய மட்பாண்டங்கள் பாதுகாப்பு</li><li><strong>அகழ்வாராய்ச்சி</strong> – கீழடி போன்ற தளங்களில் தொடர் ஆய்வு</li><li><strong>கலை கல்வி</strong> – பள்ளிகளில் மட்பாண்ட கலை பயிற்று</li></ul>',
+          aEn: '<p><strong>Efforts to preserve Weaving:</strong></p><ul><li><strong>Handloom cooperatives</strong> – Government support for weavers</li><li><strong>GI Tags</strong> – For Kanchipuram silk, Madurai Sungudi etc.</li><li><strong>Training centers</strong> – Training new weavers</li></ul><p><strong>Efforts to preserve Pottery:</strong></p><ul><li><strong>Museums</strong> – Preserving ancient pottery</li><li><strong>Excavations</strong> – Continuous research at sites like Keeladi</li><li><strong>Art education</strong> – Teaching pottery art in schools</li></ul>' }
       ]
     },
     {
-      id: 'u2',
-      label: 'அலகு II',
-      labelEn: 'Unit II',
-      title: 'வடிவமைப்பு மற்றும் கட்டுமான தொழில்நுட்பம்',
-      titleEn: 'Design & Construction Technology',
-      icon: '🏛️',
+      id: 'u2', label: 'அலகு II', labelEn: 'Unit II',
+      title: 'வடிவமைப்பு மற்றும் கட்டுமான தொழில்நுட்பம்', titleEn: 'Design & Construction Technology', icon: '🏛️',
       questions: [
         { type: 2, q: 'கட்டடக்கலை என்றால் என்ன?', qEn: 'What is Architecture?',
           a: '<p><strong>கட்டடக்கலை (Architecture)</strong> என்பது கட்டிடங்கள், நினைவுச்சின்னங்கள், கோயில்கள் ஆகியவற்றை வடிவமைக்கும் மற்றும் கட்டமைக்கும் கலை மற்றும் அறிவியல் ஆகும்.</p>',
-          aEn: '<p><strong>Architecture</strong> is the art and science of designing and constructing buildings, monuments, and temples. It combines beauty (aesthetics), functionality, and structural stability.</p>' },
+          aEn: '<p><strong>Architecture</strong> is the art and science of designing and constructing buildings, monuments, and temples, combining beauty, functionality, and structural stability.</p>' },
+        { type: 2, q: 'சங்ககால கட்டுமானப் பொருட்கள் சிலவற்றைக் கூறுக.', qEn: 'Name some construction materials used in the Sangam period.',
+          a: '<ul><li><strong>கல்</strong> – கோவில்கள் மற்றும் கோட்டைகள் கட்ட</li><li><strong>செங்கல்</strong> – வீடுகள் கட்ட</li><li><strong>மரம்</strong> – உத்திரம், தூண்கள்</li><li><strong>சுண்ணாம்பு சாந்து</strong> – கற்களை ஒட்ட</li><li><strong>ஓடு</strong> – கூரை மூட</li></ul>',
+          aEn: '<ul><li><strong>Stone</strong> – For temples and forts</li><li><strong>Brick</strong> – For houses</li><li><strong>Wood</strong> – For beams and pillars</li><li><strong>Lime mortar</strong> – To bind stones</li><li><strong>Tiles</strong> – For roofing</li></ul>' },
+        { type: 2, q: 'தமிழகத்தில் கண்டெடுக்கப்பட்ட நடுகற்களில் பெரும்பாலும் எந்த எழுத்து மொழி காணப்படுகிறது?', qEn: 'Which script is mostly found in hero stones discovered in Tamilnadu?',
+          a: '<p>தமிழகத்தில் கண்டெடுக்கப்பட்ட நடுகற்களில் பெரும்பாலும் <strong>தமிழி (Tamil Brahmi)</strong> எழுத்து மொழி காணப்படுகிறது.</p>',
+          aEn: '<p>The <strong>Tamil Brahmi (Tamizhi)</strong> script is mostly found in hero stones discovered in Tamilnadu.</p>' },
+        { type: 2, q: 'அகழிகள் என்றால் என்ன?', qEn: 'What are Akazhigal (moats)?',
+          a: '<p><strong>அகழிகள்</strong> என்பது கோட்டைகளை சுற்றி தோண்டப்பட்ட <strong>நீர் நிரம்பிய அகழிகள் (moats)</strong> ஆகும். இவை எதிரிகளின் தாக்குதலை தடுக்க அமைக்கப்பட்டன.</p>',
+          aEn: '<p><strong>Akazhigal (Moats)</strong> are water-filled ditches dug around forts to prevent enemy attacks and protect the fortification.</p>' },
         { type: 2, q: 'இந்தியாவில் கட்டப்படும் கோவில்களின் வகைகள் யாவை?', qEn: 'What are the types of temple styles built in India?',
           a: '<ul><li><strong>நாகர பாணி</strong> – வட இந்திய பாணி (கரிகான் வடிவக் கோபுரம்)</li><li><strong>திராவிட பாணி</strong> – தென் இந்திய பாணி (பிரமிட் வடிவக் கோபுரம்)</li><li><strong>வேசர பாணி</strong> – நாகர + திராவிட கலப்பு பாணி</li></ul>',
-          aEn: '<ul><li><strong>Nagara style</strong> – North Indian style (curvilinear/beehive-shaped tower)</li><li><strong>Dravida style</strong> – South Indian style (pyramidal tower/gopuram)</li><li><strong>Vesara style</strong> – Mixed style combining Nagara and Dravida elements</li></ul>' },
+          aEn: '<ul><li><strong>Nagara style</strong> – North Indian, curvilinear tower</li><li><strong>Dravida style</strong> – South Indian, pyramidal gopuram</li><li><strong>Vesara style</strong> – Mixed Nagara and Dravida elements</li></ul>' },
         { type: 2, q: 'தமிழகத்தின் மிக உயர்ந்த கோவில் கோபுரமாகக் கருதப்படுவது எது?', qEn: 'Which is considered the tallest temple tower in Tamilnadu?',
           a: '<p>தமிழகத்தின் மிக உயர்ந்த கோவில் கோபுரமாக <strong>ஸ்ரீரங்கம் அரங்கநாதர் கோவில் ராஜகோபுரம்</strong> கருதப்படுகிறது. இது <strong>72 மீட்டர்</strong> (236 அடி) உயரம் கொண்டது.</p>',
-          aEn: '<p>The <strong>Rajagopuram of Srirangam Aranganathar Temple</strong> is considered the tallest temple tower in Tamilnadu, standing at <strong>72 meters</strong> (236 feet) tall.</p>' },
+          aEn: '<p>The <strong>Rajagopuram of Srirangam Aranganathar Temple</strong> is considered the tallest temple tower in Tamilnadu at <strong>72 meters</strong> (236 feet).</p>' },
         { type: 2, q: 'தொல்காப்பியர் குறிப்பிடும் நடுகல்லுக்குரிய ஆறு நிலைகள் யாவை?', qEn: 'What are the six stages of hero-stone mentioned by Tholkappiyar?',
           a: '<ol><li><strong>மரபு</strong> – வீரனின் குலம் குறிப்பிடுதல்</li><li><strong>முன்னோர்</strong> – முன்னோர் பெயர் கூறுதல்</li><li><strong>செயல்</strong> – வீரச் செயல் விவரிக்குதல்</li><li><strong>காரணம்</strong> – இறப்பிற்கான காரணம்</li><li><strong>மரணம்</strong> – இறந்த விதம்</li><li><strong>விழா</strong> – நடுகல் நாட்டும் விழா</li></ol>',
-          aEn: '<ol><li><strong>Marabu</strong> – Stating the hero\'s lineage/clan</li><li><strong>Munnor</strong> – Naming the ancestors</li><li><strong>Seyal</strong> – Describing the heroic deed</li><li><strong>Karanam</strong> – Reason for the hero\'s death</li><li><strong>Maranam</strong> – Manner of death</li><li><strong>Vila</strong> – The ceremony of installing the hero stone</li></ol>' },
+          aEn: '<ol><li><strong>Marabu</strong> – Hero\'s lineage</li><li><strong>Munnor</strong> – Naming ancestors</li><li><strong>Seyal</strong> – Describing the heroic deed</li><li><strong>Karanam</strong> – Reason for death</li><li><strong>Maranam</strong> – Manner of death</li><li><strong>Vila</strong> – Ceremony of installing the stone</li></ol>' },
+        { type: 2, q: 'சோழர்கள் காட்டிய பெருங்கோயில்கள் சிலவற்றைக் கூறுக.', qEn: 'Name some great temples built by the Cholas.',
+          a: '<ul><li><strong>பெரிய கோவில் (தஞ்சாவூர்)</strong> – ராஜராஜ சோழன் கட்டினார்</li><li><strong>கங்கை கொண்ட சோழபுரம்</strong> – ராஜேந்திர சோழன் கட்டினார்</li><li><strong>ஐராவதேஸ்வரர் கோவில் (தாரசுரம்)</strong> – ராஜராஜ சோழன் II கட்டினார்</li></ul>',
+          aEn: '<ul><li><strong>Brihadeeswara Temple (Thanjavur)</strong> – Built by Rajaraja Chola I</li><li><strong>Gangaikonda Cholapuram</strong> – Built by Rajendra Chola</li><li><strong>Airavatesvara Temple (Darasuram)</strong> – Built by Rajaraja Chola II</li></ul>' },
+        { type: 2, q: 'திருமலை நாயக்கர் அரண்மனை பற்றிக் குறிப்பு வரைக.', qEn: 'Write a note on Thirumalai Nayakar Palace.',
+          a: '<p><strong>திருமலை நாயக்கர் அரண்மனை</strong> மதுரையில் உள்ளது. 1636-ல் மதுரை நாயக்கர் ஆட்சியில் கட்டப்பட்டது. <strong>இந்தோ-சாரசனிக்</strong> கட்டிடக்கலை பாணியில் கட்டப்பட்டது. பிரமாண்டமான தூண்கள் மற்றும் குவிமாடங்களுக்கு பிரசித்தி.</p>',
+          aEn: '<p><strong>Thirumalai Nayakar Palace</strong> is located in Madurai, built in 1636 during the Madurai Nayak rule. It is built in the <strong>Indo-Saracenic</strong> architectural style, famous for its grand pillars and domes.</p>' },
         { type: 2, q: 'மாமல்லபுரம் கடற்கரைக் கோயில் யாரால் கட்டப்பட்டது?', qEn: 'Who built the Shore Temple at Mahabalipuram?',
           a: '<p>மாமல்லபுரம் கடற்கரைக் கோயில் <strong>நரசிம்மவர்மன் II (ராஜசிம்மன்)</strong> என்ற பல்லவ மன்னரால் கி.பி. 700-728 காலத்தில் கட்டப்பட்டது. இது <strong>யுனெஸ்கோ உலக பாரம்பரிய தளம்</strong> ஆகும்.</p>',
-          aEn: '<p>The Shore Temple at Mahabalipuram was built by the Pallava king <strong>Narasimhavarman II (Rajasimhan)</strong> around 700-728 CE. It is a <strong>UNESCO World Heritage Site</strong>.</p>' },
-        { type: 2, q: 'குடைவரைக் கோவில் என்றால் என்ன?', qEn: 'What is a rock-cut temple (Kudaivarai Kovil)?',
-          a: '<p><strong>குடைவரைக் கோவில்</strong> என்பது மலைகளை அல்லது பாறைகளை குடைந்து (வெட்டி) உருவாக்கப்பட்ட கோவில் ஆகும். இவை <strong>Rock-cut temples</strong> எனவும் அழைக்கப்படும்.</p>',
-          aEn: '<p><strong>Kudaivarai Kovil</strong> refers to temples carved out of hills or rocks. They are also called <strong>Rock-cut temples</strong>. The Pallavas were masters of this art form.</p>' },
+          aEn: '<p>The Shore Temple was built by Pallava king <strong>Narasimhavarman II (Rajasimhan)</strong> around 700-728 CE. It is a <strong>UNESCO World Heritage Site</strong>.</p>' },
+        { type: 2, q: 'மாமல்லபுரம் வேறு பெயர்கள் யாவை?', qEn: 'What are the other names of Mahabalipuram?',
+          a: '<ul><li><strong>மாமல்லபுரம்</strong> – மஹாவீரர் (பல்லவ மன்னன் நரசிம்மன்) பெயரால்</li><li><strong>மகாபலிபுரம்</strong> – மகாபலியின் நகர் என்று</li><li><strong>யேழு பகனோர் (Seven Pagodas)</strong> – ஐரோப்பியர் அழைத்த பெயர்</li></ul>',
+          aEn: '<ul><li><strong>Mamallapuram</strong> – Named after the great wrestler (Pallava king Narasimhan)</li><li><strong>Mahabalipuram</strong> – City of Mahabali</li><li><strong>Seven Pagodas</strong> – Named by European sailors</li></ul>' },
         { type: 2, q: 'பஞ்சபாண்டவர்கள் இரதங்கள் யாவை?', qEn: 'What are the Pancha Pandava Rathas?',
           a: '<ol><li><strong>தர்மராஜ இரதம்</strong> – மிகப் பெரியது</li><li><strong>பீம இரதம்</strong></li><li><strong>அர்ஜுன இரதம்</strong></li><li><strong>நகுல சகதேவ இரதம்</strong></li><li><strong>திரௌபதி இரதம்</strong> – மிகச் சிறியது</li></ol><p>இவை ஒரே கல்லில் செதுக்கப்பட்ட (monolithic) ஐந்து இரதங்கள்.</p>',
-          aEn: '<ol><li><strong>Dharmaraja Ratha</strong> – The largest one</li><li><strong>Bhima Ratha</strong></li><li><strong>Arjuna Ratha</strong></li><li><strong>Nakula Sahadeva Ratha</strong></li><li><strong>Draupadi Ratha</strong> – The smallest one</li></ol><p>These are five monolithic temples carved from a single rock at Mahabalipuram.</p>' },
+          aEn: '<ol><li><strong>Dharmaraja Ratha</strong> – The largest</li><li><strong>Bhima Ratha</strong></li><li><strong>Arjuna Ratha</strong></li><li><strong>Nakula Sahadeva Ratha</strong></li><li><strong>Draupadi Ratha</strong> – The smallest</li></ol><p>Five monolithic temples carved from a single rock at Mahabalipuram.</p>' },
+        { type: 2, q: 'குடைவரைக் கோவில் என்றால் என்ன?', qEn: 'What is a rock-cut temple (Kudaivarai Kovil)?',
+          a: '<p><strong>குடைவரைக் கோவில்</strong> என்பது மலைகளை அல்லது பாறைகளை குடைந்து (வெட்டி) உருவாக்கப்பட்ட கோவில் ஆகும். இவை <strong>Rock-cut temples</strong> எனவும் அழைக்கப்படும்.</p>',
+          aEn: '<p><strong>Kudaivarai Kovil</strong> – Temples carved out of hills or rocks, also called <strong>Rock-cut temples</strong>. The Pallavas were masters of this art form.</p>' },
+        { type: 2, q: 'மதுரை மீனாட்சி அம்மன் கோயில் ஆயிரங்கால் மண்டபத்தைக் கட்டியவர் யார்?', qEn: 'Who built the Hall of Thousand Pillars in Madurai Meenakshi Amman Temple?',
+          a: '<p>மதுரை மீனாட்சி அம்மன் கோயில் <strong>ஆயிரங்கால் மண்டபத்தை</strong> <strong>அரியநாத முதலியார்</strong> கட்டினார் என்று கூறப்படுகிறது. இது நாயக்கர் ஆட்சியில் கட்டப்பட்டது.</p>',
+          aEn: '<p>The <strong>Hall of Thousand Pillars</strong> in Madurai Meenakshi Amman Temple is said to have been built by <strong>Ariyanatha Mudaliar</strong> during the Nayak period.</p>' },
+        { type: 2, q: 'இந்தோ-சாரசனிக் கட்டிடக்கலை குறிப்பு வரைக.', qEn: 'Write a note on Indo-Saracenic Architecture.',
+          a: '<p><strong>இந்தோ-சாரசனிக் கட்டிடக்கலை</strong> என்பது <strong>இந்திய மற்றும் இஸ்லாமிய</strong> கட்டிடக்கலை பாணிகளின் கலவை. <strong>திருமலை நாயக்கர் அரண்மனை, சென்னை உயர் நீதிமன்றம்</strong> இந்த பாணியில் கட்டப்பட்டவை. ஆங்கிலேயர் ஆட்சியில் இந்த பாணி வளர்ந்தது.</p>',
+          aEn: '<p><strong>Indo-Saracenic Architecture</strong> is a blend of <strong>Indian and Islamic</strong> architectural styles. <strong>Thirumalai Nayakar Palace and Madras High Court</strong> are built in this style, which flourished during British rule.</p>' },
         { type: 16, q: 'பல்லவர் கால கட்டிடக் கலைகள் பற்றி விவரிக்கவும்.', qEn: 'Describe the architecture of the Pallava period.',
           a: '<p><strong>பல்லவர் கால கட்டிடக்கலை:</strong></p><p>பல்லவர்கள் கி.பி. 4-9 நூற்றாண்டுகளில் ஆட்சி செய்தனர்.</p><p><strong>முக்கிய வகைகள்:</strong></p><ul><li><strong>குடைவரைக் கோவில்கள்</strong> – மலைகளை குடைந்து கட்டிய கோவில்கள்</li><li><strong>இரதங்கள் (Ratha)</strong> – ஒரே கல்லில் செதுக்கிய கோவில்கள். பஞ்ச பாண்டவ இரதங்கள்</li><li><strong>கட்டுமான கோவில்கள்</strong> – கல் கட்டிகளால் கட்டப்பட்ட கோவில்கள்</li></ul><p><strong>சிறப்புகள்:</strong></p><ul><li>யுனெஸ்கோ உலக பாரம்பரிய தளம்</li><li>அர்ஜுன தபசு – உலகின் மிகப் பெரிய பாறை சிற்பம்</li><li>திராவிட பாணி கட்டிடக்கலையின் தொடக்கம்</li></ul>',
-          aEn: '<p><strong>Pallava Period Architecture:</strong></p><p>The Pallavas ruled from 4th to 9th century CE.</p><p><strong>Main Types:</strong></p><ul><li><strong>Rock-cut Temples</strong> – Temples carved into hillsides</li><li><strong>Rathas (Chariots)</strong> – Monolithic temples carved from single rocks. The Pancha Pandava Rathas</li><li><strong>Structural Temples</strong> – Temples built using stone blocks. The Shore Temple</li></ul><p><strong>Highlights:</strong></p><ul><li>UNESCO World Heritage Site</li><li>Arjuna\'s Penance – the world\'s largest open-air rock bas-relief</li><li>Beginning of the Dravidian style of architecture</li></ul>' },
+          aEn: '<p><strong>Pallava Period Architecture (4th–9th century CE):</strong></p><ul><li><strong>Rock-cut Temples</strong> – Temples carved into hillsides</li><li><strong>Rathas</strong> – Monolithic temples; Pancha Pandava Rathas</li><li><strong>Structural Temples</strong> – Shore Temple</li></ul><p><strong>Highlights:</strong> UNESCO World Heritage Site; Arjuna\'s Penance (world\'s largest open-air rock bas-relief); Beginning of Dravidian architecture.</p>' },
+        { type: 16, q: 'நடுகல் வழிபாட்டு முறையை விளக்கு.', qEn: 'Explain the hero stone worship tradition.',
+          a: '<p><strong>நடுகல் (Hero Stone) என்றால் என்ன?</strong></p><p>வீரர்கள் போரில் மாண்டபோது அவர்களை நினைவுகூர அமைக்கப்பட்ட கல் நினைவுச்சின்னங்கள் <strong>நடுகற்கள்</strong> எனப்படும்.</p><p><strong>நடுகல் நிலைகள் (தொல்காப்பியர் கூறும் ஆறு நிலைகள்):</strong></p><ol><li>மரபு – குலம் கூறுதல்</li><li>முன்னோர் – முன்னோர் நினைவு</li><li>செயல் – வீரச்செயல்</li><li>காரணம் – இறப்பு காரணம்</li><li>மரணம் – இறந்த விதம்</li><li>விழா – நடுகல் நாட்டும் விழா</li></ol><p><strong>நடுகல் வழிபாட்டு முறை:</strong> நடுகல் நாட்டிய பிறகு மக்கள் அதை தெய்வமாக வழிபட்டனர். பூ வைத்து வழிபாடு செய்தனர்.</p>',
+          aEn: '<p><strong>Hero Stone (Nadukal):</strong></p><p>Stone memorials erected for warriors who died in battle.</p><p><strong>Six stages (as per Tholkappiyar):</strong></p><ol><li>Marabu – Lineage</li><li>Munnor – Ancestors</li><li>Seyal – Heroic deed</li><li>Karanam – Cause of death</li><li>Maranam – Manner of death</li><li>Vila – Installation ceremony</li></ol><p><strong>Worship:</strong> After installation, the stone was worshipped as a deity. Flowers were offered and prayers performed.</p>' },
+        { type: 16, q: 'சிலப்பதிகாரத்தில் மேடை அமைப்பு முறைகள் குறித்து விளக்குக.', qEn: 'Explain the stage construction methods mentioned in Silappatikaram.',
+          a: '<p><strong>சிலப்பதிகாரத்தில் மேடை அமைப்பு:</strong></p><p>சிலப்பதிகாரம் – இளங்கோவடிகள் இயற்றிய காப்பியம்.</p><p><strong>மேடை வகைகள்:</strong></p><ul><li><strong>கூத்து மேடை</strong> – நடன நிகழ்வுகளுக்கு</li><li><strong>வேள்வி மேடை</strong> – யாக நிகழ்வுகளுக்கு</li><li><strong>அரசவை மேடை</strong> – மன்னர் அவைகளில்</li></ul><p><strong>மேடை கட்டும் முறை:</strong></p><ul><li>மரத்தால் கட்டப்பட்டன</li><li>நாற்புறமும் திரைகள் கட்டப்பட்டன</li><li>குத்துவிளக்குகளால் ஒளியேற்றப்பட்டன</li></ul>',
+          aEn: '<p><strong>Stage Construction in Silappatikaram:</strong></p><p>Silappatikaram was composed by Ilangovadikal.</p><p><strong>Types of Stages:</strong></p><ul><li><strong>Dance stage</strong> – For performing arts</li><li><strong>Sacrificial stage</strong> – For yagna rituals</li><li><strong>Court stage</strong> – In royal courts</li></ul><p><strong>Construction Method:</strong></p><ul><li>Built from wood</li><li>Curtains hung on all four sides</li><li>Illuminated by torches/lamps</li></ul>' },
         { type: 16, q: 'சோழர் காலத்துப் பெருங்கோவில்களை பற்றி விவரிக்கவும்.', qEn: 'Describe the great temples of the Chola period.',
           a: '<p><strong>சோழர் கால பெருங்கோவில்கள்:</strong></p><p><strong>1. பெரிய கோவில் (தஞ்சாவூர்):</strong></p><ul><li>ராஜராஜ சோழன் கட்டினார் (கி.பி. 1010)</li><li>66 மீட்டர் உயர விமானம்</li><li>யுனெஸ்கோ உலக பாரம்பரிய தளம்</li></ul><p><strong>2. கங்கை கொண்ட சோழபுரம்:</strong></p><ul><li>ராஜேந்திர சோழன் கட்டினார்</li><li>கங்கை நதி வெற்றி கொண்ட நினைவாக</li></ul><p><strong>3. ஐராவதேஸ்வரர் கோவில் (தாரசுரம்):</strong> ராஜராஜ சோழன் II கட்டினார்.</p>',
-          aEn: '<p><strong>Great Chola Temples:</strong></p><p><strong>1. Brihadeeswara Temple (Thanjavur):</strong></p><ul><li>Built by Rajaraja Chola I (1010 CE)</li><li>66-meter tall vimana (tower)</li><li>UNESCO World Heritage Site</li></ul><p><strong>2. Gangaikonda Cholapuram:</strong></p><ul><li>Built by Rajendra Chola</li><li>Commemorating the victory over the Ganges River</li></ul><p><strong>3. Airavatesvara Temple (Darasuram):</strong> Built by Rajaraja Chola II.</p>' },
+          aEn: '<p><strong>Great Chola Temples:</strong></p><ul><li><strong>Brihadeeswara Temple (Thanjavur)</strong> – Rajaraja Chola I (1010 CE), 66m tall vimana, UNESCO site</li><li><strong>Gangaikonda Cholapuram</strong> – Rajendra Chola, commemorating Ganges victory</li><li><strong>Airavatesvara Temple (Darasuram)</strong> – Rajaraja Chola II</li></ul>' },
+        { type: 16, q: 'சேட்டிநாடு வீடுகளின் கட்டிடக்கலையின் சிறப்புகளைக் கூறுக.', qEn: 'State the features of Chettinad house architecture.',
+          a: '<p><strong>சேட்டிநாடு வீடுகளின் கட்டிடக்கலை சிறப்புகள்:</strong></p><ul><li><strong>பெரிய முற்றங்கள்</strong> – வீட்டின் மத்தியில் திறந்தவெளி</li><li><strong>சுதை வேலைப்பாடு</strong> – சுண்ணாம்பு கலவையால் செய்த அலங்காரம்</li><li><strong>இறக்குமதி பொருட்கள்</strong> – இத்தாலி மார்பிள் தரை, பர்மா தேக்கு மரம்</li><li><strong>வண்ணமயமான கண்ணாடிகள்</strong> – வெளிநாட்டு கண்ணாடிகள்</li><li><strong>பெரிய வாயில்கள்</strong> – சிறப்பான செதுக்கல் வேலைப்பாடு</li><li><strong>உயரமான தூண்கள்</strong> – கருங்கல் தூண்கள்</li></ul>',
+          aEn: '<p><strong>Features of Chettinad House Architecture:</strong></p><ul><li><strong>Large courtyards</strong> – Open space in the center</li><li><strong>Lime plaster work</strong> – Decorative stucco using lime mixture</li><li><strong>Imported materials</strong> – Italian marble floors, Burma teak wood</li><li><strong>Colored glass</strong> – Imported foreign glass</li><li><strong>Grand gateways</strong> – Intricately carved doors</li><li><strong>Tall pillars</strong> – Black granite columns</li></ul>' },
         { type: 16, q: 'மாமல்லபுரத்தில் உள்ள கடற்கரைக் கோயில்கள் மற்றும் குகைக் கோயில்களை விவரிக்கவும்.', qEn: 'Describe the Shore Temple and Cave Temples at Mahabalipuram.',
           a: '<p><strong>கடற்கரை கோவில்கள்:</strong></p><ul><li>கி.பி. 700-728, ராஜசிம்மன் கட்டினார்</li><li>3 கோவில்கள் – 2 சிவன், 1 விஷ்ணு</li><li>யுனெஸ்கோ உலக பாரம்பரிய தளம்</li></ul><p><strong>குகைக் கோவில்கள்:</strong></p><ul><li>மஹிஷாசுரமர்தனி குகை – துர்கை கோவில்</li><li>வராஹ மண்டபம் – விஷ்ணு கோவில்</li><li>திரிமூர்த்தி குகை</li></ul>',
-          aEn: '<p><strong>Shore Temple:</strong></p><ul><li>Built by Rajasimhan (700-728 CE)</li><li>3 shrines – 2 for Shiva, 1 for Vishnu</li><li>UNESCO World Heritage Site</li></ul><p><strong>Cave Temples:</strong></p><ul><li>Mahishasuramardini Cave – Temple dedicated to Goddess Durga</li><li>Varaha Mandapam – Temple dedicated to Vishnu</li><li>Trimurti Cave – Temple for the Trinity</li></ul>' },
+          aEn: '<p><strong>Shore Temple:</strong> Built by Rajasimhan (700-728 CE), 3 shrines (2 Shiva, 1 Vishnu), UNESCO World Heritage Site.</p><p><strong>Cave Temples:</strong></p><ul><li>Mahishasuramardini Cave – Goddess Durga</li><li>Varaha Mandapam – Lord Vishnu</li><li>Trimurti Cave – The Trinity</li></ul>' },
+        { type: 16, q: 'பிரிட்டிஷ் காலத்தில் இந்தோ-சாரசனிக் கட்டிடக்கலையின் முக்கிய அம்சங்களைக் கூறுக.', qEn: 'State the important features of Indo-Saracenic architecture during the British period.',
+          a: '<p><strong>இந்தோ-சாரசனிக் கட்டிடக்கலை:</strong></p><p>19-20 நூற்றாண்டுகளில் பிரிட்டிஷ் ஆட்சியில் வளர்ந்த கலவை கட்டிட பாணி.</p><p><strong>முக்கிய அம்சங்கள்:</strong></p><ul><li><strong>குவிமாடங்கள் (Domes)</strong> – முஸ்லிம் பாணி குவிமாடங்கள்</li><li><strong>கோபுரங்கள்</strong> – இந்திய கட்டிட பாணி கோபுரங்கள்</li><li><strong>வளைவுகள் (Arches)</strong> – இஸ்லாமிய நுட்பமான வளைவுகள்</li><li><strong>உயரமான சுவர்கள்</strong> – அழகியல் நோக்கம்</li></ul><p><strong>உதாரணங்கள்:</strong> திருமலை நாயக்கர் அரண்மனை, சென்னை உயர் நீதிமன்றம், விக்டோரியா நினைவு மண்டபம்</p>',
+          aEn: '<p><strong>Indo-Saracenic Architecture (19th-20th century):</strong></p><p><strong>Key Features:</strong></p><ul><li><strong>Domes</strong> – Islamic-style domes</li><li><strong>Towers (Gopurams)</strong> – Indian style towers</li><li><strong>Arches</strong> – Intricate Islamic arches</li><li><strong>Tall walls</strong> – Aesthetic design</li></ul><p><strong>Examples:</strong> Thirumalai Nayakar Palace, Madras High Court, Victoria Memorial</p>' }
       ]
     },
     {
-      id: 'u3',
-      label: 'அலகு III',
-      labelEn: 'Unit III',
-      title: 'உற்பத்தித் தொழில்நுட்பம்',
-      titleEn: 'Production Technology',
-      icon: '⚓',
+      id: 'u3', label: 'அலகு III', labelEn: 'Unit III',
+      title: 'உற்பத்தித் தொழில்நுட்பம்', titleEn: 'Production Technology', icon: '⚓',
       questions: [
         { type: 2, q: 'கட்டு மரங்களின் வேறு பெயர்கள் யாவை?', qEn: 'What are the other names for boats/ships in ancient Tamil?',
           a: '<ul><li><strong>அம்பி</strong> – சிறிய படகு</li><li><strong>நாவாய்</strong> – பெரிய கப்பல்</li><li><strong>வங்கம்</strong> – வணிக கப்பல்</li><li><strong>ஓடம்</strong> – சாதாரண படகு</li><li><strong>பரிசல்</strong> – ஆற்றுப் படகு</li><li><strong>திமில்</strong> – மீன்பிடி படகு</li></ul>',
-          aEn: '<ul><li><strong>Ambi</strong> – Small boat</li><li><strong>Naavai</strong> – Large ship</li><li><strong>Vangam</strong> – Merchant ship (for overseas trade)</li><li><strong>Odam</strong> – Ordinary boat</li><li><strong>Parisal</strong> – River boat</li><li><strong>Thimil</strong> – Fishing boat</li></ul>' },
+          aEn: '<ul><li><strong>Ambi</strong> – Small boat</li><li><strong>Naavai</strong> – Large ship</li><li><strong>Vangam</strong> – Merchant ship</li><li><strong>Odam</strong> – Ordinary boat</li><li><strong>Parisal</strong> – River boat</li><li><strong>Thimil</strong> – Fishing boat</li></ul>' },
+        { type: 2, q: 'சங்க இலக்கியத்தில் கூறப்பட்டுள்ள கலங்கள் எத்தனை?', qEn: 'How many types of vessels are mentioned in Sangam literature?',
+          a: '<p>சங்க இலக்கியத்தில் <strong>ஏழு வகையான</strong> கலங்கள் குறிப்பிடப்பட்டுள்ளன. இவற்றில் அம்பி, நாவாய், வங்கம், ஓடம், பரிசல், திமில், தோணி ஆகியவை அடங்கும்.</p>',
+          aEn: '<p><strong>Seven types</strong> of vessels are mentioned in Sangam literature, including Ambi, Naavai, Vangam, Odam, Parisal, Thimil, and Thoni.</p>' },
         { type: 2, q: 'பரதவர் பற்றி குறிப்பு வரைக.', qEn: 'Write a note on Paratavar.',
           a: '<p><strong>பரதவர்</strong> என்பவர் சங்க காலத்தில் கடலோரங்களில் வாழ்ந்த <strong>மீனவ மக்கள்</strong> ஆவர். இவர்கள் மீன் பிடித்தல், கடல் வாணிகம், கப்பல் ஓட்டுதல் ஆகியவற்றில் வல்லவர்கள். இவர்கள் <strong>"நெய்தல்"</strong> திணையைச் சேர்ந்தவர்கள்.</p>',
-          aEn: '<p><strong>Paratavar</strong> were the <strong>fishing community</strong> who lived along the coasts during the Sangam period. They were skilled in fishing, sea trade, and navigation. They belong to the <strong>"Neythal"</strong> landscape in Sangam literature.</p>' },
+          aEn: '<p><strong>Paratavar</strong> were the <strong>fishing community</strong> living along the coasts during the Sangam period. Skilled in fishing, sea trade, and navigation; they belong to the <strong>"Neythal"</strong> landscape.</p>' },
+        { type: 2, q: 'இருமுனை மின் இறக்கம் என்றால் என்ன?', qEn: 'What is the double-ended discharge (Irumunai min irakkam)?',
+          a: '<p><strong>இருமுனை மின் இறக்கம்</strong> என்பது உலோகவியலில் பயன்படுத்தப்படும் ஒரு நுட்பம். இரு முனைகளிலும் உலோகத்தை சுத்திகரிக்கும் முறை. <strong>தாமிரம் மற்றும் இரும்பு</strong> சுத்திகரிக்க பயன்பட்டது.</p>',
+          aEn: '<p><strong>Double-ended discharge</strong> is a technique used in metallurgy to purify metals from both ends simultaneously. Used to refine <strong>copper and iron</strong> in ancient times.</p>' },
+        { type: 2, q: 'உலைக்களம் பற்றி எழுதுக.', qEn: 'Write about the furnace/smelting site (Ulaikalam).',
+          a: '<p><strong>உலைக்களம்</strong> என்பது உலோகங்களை உருக்கி சுத்திகரிக்கும் <strong>உலை வீடு (Smelting site)</strong> ஆகும். சங்க காலத்தில் இரும்பு, தாமிரம், வெண்கலம் உருக்கும் உலைக்களங்கள் இருந்தன.</p>',
+          aEn: '<p><strong>Ulaikalam</strong> is a <strong>smelting site</strong> where metals were melted and refined. Iron, copper, and bronze smelting sites existed during the Sangam period.</p>' },
+        { type: 2, q: 'சங்க இலக்கியத்தில் இரும்பு பற்றிய பயிர்கள் எவ்வாறு குறிப்பிடப்படுகிறது?', qEn: 'How are crops related to iron mentioned in Sangam literature?',
+          a: '<p>சங்க இலக்கியத்தில் <strong>இரும்பு கலப்பை மற்றும் அரிவாள்</strong> கொண்டு பயிர் செய்வது குறிப்பிடப்படுகிறது. இரும்பு கலப்பை கொண்டு நிலம் உழுதனர் என்று <strong>புறநானூறு மற்றும் அகநானூறு</strong> குறிப்பிடுகின்றன.</p>',
+          aEn: '<p>Sangam literature mentions using <strong>iron ploughs and sickles</strong> for cultivation. <strong>Purananuru and Akananuru</strong> refer to iron ploughs being used for tilling land.</p>' },
         { type: 2, q: 'நாணயங்கள் குறிப்பு வரைக.', qEn: 'Write a note on ancient Tamil coins.',
           a: '<p>சங்க காலத்தில் நாணயங்கள் <strong>வெள்ளி, தங்கம், செம்பு</strong> ஆகியவற்றால் செய்யப்பட்டன. <strong>கா, மஞ்சாடி, பொன்</strong> போன்ற நாணயங்கள் புழக்கத்தில் இருந்தன. உரோமானிய நாணயங்களும் தமிழகத்தில் கண்டெடுக்கப்பட்டுள்ளன.</p>',
-          aEn: '<p>During the Sangam period, coins were made of <strong>silver, gold, and copper</strong>. Coins like <strong>Kaa, Manjadi, and Pon</strong> were in circulation. Roman coins have also been discovered in Tamilnadu, proving ancient overseas trade.</p>' },
+          aEn: '<p>Coins were made of <strong>silver, gold, and copper</strong>. Coins like <strong>Kaa, Manjadi, and Pon</strong> were in circulation. Roman coins have also been discovered in Tamilnadu.</p>' },
         { type: 2, q: 'நவரத்தினக் கற்களின் பெயர்களை எழுதுக.', qEn: 'Write the names of the Navaratna (nine precious gems).',
           a: '<ol><li>வைரம் (Diamond)</li><li>மாணிக்கம் (Ruby)</li><li>முத்து (Pearl)</li><li>பவளம் (Coral)</li><li>மரகதம் (Emerald)</li><li>நீலம் (Blue Sapphire)</li><li>புஷ்பராகம் (Topaz)</li><li>வைடூரியம் (Cat\'s eye)</li><li>கோமேதகம் (Hessonite)</li></ol>',
-          aEn: '<ol><li>Diamond (Vairam)</li><li>Ruby (Maanikkam)</li><li>Pearl (Muthu)</li><li>Coral (Pavalam)</li><li>Emerald (Maragatham)</li><li>Blue Sapphire (Neelam)</li><li>Topaz (Pushparagam)</li><li>Cat\'s Eye (Vaiduryam)</li><li>Hessonite (Gomedhakam)</li></ol>' },
+          aEn: '<ol><li>Diamond</li><li>Ruby</li><li>Pearl</li><li>Coral</li><li>Emerald</li><li>Blue Sapphire</li><li>Topaz</li><li>Cat\'s Eye</li><li>Hessonite</li></ol>' },
         { type: 2, q: 'கம்மியர் என்பவர் யார்?', qEn: 'Who are Kammiyar?',
           a: '<p><strong>கம்மியர்</strong> என்பவர் சங்க காலத்தில் <strong>இரும்பு மற்றும் பிற உலோகங்களை</strong> வேலை செய்த கொல்லர்கள் ஆவர். இவர்கள் வேல், வாள், கலப்பை போன்ற கருவிகளை தயாரித்தனர்.</p>',
-          aEn: '<p><strong>Kammiyar</strong> were the <strong>blacksmiths</strong> of the Sangam period who worked with iron and other metals. They manufactured weapons like spears and swords, and agricultural tools like ploughs.</p>' },
+          aEn: '<p><strong>Kammiyar</strong> were <strong>blacksmiths</strong> of the Sangam period working with iron and other metals – manufacturing spears, swords, and ploughs.</p>' },
+        { type: 2, q: 'குயினர் என்பவர் யார்?', qEn: 'Who are Kuyinar?',
+          a: '<p><strong>குயினர்</strong> என்பவர் சங்க காலத்தில் <strong>மட்பாண்டங்கள் செய்த குயவர் சமுதாயம்</strong> ஆவர். இவர்கள் களிமண்ணில் பல்வேறு வகையான பாண்டங்களை செய்தனர்.</p>',
+          aEn: '<p><strong>Kuyinar</strong> were the <strong>pottery-making community</strong> of the Sangam period who created various vessels from clay.</p>' },
+        { type: 2, q: 'மணிகளின் வடிவங்களைக் கூறுக.', qEn: 'State the shapes of beads.',
+          a: '<ul><li><strong>உருண்டை வடிவம்</strong> (Spherical)</li><li><strong>நீளமான வடிவம்</strong> (Cylindrical)</li><li><strong>தட்டையான வடிவம்</strong> (Disc-shaped)</li><li><strong>பூமணி வடிவம்</strong> (Flower-shaped)</li><li><strong>கோண வடிவம்</strong> (Angular/faceted)</li></ul>',
+          aEn: '<ul><li>Spherical</li><li>Cylindrical</li><li>Disc-shaped</li><li>Flower-shaped (Poomani)</li><li>Angular/Faceted</li></ul>' },
+        { type: 2, q: 'வண்ணக்கண் குறிப்பு வரைக.', qEn: 'Write a note on Vannakkan (colored glass eye beads).',
+          a: '<p><strong>வண்ணக்கண்</strong> என்பது <strong>வண்ண கண் வடிவிலான கண்ணாடி மணிகள்</strong> ஆகும். இவை கெட்ட சக்திகளை விரட்ட பயன்படும் என்று நம்பப்பட்டன. ஆய்கண்டி மணிகள் என்றும் அழைக்கப்படும்.</p>',
+          aEn: '<p><strong>Vannakkan</strong> are <strong>eye-shaped colored glass beads</strong> (evil-eye beads). Believed to ward off evil spirits, also known as evil-eye beads or Aykandi beads.</p>' },
+        { type: 2, q: 'மணிகளின் வடிவங்கள் எத்தனை? அவை யாவை?', qEn: 'How many shapes of beads exist and what are they?',
+          a: '<p>மணிகள் பொதுவாக <strong>ஐந்து வகை</strong> வடிவங்களில் காணப்படும்:</p><ol><li>உருண்டை</li><li>நீளுருண்டை</li><li>தட்டை</li><li>கோணல்</li><li>பல்கோண</li></ol>',
+          aEn: '<p>Beads are generally found in <strong>five shapes</strong>:</p><ol><li>Spherical (round)</li><li>Elongated</li><li>Flat/disc</li><li>Irregular</li><li>Multi-faceted/polygonal</li></ol>' },
+        { type: 2, q: 'சிலப்பதிகாரத்தில் குறிப்பிடும் மணிகள் யாவை?', qEn: 'What beads are mentioned in Silappatikaram?',
+          a: '<p>சிலப்பதிகாரத்தில் <strong>முத்து, பவளம், மாணிக்கம், மரகதம்</strong> போன்ற மணிகள் குறிப்பிடப்படுகின்றன. கண்ணகியின் சிலம்பில் உள்ள மணிகளும் குறிப்பிடப்படுகின்றன.</p>',
+          aEn: '<p>Silappatikaram mentions beads like <strong>Pearl, Coral, Ruby, and Emerald</strong>. The anklet (Silam) of Kannagi and its precious stones are also described.</p>' },
         { type: 2, q: 'மணிகளால் என்னென்ன பொருட்கள் செய்தனர்?', qEn: 'What items were made from beads/gems?',
           a: '<ul><li><strong>மாலைகள்</strong> – கழுத்தில் அணியும் அணிகலன்</li><li><strong>காப்பு (வளை)</strong> – கையில் அணியும் அணிகலன்</li><li><strong>காதணிகள்</strong> – காதில் அணியும் அணிகலன்</li><li><strong>கிரீடம்</strong> – தலையில் அணியும் முடி அலங்காரம்</li><li><strong>மோதிரம்</strong> – விரலில் அணியும் அணிகலன்</li></ul>',
-          aEn: '<ul><li><strong>Necklaces</strong> – Ornaments worn around the neck</li><li><strong>Bangles/Kaappu</strong> – Ornaments worn on the wrist</li><li><strong>Earrings</strong> – Ornaments worn on the ears</li><li><strong>Crown/Kireedam</strong> – Headgear decoration</li><li><strong>Rings</strong> – Ornaments worn on fingers</li></ul>' },
+          aEn: '<ul><li>Necklaces</li><li>Bangles/Kaappu</li><li>Earrings</li><li>Crowns/Headgear</li><li>Finger rings</li></ul>' },
         { type: 16, q: 'பழந்தமிழர் கப்பல் கலை குறித்து விளக்கி எழுதுக.', qEn: 'Explain the ancient Tamil art of shipbuilding.',
           a: '<p><strong>கப்பல் வகைகள்:</strong></p><ul><li><strong>வங்கம்</strong> – வணிக கப்பல்</li><li><strong>நாவாய்</strong> – பெரிய கப்பல்</li><li><strong>அம்பி</strong> – சிறிய படகு</li><li><strong>திமில்</strong> – மீன்பிடி படகு</li></ul><p><strong>கப்பல் கட்டும் பொருட்கள்:</strong></p><ul><li>தேக்கு மரம், வேம்பு மரம்</li><li>மரப்பால் (Resin) – நீர் புகாமல் தடுக்க</li></ul><p><strong>வணிக இலக்குகள்:</strong> உரோமானிய சாம்ராஜ்யம், அரேபியா, தென்கிழக்கு ஆசிய நாடுகள்</p>',
-          aEn: '<p><strong>Types of Ships:</strong></p><ul><li><strong>Vangam</strong> – Merchant ship for overseas trade</li><li><strong>Naavai</strong> – Large ship</li><li><strong>Ambi</strong> – Small boat</li><li><strong>Thimil</strong> – Fishing boat</li></ul><p><strong>Shipbuilding Materials:</strong></p><ul><li>Teak wood, Neem wood</li><li>Tree resin – to prevent water seepage</li></ul><p><strong>Trade Destinations:</strong> Roman Empire, Arabia, Southeast Asian countries</p>' },
+          aEn: '<p><strong>Types:</strong> Vangam (merchant), Naavai (large ship), Ambi (small boat), Thimil (fishing boat)</p><p><strong>Materials:</strong> Teak, Neem wood; Tree resin to prevent water seepage</p><p><strong>Trade Destinations:</strong> Roman Empire, Arabia, Southeast Asia</p>' },
         { type: 16, q: 'பண்டைய தமிழர்களின் உலோகவியல் திறனை விளக்குங்கள்.', qEn: 'Explain the metallurgical skills of the ancient Tamils.',
           a: '<p><strong>இரும்பு உலோகவியல்:</strong></p><ul><li>கீழடி அகழ்வாராய்ச்சியில் இரும்பு கருவிகள் கிடைத்துள்ளன</li><li>வேல், வாள், கலப்பை, அரிவாள் தயாரித்தனர்</li></ul><p><strong>வெண்கலம் (Bronze):</strong></p><ul><li>செம்பு + தகரம் கலந்து வெண்கலம் செய்தனர்</li><li>நடராஜர் சிற்பங்கள் வெண்கலத்தில் செய்யப்பட்டன</li></ul><p><strong>ஆதாரங்கள்:</strong> கீழடி, அரிக்கமேடு அகழ்வாராய்ச்சி கண்டுபிடிப்புகள்</p>',
-          aEn: '<p><strong>Iron Metallurgy:</strong></p><ul><li>Iron tools were found in the Keeladi excavations</li><li>They manufactured spears, swords, ploughs, and sickles</li></ul><p><strong>Bronze:</strong></p><ul><li>Bronze was made by mixing copper and tin</li><li>The famous Nataraja sculptures were cast in bronze</li></ul><p><strong>Archaeological Evidence:</strong> Discoveries from Keeladi and Arikamedu excavations</p>' },
+          aEn: '<p><strong>Iron Metallurgy:</strong> Iron tools from Keeladi excavations; spears, swords, ploughs, sickles manufactured</p><p><strong>Bronze:</strong> Copper + tin = bronze; Nataraja sculptures cast in bronze</p><p><strong>Evidence:</strong> Keeladi and Arikamedu excavations</p>' },
         { type: 16, q: 'நாணயங்கள் மற்றும் அவற்றின் வரலாற்று முக்கியத்துவம் பற்றி எழுதவும்.', qEn: 'Write about ancient coins and their historical significance.',
-          a: '<p><strong>வகைகள்:</strong></p><ul><li>பொன் (Gold coins) – அரச நாணயங்கள்</li><li>வெள்ளி நாணயங்கள் – வணிக நாணயங்கள்</li><li>செப்பு நாணயங்கள் – அன்றாட பரிமாற்றம்</li></ul><p><strong>நாணயங்களில் காணப்படும் உருவங்கள்:</strong></p><ul><li>மீன், வில் – பாண்டியர், சேரர் சின்னங்கள்</li><li>புலி – சோழர் சின்னம்</li></ul>',
-          aEn: '<p><strong>Types:</strong></p><ul><li>Gold coins – Royal coins used by kings</li><li>Silver coins – Merchant trade coins</li><li>Copper coins – For daily transactions</li></ul><p><strong>Symbols on Coins:</strong></p><ul><li>Fish, Bow – Pandya and Chera symbols</li><li>Tiger – Chola symbol</li></ul><p><strong>Historical Significance:</strong></p><ul><li>Help identify kings and dynasties</li><li>Prove ancient overseas trade</li><li>Help establish chronology</li></ul>' },
+          a: '<p><strong>வகைகள்:</strong></p><ul><li>பொன் (Gold coins) – அரச நாணயங்கள்</li><li>வெள்ளி நாணயங்கள் – வணிக நாணயங்கள்</li><li>செப்பு நாணயங்கள் – அன்றாட பரிமாற்றம்</li></ul><p><strong>நாணயங்களில் காணப்படும் உருவங்கள்:</strong></p><ul><li>மீன், வில் – பாண்டியர், சேரர் சின்னங்கள்</li><li>புலி – சோழர் சின்னம்</li></ul><p><strong>வரலாற்று முக்கியத்துவம்:</strong></p><ul><li>மன்னர்களை அடையாளம் காண உதவுகின்றன</li><li>பண்டைய கடல் வாணிகத்தை நிரூபிக்கின்றன</li></ul>',
+          aEn: '<p><strong>Types:</strong> Gold (royal), Silver (trade), Copper (daily transactions)</p><p><strong>Symbols:</strong> Fish, Bow (Pandya, Chera); Tiger (Chola)</p><p><strong>Significance:</strong> Identify kings and dynasties; prove ancient overseas trade; establish chronology</p>' },
+        { type: 16, q: 'மணிகளின் வடிவங்கள்/வகைகளை ஆதாரங்களுடன் விளக்கவும்.', qEn: 'Explain the shapes/types of beads with evidence.',
+          a: '<p><strong>மணிகளின் வகைகள் மற்றும் ஆதாரங்கள்:</strong></p><p><strong>1. கண்ணாடி மணிகள்:</strong> அரிக்கமேடு அகழ்வாராய்ச்சியில் கண்டெடுக்கப்பட்டன. உரோமானிய வணிகர்களிடமிருந்து இறக்குமதி செய்யப்பட்டன.</p><p><strong>2. கல் மணிகள்:</strong> கீழடியில் ஜாஸ்பர், கார்னீலியன் கற்களில் செய்த மணிகள் கண்டெடுக்கப்பட்டன.</p><p><strong>3. முத்து மணிகள்:</strong> கொற்கை முத்துக்களிலிருந்து செய்யப்பட்டன.</p><p><strong>வடிவங்கள்:</strong> உருண்டை, நீளுருண்டை, தட்டை, பல்கோண வடிவங்கள்</p>',
+          aEn: '<p><strong>Types of Beads with Evidence:</strong></p><p><strong>1. Glass beads:</strong> Found in Arikamedu; imported from Roman traders</p><p><strong>2. Stone beads:</strong> Jasper and carnelian beads found in Keeladi</p><p><strong>3. Pearl beads:</strong> Made from Korkai pearls</p><p><strong>Shapes:</strong> Spherical, elongated, flat/disc, multi-faceted</p>' },
+        { type: 16, q: 'ஊர்காண் காதையில் இளங்கோவடிகள் கூறும் மணிகள் பற்றிய செய்திகளை விளக்குக.', qEn: 'Explain the information about beads mentioned by Ilangovadikal in Urukan Kadhai.',
+          a: '<p><strong>ஊர்காண் காதை (சிலப்பதிகாரம்):</strong></p><p>இளங்கோவடிகள் கோவலனும் கண்ணகியும் மதுரை நகரில் நுழைவதை விவரிக்கும்போது நகரின் அணிகலன் வணிகரைப் பற்றி குறிப்பிடுகிறார்.</p><p><strong>குறிப்பிடப்படும் மணிகள்:</strong></p><ul><li><strong>முத்து</strong> – கடல் முத்துகள்</li><li><strong>பவளம்</strong> – சிவப்பு பவளம்</li><li><strong>மரகதம்</strong> – பச்சை கல்</li><li><strong>இந்திரநீலம்</strong> – நீல கல்</li></ul><p><strong>முக்கியத்துவம்:</strong> சங்க கால வணிக சந்தையில் நவரத்தின கல் வணிகம் சிறப்பாக இருந்ததை காட்டுகிறது.</p>',
+          aEn: '<p><strong>Urukan Kadhai (Silappatikaram):</strong></p><p>Ilangovadikal describes the gem merchants of Madurai city as Kovalan and Kannagi enter the city.</p><p><strong>Beads mentioned:</strong> Pearl, Coral, Emerald, Indranilam (Blue Sapphire)</p><p><strong>Significance:</strong> Shows the thriving gem trade in Sangam era markets.</p>' }
       ]
     },
     {
-      id: 'u4',
-      label: 'அலகு IV',
-      labelEn: 'Unit IV',
-      title: 'வேளாண்மை மற்றும் நீர் பாசன தொழில்நுட்பம்',
-      titleEn: 'Agriculture & Irrigation Technology',
-      icon: '🌾',
+      id: 'u4', label: 'அலகு IV', labelEn: 'Unit IV',
+      title: 'வேளாண்மை மற்றும் நீர் பாசன தொழில்நுட்பம்', titleEn: 'Agriculture & Irrigation Technology', icon: '🌾',
       questions: [
         { type: 2, q: 'கல்லணை குறித்துக் குறிப்பு வரைக.', qEn: 'Write a note on Kallanai (Grand Anicut).',
           a: '<p><strong>கல்லணை</strong> திருச்சிராப்பள்ளி மாவட்டத்தில் காவேரி நதியில் அமைந்துள்ளது. இதை <strong>கரிகால் சோழன்</strong> கி.மு. 2-ம் நூற்றாண்டில் கட்டினார். <strong>உலகின் மிகப் பழமையான நீர்த்தேக்கம்</strong> – இன்றும் பயன்பாட்டில் உள்ளது. நீளம் 329 மீட்டர்.</p>',
-          aEn: '<p><strong>Kallanai (Grand Anicut)</strong> is located on the Kaveri River in Tiruchirappalli district. It was built by <strong>Karikaal Cholan</strong> in the 2nd century BCE. It is the <strong>world\'s oldest water regulator</strong> still in use today. Length: 329 meters.</p>' },
+          aEn: '<p><strong>Kallanai (Grand Anicut)</strong> on the Kaveri River, Tiruchirappalli. Built by <strong>Karikaal Cholan</strong> (2nd century BCE). The <strong>world\'s oldest water regulator</strong> still in use. Length: 329 meters.</p>' },
         { type: 2, q: 'நீர் வெட்டியார் என்பவர் யார்?', qEn: 'Who is a Neer Vettiyaar?',
           a: '<p><strong>நீர் வெட்டியார்</strong> என்பவர் சங்க காலத்தில் <strong>வயல்களுக்கு நீர் பாசனம் நிர்வகித்த</strong> அலுவலர் ஆவர். இவர்கள் நீரை சரியான அளவில் பகிர்ந்தளிக்கும் பொறுப்பை வகித்தனர்.</p>',
-          aEn: '<p><strong>Neer Vettiyaar</strong> was an official during the Sangam period who <strong>managed irrigation water distribution</strong> to the fields. They held the responsibility of distributing water in the correct proportion to each farmer.</p>' },
+          aEn: '<p><strong>Neer Vettiyaar</strong> was an official who <strong>managed irrigation water distribution</strong> to fields in the Sangam period, ensuring fair water sharing among farmers.</p>' },
         { type: 2, q: 'குமிழித்தூம்பு குறிப்பு வரைக.', qEn: 'Write a note on Kumizhi Thoombhu.',
           a: '<p><strong>குமிழித்தூம்பு</strong> என்பது நீர்த்தேக்கங்களில் நீரை வெளியேற்றுவதற்காக அமைக்கப்பட்ட <strong>அடிமட்ட வடிகால் குழாய் (sluice)</strong> ஆகும்.</p>',
-          aEn: '<p><strong>Kumizhi Thoombhu</strong> is a <strong>bottom-level drainage sluice</strong> built in reservoirs to release water. When needed, it was opened to direct water to the farmlands below.</p>' },
+          aEn: '<p><strong>Kumizhi Thoombhu</strong> is a <strong>bottom-level drainage sluice</strong> in reservoirs to release water when needed to farmlands below.</p>' },
+        { type: 2, q: 'திரையன் ஏரியை அமைத்தவர் யார்?', qEn: 'Who built the Tiraiyan lake?',
+          a: '<p><strong>திரையன் ஏரியை</strong> சங்க கால சிற்றரசர் <strong>திரையன்</strong> அமைத்தார். இது சங்க கால நீர் மேலாண்மையின் சிறந்த எடுத்துக்காட்டாக விளங்குகிறது.</p>',
+          aEn: '<p>The <strong>Tiraiyan lake</strong> was built by the Sangam-era chieftain <strong>Tiraiyan</strong>. It stands as an excellent example of Sangam-era water management.</p>' },
+        { type: 2, q: 'ஏழு வாரியங்கள் அமைத்து ஆட்சி செய்த மன்னர்கள் யார்?', qEn: 'Which kings ruled by establishing seven administrative boards?',
+          a: '<p><strong>ஏழு வாரியங்கள்</strong> அமைத்து ஆட்சி செய்தவர் <strong>நின்றசீர் நெடுமாறன்</strong> என்ற பாண்டிய மன்னர் ஆவார். இந்த ஏழு வாரியங்கள் வெவ்வேறு நிர்வாக பணிகளை கவனித்தன.</p>',
+          aEn: '<p>The Pandya king <strong>Ninraseernedumaran</strong> ruled by establishing <strong>seven administrative boards (Vaariyanggal)</strong>, each handling different administrative functions.</p>' },
+        { type: 2, q: 'நீரணிக்காரர்கள் என்பவர் யார்?', qEn: 'Who are Neeranikkaraargal?',
+          a: '<p><strong>நீரணிக்காரர்கள்</strong> என்பவர் சங்க காலத்தில் <strong>நீர்நிலைகளை பராமரிக்கும்</strong> பொறுப்பு ஏற்ற அலுவலர்கள் ஆவர். ஏரி, குளம் ஆகியவற்றை சுத்தம் செய்து பராமரித்தனர்.</p>',
+          aEn: '<p><strong>Neeranikkaraargal</strong> were officials responsible for <strong>maintaining water bodies</strong> like lakes and ponds during the Sangam period, keeping them clean and functional.</p>' },
         { type: 2, q: 'மடை குறிப்பு வரைக.', qEn: 'Write a note on Madai (sluice gate).',
           a: '<p><strong>மடை (Sluice)</strong> என்பது ஏரி அல்லது கால்வாயில் நீரை கட்டுப்படுத்த அமைக்கப்படும் <strong>வாயில் (gate)</strong> ஆகும்.</p>',
-          aEn: '<p><strong>Madai (Sluice gate)</strong> is a <strong>gate</strong> installed in tanks or canals to control the flow of water. Opening it directs water to the paddy fields for irrigation.</p>' },
+          aEn: '<p><strong>Madai (Sluice gate)</strong> is a <strong>gate</strong> in tanks or canals to control water flow, directing it to paddy fields for irrigation.</p>' },
+        { type: 2, q: 'நீர்வளம் பற்றிக் குறிப்பு வரைக.', qEn: 'Write a note on water resources (NeerValam).',
+          a: '<p><strong>நீர்வளம்</strong> என்பது ஒரு நாட்டின் அல்லது பகுதியின் <strong>மொத்த நீர் கிடைப்பு</strong> ஆகும். ஆறுகள், ஏரிகள், குளங்கள், நிலத்தடி நீர் ஆகியவை நீர்வளத்தில் அடங்கும்.</p>',
+          aEn: '<p><strong>Neervalm (Water resources)</strong> refers to the <strong>total water availability</strong> in a region, including rivers, lakes, ponds, and groundwater.</p>' },
+        { type: 2, q: 'முறை பானை குறிப்பு வரைக.', qEn: 'Write a note on Murai Paanai (water distribution pot).',
+          a: '<p><strong>முறை பானை</strong> என்பது சங்க காலத்தில் <strong>நீரை சரியான விகிதத்தில் பகிர்ந்தளிக்க</strong> பயன்படுத்தப்பட்ட மட்பாண்டம். இந்த பாண்டத்தில் துளைகள் இருக்கும். நீர் வடிந்து வயல்களுக்கு பாயும்.</p>',
+          aEn: '<p><strong>Murai Paanai</strong> is a clay pot with holes used in the Sangam period to <strong>distribute water in proportionate amounts</strong> to different fields.</p>' },
+        { type: 2, q: 'தமிழ் இலக்கியத்தில் குறிப்பிடப்படும் நீர்நிலைகள் எவை?', qEn: 'What water bodies are mentioned in Tamil literature?',
+          a: '<ul><li><strong>ஆறு</strong> – நதி (River)</li><li><strong>ஏரி</strong> – செயற்கை நீர்நிலை (Tank)</li><li><strong>குளம்</strong> – கிராம நீர்நிலை (Village pond)</li><li><strong>கிணறு</strong> – ஆழ்துளை கிணறு (Well)</li><li><strong>வாய்க்கால்</strong> – கால்வாய் (Canal)</li></ul>',
+          aEn: '<ul><li><strong>Aaru</strong> – River</li><li><strong>Eri</strong> – Artificial tank</li><li><strong>Kulam</strong> – Village pond</li><li><strong>Kinaru</strong> – Well</li><li><strong>Vaaikkal</strong> – Canal</li></ul>' },
+        { type: 2, q: 'மேய்ச்சல் தொழில் பற்றிக் குறிப்பு வரைக.', qEn: 'Write a note on the pastoral occupation.',
+          a: '<p><strong>மேய்ச்சல் தொழில்</strong> என்பது கால்நடைகளை வளர்க்கும் தொழில். <strong>முல்லை திணை</strong> மக்களின் முக்கிய தொழில். ஆடு, மாடு, எருமை வளர்த்தனர். பாலும் பால் பொருட்களும் உணவாக பயன்படுத்தினர்.</p>',
+          aEn: '<p><strong>Pastoral occupation</strong> – rearing cattle; the main occupation of <strong>Mullai landscape</strong> people. They raised sheep, cows, and buffaloes, using milk and dairy products as food.</p>' },
+        { type: 2, q: 'கால்நடைகளுக்கான நீர் நிலை எது?', qEn: 'What is the water source for cattle?',
+          a: '<p>கால்நடைகளுக்கான முக்கிய நீர் ஆதாரங்கள்:</p><ul><li><strong>காட்டுத் தொட்டிகள்</strong> – காட்டில் அமைக்கப்பட்ட தொட்டிகள்</li><li><strong>கிணறுகள்</strong></li><li><strong>ஆறுகள் மற்றும் நீரோடைகள்</strong></li><li><strong>ஏரி மற்றும் குளங்கள்</strong></li></ul>',
+          aEn: '<p>Main water sources for cattle:</p><ul><li><strong>Forest troughs</strong> – specially placed containers in forests</li><li><strong>Wells</strong></li><li><strong>Rivers and streams</strong></li><li><strong>Lakes and ponds</strong></li></ul>' },
+        { type: 2, q: 'வன்புலம் மென்புலம் குறிப்பு வரைக.', qEn: 'Write a note on Vanpulam and Menpulam.',
+          a: '<p><strong>வன்புலம்</strong> என்பது <strong>கடினமான, கற்கள் நிறைந்த</strong> நிலம். இதில் விவசாயம் கடினம்.</p><p><strong>மென்புலம்</strong> என்பது <strong>மென்மையான, வளமான</strong> நிலம். இதில் விவசாயம் எளிது. <strong>நெல், கரும்பு</strong> போன்ற பயிர்கள் விளைவிக்கலாம்.</p>',
+          aEn: '<p><strong>Vanpulam</strong> – Hard, rocky land where farming is difficult.</p><p><strong>Menpulam</strong> – Soft, fertile land where farming is easy, suitable for paddy and sugarcane cultivation.</p>' },
+        { type: 2, q: 'சங்க கால நூல்களில் குறிப்பிடப்படும் கடல்வாழ் பறவைகள் யாவை?', qEn: 'What seabirds are mentioned in Sangam literature?',
+          a: '<ul><li><strong>கடல் காகம்</strong> (Sea crow / Cormorant)</li><li><strong>அன்னம்</strong> (Swan)</li><li><strong>நாரை</strong> (Heron/Crane)</li><li><strong>கடல் வாத்து</strong> (Sea duck)</li><li><strong>கடற்குருவி</strong> (Seagull)</li></ul>',
+          aEn: '<ul><li>Cormorant (Sea crow)</li><li>Swan (Annam)</li><li>Heron/Crane (Naarai)</li><li>Sea duck</li><li>Seagull</li></ul>' },
         { type: 2, q: 'முத்துக்குளித்தல் குறிப்பு வரைக.', qEn: 'Write a note on pearl diving.',
           a: '<p><strong>முத்துக்குளித்தல்</strong> என்பது கடலில் முங்கி <strong>முத்தெடுக்கும் தொழில்</strong> ஆகும். சங்க காலத்தில் <strong>கொற்கை</strong> முத்து வணிகத்திற்கு பிரசித்தமான இடம்.</p>',
-          aEn: '<p><strong>Pearl diving</strong> is the profession of diving into the sea to collect pearls. During the Sangam period, <strong>Korkai</strong> was a famous center for pearl trade. These pearls were exported to foreign countries.</p>' },
+          aEn: '<p><strong>Pearl diving</strong> – diving into the sea to collect pearls. During the Sangam period, <strong>Korkai</strong> was a famous center for pearl trade, with pearls exported to foreign countries.</p>' },
         { type: 2, q: 'குளங்களின் நான்கு நன்மைகளை எழுதுக.', qEn: 'Write four benefits of tanks/ponds.',
           a: '<ul><li><strong>1. பாசன நீர்</strong> – விவசாயத்திற்கு தண்ணீர்</li><li><strong>2. குடிநீர்</strong> – மக்களுக்கும் கால்நடைகளுக்கும்</li><li><strong>3. மீன் வளர்ப்பு</strong> – மீன்பிடி தொழில்</li><li><strong>4. நிலத்தடி நீர் பெருக்கம்</strong> – கிணறுகளில் நீர் இருக்கும்</li></ul>',
-          aEn: '<ul><li><strong>1. Irrigation water</strong> – Water for farming and agriculture</li><li><strong>2. Drinking water</strong> – For people and livestock</li><li><strong>3. Fish farming</strong> – Supporting the fishing industry</li><li><strong>4. Groundwater recharge</strong> – Wells will have sufficient water</li></ul>' },
+          aEn: '<ul><li>Irrigation water for farming</li><li>Drinking water for people and livestock</li><li>Fish farming support</li><li>Groundwater recharge for wells</li></ul>' },
         { type: 16, q: 'சங்க காலத்து நீர் மேலாண்மை பற்றி விரிவாக எழுதவும்.', qEn: 'Write in detail about water management during the Sangam period.',
-          a: '<p><strong>நீர்நிலை வகைகள்:</strong></p><ul><li><strong>கல்லணை</strong> – கரிகால் சோழன் கட்டிய உலகின் மிகப் பழமையான அணை</li><li><strong>ஏரிகள்</strong> – மழை நீர் சேகரிக்கும் செயற்கை ஏரிகள்</li><li><strong>குளங்கள்</strong> – கிராம மட்ட நீர்நிலைகள்</li><li><strong>கால்வாய்கள்</strong> – வயல்களுக்கு நீர் பாயும் வழிகள்</li></ul><p><strong>நீர் நிர்வாக முறைகள்:</strong></p><ul><li>நீர் வெட்டியார் – நீர் பகிர்வு அலுவலர்</li><li>முறை பாளை – நியாயமான நீர் பகிர்வு முறை</li></ul>',
-          aEn: '<p><strong>Types of Water Bodies:</strong></p><ul><li><strong>Kallanai</strong> – The world\'s oldest dam, built by Karikaal Cholan</li><li><strong>Eris (tanks)</strong> – Man-made tanks to collect rainwater</li><li><strong>Kulams (ponds)</strong> – Village-level water bodies</li><li><strong>Canals</strong> – Channels to direct water to fields</li></ul><p><strong>Water Management Methods:</strong></p><ul><li>Neer Vettiyaar – Water distribution officer</li><li>Murai Paalai – A fair system for distributing water equally</li></ul>' },
+          a: '<p><strong>நீர்நிலை வகைகள்:</strong></p><ul><li><strong>கல்லணை</strong> – கரிகால் சோழன் கட்டிய உலகின் மிகப் பழமையான அணை</li><li><strong>ஏரிகள்</strong> – மழை நீர் சேகரிக்கும் செயற்கை ஏரிகள்</li><li><strong>குளங்கள்</strong> – கிராம மட்ட நீர்நிலைகள்</li><li><strong>கால்வாய்கள்</strong> – வயல்களுக்கு நீர் பாயும் வழிகள்</li></ul><p><strong>நீர் நிர்வாக முறைகள்:</strong></p><ul><li>நீர் வெட்டியார் – நீர் பகிர்வு அலுவலர்</li><li>முறை பாளை – நியாயமான நீர் பகிர்வு முறை</li><li>நீரணிக்காரர்கள் – நீர்நிலைகள் பராமரிப்பு</li></ul>',
+          aEn: '<p><strong>Water Bodies:</strong> Kallanai (oldest dam), Eris (tanks), Kulams (village ponds), Canals</p><p><strong>Management:</strong> Neer Vettiyaar (water distribution officer), Murai Paalai (fair water distribution system), Neeranikkaraargal (maintenance officials)</p>' },
         { type: 16, q: 'கல்லணை - அதன் கட்டுமானம், நோக்கம் மற்றும் வரலாற்று முக்கியத்துவம் பற்றி விளக்குக.', qEn: 'Explain Kallanai – its construction, purpose, and historical significance.',
-          a: '<p><strong>கட்டிய மன்னர்:</strong> கரிகால் சோழன் | <strong>இடம்:</strong> காவேரி நதி | <strong>அளவு:</strong> நீளம் 329 மீட்டர்</p><p><strong>கட்டுமான முறை:</strong></p><ul><li>கற்களை சுண்ணாம்பு சாந்து இல்லாமல் நிரைத்தனர்</li><li>நதியின் குறுக்கே கட்டினர்</li></ul><p><strong>வரலாற்று முக்கியத்துவம்:</strong></p><ul><li>உலகின் மிகப் பழமையான நீர்த்தேக்க அமைப்பு</li><li>2000 ஆண்டுகளுக்கும் மேலாக இன்றும் பயன்பாட்டில் உள்ளது</li></ul>',
-          aEn: '<p><strong>Builder:</strong> Karikaal Cholan | <strong>Location:</strong> Kaveri River | <strong>Length:</strong> 329 meters</p><p><strong>Construction Method:</strong></p><ul><li>Stones were laid without lime mortar</li><li>Built across the river to divert and regulate water flow</li></ul><p><strong>Historical Significance:</strong></p><ul><li>The world\'s oldest irrigation structure</li><li>Still in use after more than 2000 years</li><li>British engineer Sir Arthur Cotton was amazed by its precision</li></ul>' },
+          a: '<p><strong>கட்டிய மன்னர்:</strong> கரிகால் சோழன் | <strong>இடம்:</strong> காவேரி நதி, திருச்சிராப்பள்ளி | <strong>அளவு:</strong> நீளம் 329 மீட்டர்</p><p><strong>கட்டுமான முறை:</strong></p><ul><li>கற்களை சுண்ணாம்பு சாந்து இல்லாமல் நிரைத்தனர்</li><li>நதியின் குறுக்கே கட்டினர்</li></ul><p><strong>நோக்கம்:</strong></p><ul><li>காவேரி நீரை பல கிளை ஆறுகளுக்கு திசைமாற்றுதல்</li><li>வெள்ளக் கட்டுப்பாடு</li><li>விவசாயத்திற்கு நீர் வழங்குதல்</li></ul><p><strong>வரலாற்று முக்கியத்துவம்:</strong></p><ul><li>உலகின் மிகப் பழமையான நீர்த்தேக்க அமைப்பு</li><li>2000 ஆண்டுகளுக்கும் மேலாக இன்றும் பயன்பாட்டில் உள்ளது</li><li>ஆர்தர் காட்டன் என்ற ஆங்கிலேய பொறியாளர் இதன் நுட்பத்தால் வியந்தார்</li></ul>',
+          aEn: '<p><strong>Builder:</strong> Karikaal Cholan | <strong>Location:</strong> Kaveri River, Tiruchirappalli | <strong>Length:</strong> 329 meters</p><p><strong>Construction:</strong> Stones laid without lime mortar; built across the river</p><p><strong>Purpose:</strong> Divert Kaveri water to branch rivers; flood control; agricultural irrigation</p><p><strong>Significance:</strong> World\'s oldest irrigation structure; still in use after 2000+ years; amazed British engineer Sir Arthur Cotton</p>' },
+        { type: 16, q: 'சங்க காலத்தில் தமிழர்களின் விவசாயம் பற்றி எழுதவும்.', qEn: 'Write about agriculture of Tamils during the Sangam period.',
+          a: '<p><strong>முக்கிய பயிர்கள்:</strong></p><ul><li><strong>நெல்</strong> – முக்கிய உணவு பயிர்</li><li><strong>கரும்பு</strong> – சர்க்கரை தயாரிப்புக்கு</li><li><strong>மிளகு</strong> – ஏற்றுமதி பயிர்</li><li><strong>பருத்தி</strong> – நெசவுக்கு</li></ul><p><strong>விவசாய கருவிகள்:</strong></p><ul><li>இரும்பு கலப்பை – நிலம் உழுதல்</li><li>அரிவாள் – அறுவடை</li><li>வாய்க்கால்கள் – நீர் பாசனம்</li></ul><p><strong>நில வகைகள்:</strong> வன்புலம், மென்புலம், நடுத்தர நிலம்</p>',
+          aEn: '<p><strong>Main Crops:</strong> Paddy (staple), Sugarcane, Pepper (export), Cotton (weaving)</p><p><strong>Agricultural Tools:</strong> Iron plough (tilling), Sickle (harvesting), Canals (irrigation)</p><p><strong>Land Types:</strong> Vanpulam (hard land), Menpulam (soft fertile land), medium land</p>' },
+        { type: 16, q: 'பழங்காலத்தில் முத்து சேகரிப்பு மற்றும் முத்துக்குளித்தல் செயல்முறை பற்றி விரிவாக விளக்குக.', qEn: 'Explain in detail about pearl collection and pearl diving process in ancient times.',
+          a: '<p><strong>முத்துக்குளித்தல் மையங்கள்:</strong></p><ul><li><strong>கொற்கை</strong> – தமிழகத்தின் பிரசித்தமான முத்து வணிக நகர்</li><li><strong>மன்னார் வளைகுடா</strong> – முத்துக்குளித்தல் இடம்</li></ul><p><strong>முத்துக்குளிப்பவர்கள்:</strong></p><ul><li><strong>பரதவர்</strong> – கடலில் நன்றாக முங்கும் திறன் கொண்டவர்கள்</li><li>மூக்கை அடைத்துக்கொண்டு கடலில் குளித்தனர்</li></ul><p><strong>முத்து வணிகம்:</strong></p><ul><li>உரோமானிய வணிகர்களுக்கு ஏற்றுமதி செய்தனர்</li><li>அரசர்களுக்கான அணிகலன்களில் பயன்பட்டது</li></ul>',
+          aEn: '<p><strong>Pearl Diving Centers:</strong> Korkai (famous Tamil pearl trade city), Gulf of Mannar</p><p><strong>Divers:</strong> Paratavar community; skilled in deep-sea diving; plugged nostrils to dive</p><p><strong>Pearl Trade:</strong> Exported to Roman merchants; used in royal ornaments</p>' },
+        { type: 16, q: 'சங்க காலத்தில் கால்நடை வளர்ப்பு, கால்நடை மேலாண்மை, விலங்கு வளர்ப்பு முறைகள் பற்றி எழுதுக.', qEn: 'Write about cattle rearing, cattle management, and animal husbandry methods during the Sangam period.',
+          a: '<p><strong>கால்நடை வகைகள்:</strong></p><ul><li>மாடு, எருமை – உழவு மற்றும் பால்</li><li>ஆடு – பால் மற்றும் இறைச்சி</li><li>குதிரை – போர் மற்றும் பயணம்</li><li>யானை – போர் மற்றும் சரக்கு</li></ul><p><strong>மேய்ச்சல் இடங்கள்:</strong> முல்லை திணை (காடு சார்ந்த பகுதி)</p><p><strong>கால்நடை மேலாண்மை:</strong></p><ul><li>குறிப்பிட்ட கால்நடைகளுக்கு மதிப்பு மரியாதை</li><li>கறவை மாடுகளை சிறப்பாக பராமரிக்கினர்</li><li>நோயுற்ற கால்நடைகளுக்கு மூலிகை மருந்து</li></ul>',
+          aEn: '<p><strong>Cattle Types:</strong> Cows/Buffalo (ploughing, milk), Goats (milk, meat), Horses (war, travel), Elephants (war, transport)</p><p><strong>Grazing Areas:</strong> Mullai landscape (forest region)</p><p><strong>Management:</strong> Special care for milch cows; herbal medicine for sick animals; cattle held in high regard</p>' }
       ]
     },
     {
-      id: 'u5',
-      label: 'அலகு V',
-      labelEn: 'Unit V',
-      title: 'அறிவியல் தமிழ் மற்றும் கணித்தமிழ்',
-      titleEn: 'Scientific Tamil & Mathematical Tamil',
-      icon: '💻',
+      id: 'u5', label: 'அலகு V', labelEn: 'Unit V',
+      title: 'அறிவியல் தமிழ் மற்றும் கணித்தமிழ்', titleEn: 'Scientific Tamil & Mathematical Tamil', icon: '💻',
       questions: [
         { type: 2, q: 'கணித்தமிழ் குறிப்பு வரைக.', qEn: 'Write a note on Kanitha Tamil (Mathematical Tamil).',
           a: '<p><strong>கணித்தமிழ்</strong> என்பது கணிதக் கருத்துக்களை தமிழ் மொழியில் விளக்கும் துறை. <strong>கணக்கதிகாரம்</strong> போன்ற நூல்கள் கணித தமிழின் வளர்ச்சியை காட்டுகின்றன.</p>',
-          aEn: '<p><strong>Kanitha Tamil</strong> is the field of explaining mathematical concepts in the Tamil language. Books like <strong>Kanakkadhikaram</strong> demonstrate the growth of mathematical Tamil through history.</p>' },
+          aEn: '<p><strong>Kanitha Tamil</strong> is the field of explaining mathematical concepts in Tamil. Books like <strong>Kanakkadhikaram</strong> demonstrate the growth of mathematical Tamil.</p>' },
         { type: 2, q: 'தமிழ் இணையக் கல்விக் கழகம் எந்த ஆண்டு தொடங்கப்பட்டது?', qEn: 'In which year was Tamil Virtual Academy (TVA) established?',
           a: '<p><strong>தமிழ் இணையக் கல்விக் கழகம் (Tamil Virtual Academy – TVA)</strong> <strong>2001-ம் ஆண்டு</strong> தொடங்கப்பட்டது.</p>',
-          aEn: '<p><strong>Tamil Virtual Academy (TVA)</strong> was established in the year <strong>2001</strong>. It promotes Tamil language education and resources through the internet.</p>' },
+          aEn: '<p><strong>Tamil Virtual Academy (TVA)</strong> was established in <strong>2001</strong>, promoting Tamil language education through the internet.</p>' },
         { type: 2, q: 'மின்னூல் அமைப்புகள் மூன்றினைக் கூறுக.', qEn: 'Name three e-book formats.',
           a: '<ul><li><strong>PDF</strong> – Adobe நிறுவனம் உருவாக்கியது</li><li><strong>EPUB</strong> – திரையில் படிக்க ஏற்றது</li><li><strong>MOBI / Kindle Format</strong> – Amazon Kindle-க்கான வடிவம்</li></ul>',
-          aEn: '<ul><li><strong>PDF</strong> – Developed by Adobe, fixed layout format</li><li><strong>EPUB</strong> – Reflowable format, adapts to screen size</li><li><strong>MOBI / Kindle Format</strong> – Amazon Kindle\'s proprietary format</li></ul>' },
+          aEn: '<ul><li><strong>PDF</strong> – Developed by Adobe</li><li><strong>EPUB</strong> – Reflowable format for screens</li><li><strong>MOBI / Kindle Format</strong> – Amazon Kindle format</li></ul>' },
+        { type: 2, q: 'தமிழ் மென்பொருள் உருவாக்கும் இடங்களைக் கூறுக.', qEn: 'Name the places where Tamil software is developed.',
+          a: '<ul><li><strong>IIT Madras</strong> – தமிழ் NLP மற்றும் Corpus</li><li><strong>Anna University (AU-KBC)</strong> – AU-KBC Tamil Corpus</li><li><strong>CDAC Pune</strong> – இந்திய மொழி மென்பொருள்</li><li><strong>Tamil Virtual Academy (TVA)</strong> – Online Tamil resources</li><li><strong>Microsoft Research India</strong> – Tamil speech recognition</li></ul>',
+          aEn: '<ul><li><strong>IIT Madras</strong> – Tamil NLP and Corpus</li><li><strong>Anna University (AU-KBC)</strong> – Tamil Corpus</li><li><strong>CDAC Pune</strong> – Indian language software</li><li><strong>Tamil Virtual Academy</strong> – Online Tamil resources</li><li><strong>Microsoft Research India</strong> – Tamil speech recognition</li></ul>' },
         { type: 2, q: 'மின் நூலகம் குறிப்பு வரைக.', qEn: 'Write a note on E-Library.',
           a: '<p><strong>மின் நூலகம் (E-Library)</strong> என்பது புத்தகங்கள், ஆவணங்கள் போன்றவற்றை <strong>இணையத்தில் மின்னணு வடிவில் சேமித்து</strong> படிக்கும் வசதி. <strong>www.projectmadurai.org</strong> போன்றவை தமிழ் மின் நூலகங்கள்.</p>',
-          aEn: '<p>An <strong>E-Library</strong> is a facility to store and read books, documents, and resources in <strong>digital format on the internet</strong>. <strong>www.projectmadurai.org</strong> is an example of a Tamil e-library offering free access to Sangam literature.</p>' },
+          aEn: '<p>An <strong>E-Library</strong> stores and provides access to books and documents in <strong>digital format on the internet</strong>. <strong>www.projectmadurai.org</strong> is a Tamil e-library offering free access to Sangam literature.</p>' },
+        { type: 2, q: 'மின் அகராதி குறித்து எழுதுக.', qEn: 'Write about e-dictionary.',
+          a: '<p><strong>மின் அகராதி (E-Dictionary)</strong> என்பது <strong>இணையத்தில் அல்லது மென்பொருளில்</strong> கிடைக்கும் அகராதி. <strong>மதுரம் மின் அகராதி</strong> தமிழின் பிரசித்தமான மின் அகராதி. தமிழ் – ஆங்கிலம், ஆங்கிலம் – தமிழ் என்று வகைப்படுத்தப்பட்டுள்ளன.</p>',
+          aEn: '<p>An <strong>E-Dictionary</strong> is a dictionary available <strong>online or as software</strong>. <strong>Maduram E-dictionary</strong> is a famous Tamil e-dictionary, available in Tamil-English and English-Tamil formats.</p>' },
+        { type: 2, q: 'மதுரம் மின் அகராதியில் எத்தனை கூறுகள் உள்ளன?', qEn: 'How many sections are in the Maduram e-dictionary?',
+          a: '<p><strong>மதுரம் மின் அகராதியில் (Maduram E-Dictionary)</strong> பொதுவாக <strong>மூன்று முக்கிய கூறுகள்</strong> உள்ளன:</p><ol><li>தமிழ் – தமிழ் அகராதி</li><li>தமிழ் – ஆங்கிலம் அகராதி</li><li>ஆங்கிலம் – தமிழ் அகராதி</li></ol>',
+          aEn: '<p>The <strong>Maduram E-Dictionary</strong> generally has <strong>three main sections</strong>:</p><ol><li>Tamil – Tamil dictionary</li><li>Tamil – English dictionary</li><li>English – Tamil dictionary</li></ol>' },
+        { type: 2, q: 'தமிழ் விக்சனரி -குறிப்பு வரைக.', qEn: 'Write a note on Tamil Wiktionary.',
+          a: '<p><strong>தமிழ் விக்சனரி</strong> என்பது <strong>விக்கிபீடியா நிறுவனம்</strong> நடத்தும் இலவச இணைய அகராதி. இதில் தமிழ் சொற்களின் பொருள், வேர்ச்சொல், வகை, உதாரண வாக்கியங்கள் தரப்படுகின்றன. யார் வேண்டுமானாலும் திருத்தி சேர்க்கலாம்.</p>',
+          aEn: '<p><strong>Tamil Wiktionary</strong> is a free online dictionary by the <strong>Wikipedia foundation</strong>. It provides meaning, root word, category, and example sentences for Tamil words. Anyone can edit and contribute.</p>' },
         { type: 2, q: 'சொற்குவைத்திட்டம் என்றால் என்ன?', qEn: 'What is a Corpus (Sorkkuvai Thittam)?',
           a: '<p><strong>சொற்குவைத்திட்டம் (Corpus)</strong> என்பது ஒரு மொழியில் உள்ள <strong>இலட்சக்கணக்கான வாக்கியங்கள் மற்றும் சொற்களை கணினியில் சேகரித்து வைக்கும் தொகுப்பு</strong>. மொழி ஆராய்ச்சிக்கும் மொழி மென்பொருள் தயாரிக்கவும் பயன்படும்.</p>',
-          aEn: '<p>A <strong>Corpus (Sorkkuvai Thittam)</strong> is a large digital collection of <strong>millions of sentences and words in a language stored on a computer</strong>. It is used for language research and developing language software like translation tools and spell checkers.</p>' },
+          aEn: '<p>A <strong>Corpus</strong> is a large digital collection of <strong>millions of sentences and words in a language</strong>. Used for language research and developing language software like translation tools and spell checkers.</p>' },
+        { type: 2, q: 'சொற்குவையின் முதன்மை நோக்கங்கள் யாவை?', qEn: 'What are the primary objectives of a corpus?',
+          a: '<ul><li><strong>மொழி ஆராய்ச்சி</strong> – சொல் பயன்பாட்டு முறை ஆய்வு</li><li><strong>தானியங்கி மொழிபெயர்ப்பு</strong> – Google Translate போன்ற மென்பொருட்களுக்கு</li><li><strong>குரல் அங்கீகாரம்</strong> – Speech Recognition</li><li><strong>எழுத்துப்பிழை திருத்தம்</strong> – Spell check</li></ul>',
+          aEn: '<ul><li>Language research – studying word usage patterns</li><li>Automatic translation – for Google Translate type software</li><li>Speech Recognition – voice-based Tamil input</li><li>Spell Check – correcting spelling errors</li></ul>' },
+        { type: 2, q: 'தமிழ் இணையக் கல்விக்கழகத்தின் முந்தைய பெயர் என்ன?', qEn: 'What was the previous name of Tamil Virtual Academy?',
+          a: '<p>தமிழ் இணையக் கல்விக்கழகத்தின் முந்தைய பெயர் <strong>"தமிழ் இணைய கல்வி நிறுவனம்"</strong> அல்லது <strong>TELI (Tamil e-Learning Institute)</strong> என்று அழைக்கப்பட்டது.</p>',
+          aEn: '<p>The previous name of Tamil Virtual Academy was <strong>"Tamil e-Learning Institute (TELI)"</strong>.</p>' },
+        { type: 2, q: 'வலைப்பூவில் தமிழ் வளர்ச்சி குறித்து எழுதுக.', qEn: 'Write about Tamil growth in blogs.',
+          a: '<p>வலைப்பூக்களில் (Blogs) தமிழில் இலக்கியம், அரசியல், தொழில்நுட்பம் உள்ளிட்ட பல்வேறு தலைப்புகளில் எழுதப்படுகின்றன. <strong>தமிழ் வலைப்பதிவுகள்</strong> 2000-ம் ஆண்டில் இருந்து வேகமாக வளர்ந்துள்ளன. Blogger, WordPress தளங்களில் இலட்சக்கணக்கான தமிழ் வலைப்பூக்கள் உள்ளன.</p>',
+          aEn: '<p>Tamil blogs cover literature, politics, technology, and more. <strong>Tamil blogging</strong> has grown rapidly since 2000, with millions of Tamil blogs on Blogger and WordPress platforms.</p>' },
         { type: 2, q: 'வலைப்பூ குறிப்பு வரைக.', qEn: 'Write a note on Blog (Valaippoo).',
           a: '<p><strong>வலைப்பூ (Blog)</strong> என்பது இணையத்தில் தனி நபர் அல்லது குழு தங்கள் கருத்துகள், கட்டுரைகளை எழுதும் தளம். <strong>Blogger, WordPress</strong> போன்ற தளங்களில் வலைப்பூ எழுதலாம்.</p>',
-          aEn: '<p>A <strong>Blog (Valaippoo)</strong> is a website where an individual or group writes their opinions and articles on the internet. Blogs can be created on platforms like <strong>Blogger and WordPress</strong>.</p>' },
+          aEn: '<p>A <strong>Blog</strong> is a website where individuals or groups write opinions and articles. Created on platforms like <strong>Blogger and WordPress</strong>.</p>' },
+        { type: 2, q: 'இணையத்தில் தமிழ் அகராதிகள் குறித்து சிறு குறிப்பு வரைக.', qEn: 'Write a brief note on Tamil dictionaries on the internet.',
+          a: '<ul><li><strong>மதுரம் தமிழ் அகராதி</strong> – www.madurai.com</li><li><strong>University of Madras Tamil Lexicon</strong> – பழந்தமிழ் சொற்கள்</li><li><strong>தமிழ் விக்சனரி</strong> – விக்கி அடிப்படையிலானது</li><li><strong>Google Translate</strong> – தானியங்கி மொழிபெயர்ப்பு</li></ul>',
+          aEn: '<ul><li><strong>Maduram Tamil Dictionary</strong> – www.madurai.com</li><li><strong>University of Madras Tamil Lexicon</strong> – Classical Tamil words</li><li><strong>Tamil Wiktionary</strong> – Wiki-based dictionary</li><li><strong>Google Translate</strong> – Automatic translation</li></ul>' },
+        { type: 2, q: 'தமிழ் மென்பொருள் உருவாக்கத்தின் பயன்கள் யாவை?', qEn: 'What are the benefits of Tamil software development?',
+          a: '<ul><li>தமிழில் கணினி பயன்படுத்த முடிகிறது</li><li>தமிழ் உரைகளை எளிதாக தட்டச்சு செய்யலாம்</li><li>இணையத்தில் தமிழ் உள்ளடக்கம் அதிகரிக்கிறது</li><li>தமிழ் மொழி நவீன தொழில்நுட்பத்தில் வாழ்கிறது</li><li>கல்வி மற்றும் வணிகத்தில் தமிழ் பயன்படுகிறது</li></ul>',
+          aEn: '<ul><li>Enables using computers in Tamil</li><li>Easy Tamil text typing</li><li>Increases Tamil content on the internet</li><li>Tamil language survives in modern technology</li><li>Tamil used in education and business</li></ul>' },
         { type: 16, q: 'கணித்தமிழ் வளர்ச்சி குறித்து விவரித்து எழுதுக.', qEn: 'Write in detail about the development of Kanitha Tamil.',
           a: '<p><strong>பண்டைய கணித்தமிழ் நூல்கள்:</strong></p><ul><li>கணக்கதிகாரம் – தொகுப்பு கணக்கு</li><li>கணிதசாரம்</li></ul><p><strong>தமிழ் அளவை முறைகள்:</strong></p><ul><li><strong>நீள அளவு</strong> – விரல், சாண், முழம், கோல், காதம்</li><li><strong>நிறை அளவு</strong> – குன்றிமணி, பலம், மணை, வீசை</li><li><strong>திரவ அளவு</strong> – உழக்கு, படி, ஆழாக்கு</li></ul>',
-          aEn: '<p><strong>Ancient Mathematical Tamil Texts:</strong></p><ul><li>Kanakkadhikaram – Arithmetic and mathematics</li><li>Kanita Saram</li></ul><p><strong>Tamil Measurement Systems:</strong></p><ul><li><strong>Length measures</strong> – Viral (finger), Saan, Muzham, Kol, Kaadham</li><li><strong>Weight measures</strong> – Kundrimani, Palam, Manai, Veesei</li><li><strong>Volume measures</strong> – Uzhakku, Padi, Aazhaakku</li></ul>' },
+          aEn: '<p><strong>Ancient Mathematical Tamil Texts:</strong> Kanakkadhikaram, Kanita Saram</p><p><strong>Tamil Measurement Systems:</strong></p><ul><li>Length: Viral, Saan, Muzham, Kol, Kaadham</li><li>Weight: Kundrimani, Palam, Manai, Veesei</li><li>Volume: Uzhakku, Padi, Aazhaakku</li></ul>' },
         { type: 16, q: 'மின்நூல்கள் பற்றி விவரித்து எழுதுக.', qEn: 'Write in detail about e-books.',
-          a: '<p><strong>மின்நூல் வடிவங்கள்:</strong></p><ul><li>PDF – Adobe தயாரித்தது</li><li>EPUB – திரை அளவிற்கு ஏற்ப மாறும்</li><li>MOBI/AZW – Kindle படிப்பான்களுக்கு</li></ul><p><strong>தமிழ் மின்நூல் தளங்கள்:</strong></p><ul><li>Project Madurai (projectmadurai.org) – சங்க நூல்கள் இலவசம்</li><li>Tamil Virtual Academy (tamilvu.org)</li></ul>',
-          aEn: '<p><strong>E-Book Formats:</strong></p><ul><li>PDF – Made by Adobe, universal format</li><li>EPUB – Adapts to different screen sizes</li><li>MOBI/AZW – Specifically for Kindle e-readers</li></ul><p><strong>Tamil E-Book Platforms:</strong></p><ul><li>Project Madurai (projectmadurai.org) – Free Sangam literature</li><li>Tamil Virtual Academy (tamilvu.org)</li></ul><p><strong>Advantages:</strong></p><ul><li>Thousands of books without physical weight</li><li>Search feature and access from anywhere</li></ul>' },
+          a: '<p><strong>மின்நூல் வடிவங்கள்:</strong></p><ul><li>PDF – Adobe தயாரித்தது</li><li>EPUB – திரை அளவிற்கு ஏற்ப மாறும்</li><li>MOBI/AZW – Kindle படிப்பான்களுக்கு</li></ul><p><strong>தமிழ் மின்நூல் தளங்கள்:</strong></p><ul><li>Project Madurai (projectmadurai.org) – சங்க நூல்கள் இலவசம்</li><li>Tamil Virtual Academy (tamilvu.org)</li></ul><p><strong>நன்மைகள்:</strong></p><ul><li>ஆயிரக்கணக்கான புத்தகங்கள் எடை இல்லாமல்</li><li>தேடும் வசதி மற்றும் எங்கிருந்தும் படிக்கலாம்</li></ul>',
+          aEn: '<p><strong>E-Book Formats:</strong> PDF (Adobe), EPUB (reflowable), MOBI/AZW (Kindle)</p><p><strong>Tamil Platforms:</strong> Project Madurai (free Sangam texts), Tamil Virtual Academy (tamilvu.org)</p><p><strong>Advantages:</strong> Thousands of books without physical weight; search function; accessible anywhere</p>' },
+        { type: 16, q: 'இணைய அகராதி அல்லது மின் அகராதி குறித்து விளக்குக.', qEn: 'Explain online dictionary or e-dictionary.',
+          a: '<p><strong>மின் அகராதி (E-Dictionary) என்றால் என்ன?</strong></p><p>இணையத்தில் அல்லது கணினி மென்பொருளில் கிடைக்கும் அகராதி <strong>மின் அகராதி</strong> எனப்படும்.</p><p><strong>சிறப்புகள்:</strong></p><ul><li>உடனடி சொல் தேடல்</li><li>ஒலிப்பு (Pronunciation) வழிகாட்டல்</li><li>வாக்கிய உதாரணங்கள்</li><li>படங்களுடன் விளக்கம்</li></ul><p><strong>பிரசித்தமான தமிழ் மின் அகராதிகள்:</strong></p><ul><li>மதுரம் (Maduram) – தமிழ்-ஆங்கிலம்</li><li>University of Madras Tamil Lexicon</li><li>தமிழ் விக்சனரி</li></ul>',
+          aEn: '<p><strong>E-Dictionary:</strong> A dictionary available online or as software.</p><p><strong>Features:</strong> Instant word search; Pronunciation guide; Example sentences; Illustrated explanations</p><p><strong>Famous Tamil E-dictionaries:</strong> Maduram (Tamil-English); University of Madras Tamil Lexicon; Tamil Wiktionary</p>' },
         { type: 16, q: 'சொற்குவைத் திட்டங்களையும் அவற்றின் நோக்கங்களையும் விவரித்து எழுதுக.', qEn: 'Describe corpus projects and their objectives.',
-          a: '<p><strong>தமிழ் சொற்குவை திட்டங்கள்:</strong></p><ul><li>IIT Madras Tamil Corpus</li><li>AU-KBC Tamil Corpus</li><li>TDIL (Technology Development for Indian Languages)</li></ul><p><strong>நோக்கங்கள்:</strong></p><ul><li>மொழி ஆராய்ச்சி – சொல் பயன்பாட்டு முறை ஆய்வு</li><li>தானியங்கி மொழிபெயர்ப்பு – Google Translate போன்ற மென்பொருட்களுக்கு</li><li>Speech Recognition – குரல் மூலம் தமிழ் தட்டச்சு செய்ய</li></ul>',
-          aEn: '<p><strong>Tamil Corpus Projects:</strong></p><ul><li>IIT Madras Tamil Corpus</li><li>AU-KBC Tamil Corpus</li><li>TDIL (Technology Development for Indian Languages)</li></ul><p><strong>Objectives:</strong></p><ul><li>Language research – studying word usage patterns</li><li>Automatic translation – for software like Google Translate</li><li>Speech Recognition – typing Tamil using voice input</li><li>Spell Check – correcting spelling errors in Tamil</li></ul>' },
+          a: '<p><strong>தமிழ் சொற்குவை திட்டங்கள்:</strong></p><ul><li>IIT Madras Tamil Corpus</li><li>AU-KBC Tamil Corpus</li><li>TDIL (Technology Development for Indian Languages)</li></ul><p><strong>நோக்கங்கள்:</strong></p><ul><li>மொழி ஆராய்ச்சி – சொல் பயன்பாட்டு முறை ஆய்வு</li><li>தானியங்கி மொழிபெயர்ப்பு – Google Translate போன்ற மென்பொருட்களுக்கு</li><li>Speech Recognition – குரல் மூலம் தமிழ் தட்டச்சு செய்ய</li><li>Spell Check – எழுத்துப்பிழை திருத்தம்</li></ul>',
+          aEn: '<p><strong>Tamil Corpus Projects:</strong> IIT Madras Tamil Corpus; AU-KBC Tamil Corpus; TDIL</p><p><strong>Objectives:</strong> Language research; Automatic translation (Google Translate type); Speech Recognition; Spell Check</p>' },
+        { type: 16, q: 'அறிவியல் தமிழ் என்னும் தலைப்பில் கட்டுரை எழுதுக.', qEn: 'Write an essay on the topic "Scientific Tamil".',
+          a: '<p><strong>அறிவியல் தமிழ் (Scientific Tamil):</strong></p><p><strong>முன்னுரை:</strong> அறிவியல் கருத்துக்களை தமிழ் மொழியில் விளக்குவதே அறிவியல் தமிழ்.</p><p><strong>பண்டைய அறிவியல் தமிழ்:</strong></p><ul><li>திருக்குறளில் மருத்துவம் மற்றும் நீதி அறிவியல்</li><li>சித்தர் மருத்துவ நூல்கள்</li><li>நட்சத்திர அறிவியல் (Astronomy)</li></ul><p><strong>நவீன அறிவியல் தமிழ்:</strong></p><ul><li>தமிழ் அறிவியல் சொற்கள் உருவாக்கம்</li><li>தமிழ் நுட்பசொல் கலைக்களஞ்சியம்</li><li>அறிவியல் நூல்களை தமிழில் மொழிபெயர்த்தல்</li></ul><p><strong>முக்கியத்துவம்:</strong> தமிழ் மொழியை நவீன அறிவியல் காலத்திலும் வாழவைக்கிறது.</p>',
+          aEn: '<p><strong>Scientific Tamil:</strong></p><p><strong>Introduction:</strong> Explaining scientific concepts in Tamil language.</p><p><strong>Ancient Scientific Tamil:</strong> Medicine and moral science in Thirukkural; Siddhar medical texts; Astronomy</p><p><strong>Modern Scientific Tamil:</strong> Creating Tamil scientific terminology; Tamil technical encyclopedia; Translating science books into Tamil</p><p><strong>Significance:</strong> Keeps Tamil language alive and relevant in the modern scientific era.</p>' }
       ]
     }
   ]
 };
 
-// ─────────────────────────────────────────────
 // STATE
-// ─────────────────────────────────────────────
-let activeUnit = 'all';
-let activeFilter = 'all';
-let currentLang = 'ta';
-let doneSet = new Set(JSON.parse(localStorage.getItem('tamilDone_v2') || '[]'));
+let activeUnit = 'all', activeFilter = 'all', currentLang = 'ta';
+let doneSet = new Set(JSON.parse(localStorage.getItem('tamilDone_v3') || '[]'));
 let speakingId = null;
 
-// ─────────────────────────────────────────────
-// LANGUAGE
-// ─────────────────────────────────────────────
 function setLang(lang) {
   currentLang = lang;
   document.body.className = 'lang-' + lang;
@@ -835,14 +527,8 @@ function setLang(lang) {
   document.getElementById('btn' + lang.charAt(0).toUpperCase() + lang.slice(1))?.classList.add('active');
 }
 
-// ─────────────────────────────────────────────
-// RENDER
-// ─────────────────────────────────────────────
 function getCardId(uid, idx) { return uid + '-' + idx; }
-
-function saveDone() {
-  localStorage.setItem('tamilDone_v2', JSON.stringify([...doneSet]));
-}
+function saveDone() { localStorage.setItem('tamilDone_v3', JSON.stringify([...doneSet])); }
 
 function updateStats() {
   const cards = document.querySelectorAll('.reader-card');
@@ -863,7 +549,6 @@ function renderAll() {
 
   for (const unit of data.units) {
     if (activeUnit !== 'all' && activeUnit !== unit.id) continue;
-
     const filtered = unit.questions.filter(q => {
       if (activeFilter !== 'all' && q.type !== parseInt(activeFilter)) return false;
       if (search && !q.q.toLowerCase().includes(search) && !q.qEn.toLowerCase().includes(search)) return false;
@@ -871,7 +556,6 @@ function renderAll() {
     });
     if (filtered.length === 0) continue;
 
-    // Unit title
     const uDiv = document.createElement('div');
     uDiv.className = 'unit-title';
     uDiv.innerHTML = `<div class="unit-icon">${unit.icon}</div><div><h2>${unit.label} · ${unit.labelEn}</h2><h3>${unit.title}</h3><div class="unit-title-en">${unit.titleEn}</div></div>`;
@@ -895,8 +579,6 @@ function renderAll() {
         const card = document.createElement('div');
         card.className = `reader-card type-${type}${isDone ? ' state-answered' : ''}`;
         card.id = 'card-' + cid;
-
-        // Store question text in data attrs to avoid escaping issues
         card.dataset.qtamil = item.q;
         card.dataset.qenglish = item.qEn;
         card.dataset.atamil = item.a;
@@ -914,10 +596,9 @@ function renderAll() {
               <span class="en">${item.qEn}</span>
             </div>
             <div class="q-actions" onclick="event.stopPropagation()">
-              <button class="speak-btn" id="spk-${cid}" title="கேளு / Listen" onclick="speakQ('${cid}')">🔊</button>
+              <button class="speak-btn" id="spk-${cid}" title="கேளு" onclick="speakQ('${cid}')">🔊</button>
               <div class="wave-indicator" id="wave-${cid}">
-                <div class="wave-bar"></div><div class="wave-bar"></div>
-                <div class="wave-bar"></div><div class="wave-bar"></div>
+                <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
               </div>
             </div>
           </div>
@@ -952,9 +633,6 @@ function renderAll() {
   updateStats();
 }
 
-// ─────────────────────────────────────────────
-// UNIT TABS
-// ─────────────────────────────────────────────
 function buildTabs() {
   const tabs = document.getElementById('unitTabs');
   tabs.innerHTML = '';
@@ -975,10 +653,6 @@ function setActiveTab(el) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   el.classList.add('active');
 }
-
-// ─────────────────────────────────────────────
-// FILTER / SEARCH
-// ─────────────────────────────────────────────
 function setFilter(val, btn) {
   activeFilter = val;
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -986,10 +660,6 @@ function setFilter(val, btn) {
   renderAll();
 }
 function filterCards() { renderAll(); }
-
-// ─────────────────────────────────────────────
-// TOGGLE ANSWER
-// ─────────────────────────────────────────────
 function toggleAnswer(cid) {
   const ans = document.getElementById('ans-' + cid);
   if (!ans) return;
@@ -1009,10 +679,6 @@ function collapseAll() {
   document.querySelectorAll('.reader-card').forEach(c => c.classList.remove('state-reading'));
   updateStats();
 }
-
-// ─────────────────────────────────────────────
-// MARK DONE
-// ─────────────────────────────────────────────
 function toggleDone(cid) {
   const card = document.getElementById('card-' + cid);
   const btn = document.getElementById('done-' + cid);
@@ -1036,10 +702,6 @@ function resetDone() {
   saveDone();
   renderAll();
 }
-
-// ─────────────────────────────────────────────
-// SPEECH — FIX: use data attrs, not inline strings
-// ─────────────────────────────────────────────
 function stopSpeech() {
   if (window.speechSynthesis) window.speechSynthesis.cancel();
   if (speakingId) {
@@ -1052,13 +714,11 @@ function stopSpeech() {
     speakingId = null;
   }
 }
-
 function speak(text, cid, isAns) {
   stopSpeech();
-  if (!window.speechSynthesis) { alert('உங்கள் உலாவியில் Text-to-Speech ஆதரிக்கப்படவில்லை.'); return; }
+  if (!window.speechSynthesis) { alert('Text-to-Speech not supported.'); return; }
   const clean = text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
   const utt = new SpeechSynthesisUtterance(clean);
-  // Choose language based on current mode
   utt.lang = currentLang === 'en' ? 'en-IN' : 'ta-IN';
   utt.rate = 0.85;
   speakingId = cid;
@@ -1071,16 +731,13 @@ function speak(text, cid, isAns) {
   utt.onerror = () => stopSpeech();
   window.speechSynthesis.speak(utt);
 }
-
 function speakQ(cid) {
   if (speakingId === cid) { stopSpeech(); return; }
   const card = document.getElementById('card-' + cid);
   if (!card) return;
-  // Pick text based on language
   const text = (currentLang === 'en') ? card.dataset.qenglish : card.dataset.qtamil;
   speak(text, cid, false);
 }
-
 function speakAns(cid) {
   if (speakingId === cid) { stopSpeech(); return; }
   const card = document.getElementById('card-' + cid);
@@ -1089,9 +746,6 @@ function speakAns(cid) {
   speak(text, cid, true);
 }
 
-// ─────────────────────────────────────────────
-// INIT
-// ─────────────────────────────────────────────
 buildTabs();
 renderAll();
 </script>
