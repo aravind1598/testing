@@ -1,422 +1,1646 @@
-
-profile_src = f"data:image/png;base64,{profile_b64}"
-cover_src = f"data:image/png;base64,{cover_b64}"
-
-html = f"""<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ta">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>S. Parameshwari | Banking Professional</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>தமிழ் விடைகள் - அலகு I முதல் V</title>
 <style>
-  :root {{
-    --navy: #0B1F3A;
-    --navy-mid: #142d52;
-    --gold: #C9922A;
-    --gold-light: #e8b85c;
-    --white: #F8F6F1;
-    --slate: #4A5568;
-    --light-bg: #f0ede7;
-  }}
-  *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
-  html {{ scroll-behavior: smooth; }}
-  body {{ font-family: 'Inter', sans-serif; background: var(--white); color: var(--navy); overflow-x: hidden; }}
-
-  /* NAV */
-  nav {{
-    position: fixed; top: 0; width: 100%; z-index: 100;
-    background: rgba(11,31,58,0.96);
-    backdrop-filter: blur(12px);
-    padding: 0 5%;
-    display: flex; align-items: center; justify-content: space-between;
-    height: 64px;
-    border-bottom: 1px solid rgba(201,146,42,0.2);
-  }}
-  .nav-logo {{ font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.15rem; font-weight: 700; letter-spacing: 0.05em; }}
-  .nav-links {{ display: flex; gap: 2rem; list-style: none; }}
-  .nav-links a {{ color: rgba(248,246,241,0.7); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; }}
-  .nav-links a:hover {{ color: var(--gold); }}
-
-  /* COVER BANNER */
-  .cover-banner {{
-    margin-top: 64px;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    max-height: 420px;
-    display: block;
-  }}
-  .cover-banner img {{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-  }}
-  .cover-overlay {{
-    position: absolute; inset: 0;
-    background: linear-gradient(to right, rgba(11,31,58,0.15) 0%, transparent 50%, rgba(11,31,58,0.05) 100%);
-  }}
-
-  /* PROFILE PHOTO OVERLAP */
-  .profile-overlap-wrap {{
-    background: var(--white);
-    padding: 0 8%;
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans Tamil', 'Latha', Arial, sans-serif;
+    background: #0f0f1a;
+    color: #e8e0f0;
+    line-height: 1.9;
+    font-size: 16px;
+  }
+  .header {
+    background: linear-gradient(135deg, #1a0533, #2d1b69, #1a0533);
+    padding: 30px 20px;
+    text-align: center;
+    border-bottom: 3px solid #7c3aed;
+  }
+  .header h1 { font-size: 1.6rem; color: #e9d5ff; margin-bottom: 6px; }
+  .header p { color: #a78bfa; font-size: 0.95rem; }
+  .nav {
     display: flex;
-    align-items: flex-end;
-    gap: 2rem;
-    position: relative;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(11,31,58,0.07);
-  }}
-  .profile-photo-circle {{
-    width: 160px; height: 160px;
-    border-radius: 50%;
-    border: 4px solid var(--white);
-    box-shadow: 0 4px 24px rgba(11,31,58,0.18);
-    margin-top: -80px;
-    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 16px 20px;
+    background: #13131f;
+    border-bottom: 1px solid #2d2d4e;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav a {
+    background: #1e1e3a;
+    color: #a78bfa;
+    padding: 6px 14px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    border: 1px solid #3d3d6b;
+    transition: all 0.2s;
+  }
+  .nav a:hover { background: #7c3aed; color: white; }
+  .unit {
+    max-width: 860px;
+    margin: 30px auto;
+    padding: 0 16px;
+  }
+  .unit-header {
+    background: linear-gradient(135deg, #1e1040, #2d1b69);
+    border: 1px solid #7c3aed;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .unit-header h2 { color: #c4b5fd; font-size: 1.1rem; margin-bottom: 4px; }
+  .unit-header h3 { color: #e9d5ff; font-size: 1.3rem; }
+  .section-title {
+    display: inline-block;
+    background: #7c3aed;
+    color: white;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin: 20px 0 16px;
+    font-weight: bold;
+  }
+  .section-title.marks16 { background: #b45309; }
+  .qa-card {
+    background: #161628;
+    border: 1px solid #2d2d4e;
+    border-left: 4px solid #7c3aed;
+    border-radius: 10px;
+    margin-bottom: 16px;
     overflow: hidden;
-    background: var(--navy);
-    position: relative;
-    z-index: 2;
-  }}
-  .profile-photo-circle img {{
-    width: 100%; height: 100%;
-    object-fit: cover;
+  }
+  .qa-card.marks16 { border-left-color: #f59e0b; }
+  .question {
+    background: #1e1e38;
+    padding: 12px 18px;
+    color: #f0e6ff;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .q-num {
+    background: #7c3aed;
+    color: white;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-top: 2px;
+  }
+  .qa-card.marks16 .q-num { background: #b45309; }
+  .answer {
+    padding: 16px 18px 16px 54px;
+    color: #d4c5f0;
+    display: none;
+    border-top: 1px solid #2d2d4e;
+  }
+  .answer.show { display: block; }
+  .answer p { margin-bottom: 8px; }
+  .answer ul { padding-left: 20px; }
+  .answer ul li { margin-bottom: 6px; }
+  .answer strong { color: #c4b5fd; }
+  .show-all-btn {
     display: block;
-  }}
-  .profile-name-block {{
-    padding-bottom: 0.5rem;
-    flex: 1;
-  }}
-  .profile-name {{
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(1.6rem, 3vw, 2.4rem);
-    font-weight: 900;
-    color: var(--navy);
-    line-height: 1.1;
-  }}
-  .profile-name .gold-part {{ color: var(--gold); position: relative; display: inline-block; }}
-  .profile-name .gold-part::after {{
-    content: '';
-    position: absolute; bottom: -4px; left: 0;
-    width: 0; height: 2px; background: var(--gold);
-    animation: uline 1.2s 0.4s ease forwards;
-  }}
-  @keyframes uline {{ to {{ width: 100%; }} }}
-  .profile-title {{
-    font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--gold); margin-top: 0.4rem; font-weight: 500;
-  }}
-  .profile-pills {{
-    display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.8rem;
-  }}
-  .pill {{
-    border: 1px solid rgba(201,146,42,0.35); color: var(--slate);
-    font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 0.3rem 0.8rem; border-radius: 2px; transition: all 0.2s;
-  }}
-  .pill:hover {{ border-color: var(--gold); color: var(--gold); }}
-
-  /* STATS BAR */
-  .stats-bar {{
-    background: var(--gold);
-    display: grid; grid-template-columns: repeat(4, 1fr);
-  }}
-  .stat {{ padding: 1.3rem 2rem; text-align: center; border-right: 1px solid rgba(11,31,58,0.15); }}
-  .stat:last-child {{ border-right: none; }}
-  .stat-num {{ font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; color: var(--navy); line-height: 1; }}
-  .stat-label {{ font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(11,31,58,0.6); margin-top: 0.25rem; }}
-
-  /* SECTIONS */
-  section {{ padding: 72px 8%; }}
-  .section-label {{ font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }}
-  .section-title {{ font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 2.5vw, 2.3rem); font-weight: 700; color: var(--navy); line-height: 1.15; }}
-  .title-rule {{ width: 44px; height: 2px; background: var(--gold); margin: 0.9rem 0 2.8rem; }}
-
-  /* ABOUT */
-  .about {{ background: var(--white); }}
-  .about-grid {{ display: grid; grid-template-columns: 3fr 2fr; gap: 4rem; align-items: start; }}
-  .about-text p {{ font-size: 0.97rem; line-height: 1.85; color: var(--slate); margin-bottom: 1.1rem; font-weight: 300; }}
-  .about-text strong {{ color: var(--navy); font-weight: 600; }}
-  .contact-card {{ background: var(--navy); padding: 1.8rem; border-left: 3px solid var(--gold); }}
-  .contact-card h3 {{ font-family: 'Playfair Display', serif; color: var(--white); font-size: 0.95rem; margin-bottom: 1.3rem; }}
-  .contact-item {{ display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.9rem; }}
-  .contact-icon {{ width: 30px; height: 30px; background: rgba(201,146,42,0.12); border: 1px solid rgba(201,146,42,0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.8rem; }}
-  .contact-detail {{ font-size: 0.78rem; color: rgba(248,246,241,0.7); line-height: 1.5; }}
-  .contact-detail span {{ display: block; font-size: 0.58rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.1rem; }}
-
-  /* EXPERIENCE */
-  .experience {{ background: var(--light-bg); }}
-  .timeline {{ position: relative; padding-left: 2.5rem; }}
-  .timeline::before {{ content: ''; position: absolute; left: 6px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(to bottom, var(--gold), transparent); }}
-  .timeline-item {{ position: relative; margin-bottom: 3rem; }}
-  .timeline-item:last-child {{ margin-bottom: 0; }}
-  .timeline-dot {{ position: absolute; left: -2.5rem; top: 7px; width: 12px; height: 12px; border: 2px solid var(--gold); background: var(--light-bg); border-radius: 50%; }}
-  .timeline-item.current .timeline-dot {{ background: var(--gold); }}
-  .timeline-meta {{ display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; margin-bottom: 0.3rem; }}
-  .timeline-role {{ font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--navy); }}
-  .timeline-company {{ font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); font-weight: 500; }}
-  .timeline-period {{ margin-left: auto; font-size: 0.72rem; color: var(--slate); font-weight: 300; }}
-  .timeline-desc {{ font-size: 0.88rem; line-height: 1.7; color: var(--slate); font-weight: 300; max-width: 660px; }}
-
-  /* VALUES BANNER */
-  .values-banner {{ background: var(--gold); padding: 2.5rem 8%; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; text-align: center; }}
-  .value-icon {{ font-size: 1.5rem; margin-bottom: 0.4rem; }}
-  .value-name {{ font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--navy); font-weight: 600; }}
-  .value-desc {{ font-size: 0.72rem; color: rgba(11,31,58,0.6); margin-top: 0.25rem; }}
-
-  /* SKILLS */
-  .skills-section {{ background: var(--navy); }}
-  .skills-section .section-title {{ color: var(--white); }}
-  .skills-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.05); }}
-  .skill-box {{ padding: 1.4rem; background: rgba(20,45,82,0.5); display: flex; align-items: center; gap: 0.9rem; transition: background 0.2s; }}
-  .skill-box:hover {{ background: rgba(201,146,42,0.1); }}
-  .skill-icon {{ font-size: 1.3rem; flex-shrink: 0; }}
-  .skill-name {{ font-size: 0.78rem; color: rgba(248,246,241,0.8); font-weight: 400; }}
-
-  /* EDUCATION */
-  .education {{ background: var(--white); }}
-  .edu-grid {{ display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.4rem; }}
-  .edu-card {{ border: 1px solid rgba(11,31,58,0.1); padding: 1.6rem; position: relative; transition: border-color 0.2s, transform 0.15s; }}
-  .edu-card:hover {{ border-color: var(--gold); transform: translateY(-2px); }}
-  .edu-card::before {{ content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 0; background: var(--gold); transition: height 0.3s; }}
-  .edu-card:hover::before {{ height: 100%; }}
-  .edu-degree {{ font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.25rem; }}
-  .edu-institution {{ font-size: 0.72rem; color: var(--slate); margin-bottom: 0.75rem; }}
-  .edu-meta {{ display: flex; justify-content: space-between; align-items: center; }}
-  .edu-year {{ font-size: 0.68rem; color: var(--slate); }}
-  .edu-score {{ font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--gold); }}
-
-  /* ACHIEVEMENTS */
-  .achievements {{ background: var(--light-bg); }}
-  .ach-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 1.8rem; }}
-  .ach-card {{ display: flex; gap: 1.4rem; padding: 1.8rem; background: var(--white); border-bottom: 2px solid transparent; transition: border-color 0.2s; }}
-  .ach-card:hover {{ border-color: var(--gold); }}
-  .ach-trophy {{ font-size: 1.8rem; flex-shrink: 0; }}
-  .ach-title {{ font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }}
-  .ach-desc {{ font-size: 0.82rem; color: var(--slate); line-height: 1.6; font-weight: 300; }}
-
-  /* FOOTER */
-  footer {{ background: var(--navy); padding: 2.2rem 8%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }}
-  .footer-quote {{ font-family: 'Playfair Display', serif; font-style: italic; color: rgba(248,246,241,0.5); font-size: 0.88rem; }}
-  .footer-quote em {{ color: var(--gold); font-style: normal; }}
-  .footer-copy {{ font-size: 0.68rem; color: rgba(248,246,241,0.3); letter-spacing: 0.1em; }}
-
-  /* ANIMATIONS */
-  .fade-up {{ opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }}
-  .fade-up.visible {{ opacity: 1; transform: translateY(0); }}
-
-  /* RESPONSIVE */
-  @media (max-width: 900px) {{
-    .about-grid {{ grid-template-columns: 1fr; gap: 2rem; }}
-    .ach-grid {{ grid-template-columns: 1fr; }}
-    .values-banner {{ grid-template-columns: 1fr; }}
-    .stats-bar {{ grid-template-columns: repeat(2, 1fr); }}
-    .nav-links {{ display: none; }}
-    .profile-overlap-wrap {{ flex-direction: column; align-items: flex-start; padding-top: 1rem; }}
-    .profile-photo-circle {{ margin-top: -60px; width: 120px; height: 120px; }}
-  }}
-  @media (max-width: 600px) {{
-    section {{ padding: 52px 5%; }}
-    .cover-banner {{ max-height: 200px; }}
-    .stat {{ padding: 1rem 0.8rem; }}
-    .stat-num {{ font-size: 1.3rem; }}
-  }}
+    width: 100%;
+    padding: 12px;
+    background: #7c3aed;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-family: inherit;
+  }
+  .show-all-btn:hover { background: #6d28d9; }
+  .divider {
+    border: none;
+    border-top: 1px solid #2d2d4e;
+    margin: 40px 0;
+  }
+  .tip-box {
+    background: #162033;
+    border: 1px solid #1d4ed8;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 20px 0;
+    color: #93c5fd;
+    font-size: 0.9rem;
+  }
+  @media print {
+    body { background: white; color: black; }
+    .nav, .show-all-btn { display: none; }
+    .answer { display: block !important; }
+    .unit-header { background: #f3f4f6; border: 1px solid #999; }
+    .qa-card { border: 1px solid #ccc; border-left: 3px solid #7c3aed; }
+    .question { background: #f9f9f9; }
+    .answer { color: #222; }
+  }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">S. Parameshwari</div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#education">Education</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
-
-<!-- COVER BANNER -->
-<div class="cover-banner">
-  <img src="{cover_src}" alt="S. Parameshwari Cover">
-  <div class="cover-overlay"></div>
+<div class="header">
+  <h1>📚 தமிழ் விடைகள் - முழு விடைத்தாள்</h1>
+  <p>அலகு I முதல் V வரை | 2 மதிப்பெண் & 16 மதிப்பெண் | Full Marks ✅</p>
 </div>
 
-<!-- PROFILE PHOTO OVERLAP -->
-<div class="profile-overlap-wrap">
-  <div class="profile-photo-circle">
-    <img src="{profile_src}" alt="S. Parameshwari">
+<div class="nav">
+  <a href="#unit1">அலகு I - நெசவு</a>
+  <a href="#unit2">அலகு II - வடிவமைப்பு</a>
+  <a href="#unit3">அலகு III - உற்பத்தி</a>
+  <a href="#unit4">அலகு IV - வேளாண்மை</a>
+  <a href="#unit5">அலகு V - கணித தமிழ்</a>
+</div>
+
+<!-- ===== UNIT 1 ===== -->
+<div class="unit" id="unit1">
+  <div class="unit-header">
+    <h2>அலகு – I</h2>
+    <h3>நெசவு மற்றும் பானை தொழில்நுட்பம்</h3>
   </div>
-  <div class="profile-name-block">
-    <div class="profile-name">S. <span class="gold-part">Parameshwari</span></div>
-    <div class="profile-title">Manager &nbsp;|&nbsp; Branch Operations &nbsp;|&nbsp; Axis Bank</div>
-    <div class="profile-pills">
-      <span class="pill">Analytical Thinker</span>
-      <span class="pill">Problem Solver</span>
-      <span class="pill">Team Leader</span>
-      <span class="pill">Results Driven</span>
+
+  <button class="show-all-btn" onclick="toggleAll('unit1')">🔍 அனைத்து விடைகளையும் காட்டு / மறை</button>
+
+  <div class="section-title">2 மதிப்பெண் விடைகள்</div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">1</span>பருத்திப்பெண்டீர் யார்?</div>
+    <div class="answer"><p>பருத்திப்பெண்டீர் என்பவர் சங்க கால நூல்களில் குறிப்பிடப்படும் <strong>பெண் நெசவாளர்கள்</strong> ஆவர். இவர்கள் பருத்தியை நூலாக நூற்று ஆடை நெய்யும் பணியை செய்தனர். இவர்கள் சங்க காலத்தில் தமிழக நெசவுத் தொழிலில் முக்கிய பங்கு வகித்தனர்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">2</span>பா அல்லது பாவோட்டுதல் என்றால் என்ன?</div>
+    <div class="answer"><p><strong>பா</strong> என்பது நெசவின் ஓர் அடிப்படை நுட்பம் ஆகும். நூல்களை ஒழுங்காக வரிசைப்படுத்தி நெசவுத் தறியில் கட்டும் முறையே <strong>பாவோட்டுதல்</strong> எனப்படும். இதன் மூலம் ஆடையின் அமைப்பு நிர்ணயிக்கப்படுகிறது.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">3</span>நெசவின் வகைகள் யாவை?</div>
+    <div class="answer">
+      <p>நெசவின் வகைகள்:</p>
+      <ul>
+        <li><strong>மேல் நெசவு</strong> – கைத்தறி நெசவு</li>
+        <li><strong>கீழ் நெசவு</strong> – காலால் இயக்கும் தறி நெசவு</li>
+        <li><strong>கம்பளி நெசவு</strong> – ஆட்டு உரோமம் கொண்டு நெய்தல்</li>
+        <li><strong>பட்டு நெசவு</strong> – பட்டுப் புழு நூல் கொண்டு நெய்தல்</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">4</span>நெசவுத்தறியின் பகுதிகளில் ஏதேனும் இரண்டின் பெயர்களை எழுதுக.</div>
+    <div class="answer">
+      <ul>
+        <li><strong>ஆப்பு (Reed)</strong> – நூல்களை ஒழுங்குபடுத்தும் பகுதி</li>
+        <li><strong>தரி (Shuttle)</strong> – கிடையிலாக நூலை கொண்டு செல்லும் பகுதி</li>
+        <li><strong>கழுத்தாணி</strong> – நூல்களை நிலைப்படுத்தும் பகுதி</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">5</span>சங்க காலத்தில் நெசவு செய்த ஆடைகளை எவ்வாறு விற்றனர்?</div>
+    <div class="answer"><p>சங்க காலத்தில் நெசவு ஆடைகளை <strong>சந்தைகளில் (பேட்டை)</strong> விற்பனை செய்தனர். மேலும் <strong>ஏற்றுமதி</strong> மூலம் வெளிநாடுகளுக்கும் அனுப்பினர். வணிகர்கள் (வாணிகர்) ஆடைகளை வாங்கி தொலைதூரம் கொண்டு சென்று விற்பனை செய்தனர்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">6</span>எங்கு சாயத்தொட்டிகள் கண்டெடுக்கப்பட்டன?</div>
+    <div class="answer"><p>சாயத்தொட்டிகள் <strong>அரிக்கமேடு</strong> (புதுச்சேரி அருகே) என்னும் இடத்தில் கண்டெடுக்கப்பட்டன. இங்கு உரோமானிய வணிகர்களுடன் தமிழர்கள் வணிகம் செய்ததற்கான சான்றுகளும் கிடைத்துள்ளன.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">7</span>மதுரையில் எவ்வகை மட்பாண்டங்கள் சிறந்தவையாகக் கருதப்படுகின்றது?</div>
+    <div class="answer"><p>மதுரையில் <strong>கருப்பு மற்றும் சிவப்பு மட்பாண்டங்கள் (Black and Red Ware)</strong> சிறந்தவையாகக் கருதப்படுகின்றன. இவை மிகவும் திண்மையாகவும் அழகாகவும் செய்யப்பட்டு வெளிநாடுகளுக்கும் ஏற்றுமதி செய்யப்பட்டன.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">8</span>வேலூர் கரிகிரி மட்பாண்டங்களின் சிறப்பு என்ன?</div>
+    <div class="answer"><p>வேலூர் கரிகிரி மட்பாண்டங்கள் <strong>மிகவும் மெல்லியதாகவும் ஒளி ஊடுருவக்கூடியதாகவும்</strong> (egg-shell thin) இருக்கும். இவற்றின் தயாரிப்பு நுட்பம் மிகவும் தனித்துவமானது. இவை <strong>"முஞ்சிறி"</strong> என்ற சிறப்புப் பெயரால் அழைக்கப்படும்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">9</span>மட்பாண்டங்களின் இரு பிரிவுகள் என்ன?</div>
+    <div class="answer">
+      <ul>
+        <li><strong>1. பளபளப்பான மட்பாண்டங்கள் (Polished Ware)</strong> – மேற்பரப்பை மெருகேற்றி தயாரிக்கப்படும்</li>
+        <li><strong>2. மெருகூட்டப்படாத மட்பாண்டங்கள் (Unpolished Ware)</strong> – இயற்கையான முரடான தோற்றமுடையவை</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">10</span>மண்பாண்டங்களில் நுண்கலைப் படைப்பு என்றால் என்ன?</div>
+    <div class="answer"><p>மண்பாண்டங்களில் <strong>நுண்கலைப் படைப்பு</strong> என்பது மட்பாண்டங்களின் மேற்பரப்பில் <strong>மனிதர்கள், விலங்குகள், தாவரங்கள், வடிவங்கள்</strong> ஆகியவற்றை நுட்பமாக வரைந்து அல்லது செதுக்கி அலங்கரிக்கும் கலை ஆகும்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">11</span>கல்விக் கலையில் மண்பாண்டங்களின் பயன்கள் யாவை?</div>
+    <div class="answer">
+      <ul>
+        <li>கலை வரலாற்றை ஆய்வு செய்ய உதவுகின்றன</li>
+        <li>தொல்லியல் ஆய்வுக்கு பயன்படுகின்றன</li>
+        <li>பண்டைய வாழ்க்கை முறையை அறிய உதவுகின்றன</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">12</span>மருத்துவக் கலையில் மட்பாண்டங்களின் பயன்கள் யாவை?</div>
+    <div class="answer">
+      <ul>
+        <li><strong>மண் பானைகளில்</strong> தண்ணீர் குளிர்ச்சியாகவும் சுத்தமாகவும் இருக்கும்</li>
+        <li>மண் பாத்திரங்களில் சமைத்தால் <strong>ஊட்டச்சத்து</strong> கூடுதலாக இருக்கும்</li>
+        <li>மண் சட்டியில் மருந்துகள் தயாரிக்க பயன்படும்</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">13</span>கருப்பு சிவப்பு மட்பாண்டங்களில் காணப்படும் பொருட்கள் யாவை?</div>
+    <div class="answer">
+      <ul>
+        <li>குடங்கள், கலயங்கள், பாத்திரங்கள்</li>
+        <li>தட்டுகள் மற்றும் கிண்ணங்கள்</li>
+        <li>சேமிப்புப் பானைகள்</li>
+        <li>விளக்குகள் (தீபங்கள்)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">14</span>மட்பாண்டங்களில் காணப்படும் குறியீடுகள் யாவை?</div>
+    <div class="answer"><p>மட்பாண்டங்களில் <strong>தமிழி எழுத்துகள், சின்னங்கள், வடிவங்கள்</strong> ஆகியவை காணப்படுகின்றன. இவை உரிமையாளர் அல்லது தயாரிப்பாளரை குறிக்கும் <strong>குயவன் குறியீடுகள்</strong> (potter's marks) ஆகும்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">15</span>தமிழகத்தில் ஸ்வஸ்திக் குறியீடு உள்ள மண்பாண்டங்கள் எங்கு காணப்பட்டன?</div>
+    <div class="answer"><p>தமிழகத்தில் ஸ்வஸ்திக் குறியீடு உள்ள மண்பாண்டங்கள் <strong>அரிக்கமேடு, கீழடி, கொற்கை</strong> ஆகிய இடங்களில் கண்டெடுக்கப்பட்டன.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">16</span>எக்காலத்து மக்கள் தங்கள் எண்ணங்களை வெளிப்படுத்த குறியீடுகளைப் பயன்படுத்தினர்?</div>
+    <div class="answer"><p><strong>பண்டைய காலத்து மக்கள்</strong> (சங்க காலம் மற்றும் அதற்கு முந்தைய காலம்) தங்கள் எண்ணங்கள், நம்பிக்கைகள், மதக் கருத்துகளை வெளிப்படுத்த <strong>குறியீடுகளை</strong> மட்பாண்டங்களிலும் பாறைகளிலும் பொறித்தனர்.</p></div>
+  </div>
+
+  <div class="section-title marks16">16 மதிப்பெண் விடைகள்</div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num marks16" style="background:#b45309">1</span>சங்க காலத்தில் நெசவுத் தொழில் எப்படி இருந்தது? அவற்றில் ஆடைகள் தயாரிப்பதில் உள்ள பல்வேறு படிநிலைகளை விரிவாக விளக்கவும்.</div>
+    <div class="answer">
+      <p><strong>சங்க காலத்தில் நெசவுத் தொழில்:</strong></p>
+      <p>சங்க காலத்தில் நெசவுத் தொழில் மிகவும் வளர்ச்சியடைந்திருந்தது. தமிழகம் ஆடைத் தயாரிப்பில் உலகப் புகழ் பெற்றிருந்தது.</p>
+      <p><strong>மூலப்பொருள்கள்:</strong></p>
+      <ul>
+        <li>பருத்தி – சிறந்த ஆடைகளுக்கு</li>
+        <li>பட்டு – அரசர்கள் மற்றும் செல்வந்தர்களுக்கு</li>
+        <li>சணல் – பொதுவான ஆடைகளுக்கு</li>
+        <li>கம்பளி – குளிர்ப்பிரதேசங்களில்</li>
+      </ul>
+      <p><strong>ஆடை தயாரிப்பு படிநிலைகள்:</strong></p>
+      <ul>
+        <li><strong>1. பஞ்சு சேகரிப்பு</strong> – பருத்திக் காய்களிலிருந்து பஞ்சை பிரித்தெடுத்தல்</li>
+        <li><strong>2. நூற்றல் (Spinning)</strong> – பஞ்சை நூலாக நூற்பது. இதை <strong>பருத்திப்பெண்டீர்</strong> செய்தனர்</li>
+        <li><strong>3. சாயமிடுதல் (Dyeing)</strong> – இயற்கை வேர்கள், பூக்கள், பழங்கள் மூலம் நூலுக்கு நிறமிடுதல். அரிக்கமேட்டில் சாயத்தொட்டிகள் கண்டெடுக்கப்பட்டன</li>
+        <li><strong>4. நெசவு (Weaving)</strong> – தறியில் நூலை நெய்து ஆடை தயாரித்தல். பா அல்லது பாவோட்டுதல் முறையில் நெய்தனர்</li>
+        <li><strong>5. அலங்காரம்</strong> – ஆடையில் வண்ணமயமான வேலைப்பாடுகள் செய்தல்</li>
+      </ul>
+      <p><strong>சிறப்புகள்:</strong></p>
+      <ul>
+        <li>மதுரை மெல்லிய முசுவன் ஆடை (இளம் காற்றிலும் பறக்கும் அளவு மெல்லியது)</li>
+        <li>ஆடைகளை வெளிநாடுகளுக்கு ஏற்றுமதி செய்தனர்</li>
+        <li>உரோமானிய வணிகர்கள் தமிழக ஆடைகளை வாங்கினர்</li>
+      </ul>
+      <p><strong>முடிவு:</strong> சங்க காலத்தில் நெசவுத் தொழில் தமிழக பொருளாதாரத்தின் முதுகெலும்பாக இருந்தது.</p>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">2</span>பளபளப்பான மற்றும் மெருகூட்டப்படாத மட்பாண்டங்கள் என்றால் என்ன? மட்பாண்டங்கள் செய்யும் முறையை விரிவாக விளக்கவும்.</div>
+    <div class="answer">
+      <p><strong>மட்பாண்டங்கள் இரு வகை:</strong></p>
+      <p><strong>1. பளபளப்பான மட்பாண்டங்கள் (Polished Ware):</strong></p>
+      <ul>
+        <li>மேற்பரப்பை மெருகேற்றி தயாரிக்கப்படும்</li>
+        <li>பார்க்க மிகவும் அழகாக இருக்கும்</li>
+        <li>கருப்பு மற்றும் சிவப்பு வண்ணங்களில் காணப்படும்</li>
+        <li>உயர்தர அலங்கார பாண்டங்களாக பயன்படும்</li>
+      </ul>
+      <p><strong>2. மெருகூட்டப்படாத மட்பாண்டங்கள் (Unpolished Ware):</strong></p>
+      <ul>
+        <li>இயற்கையான முரடான தோற்றமுடையவை</li>
+        <li>அன்றாட பயன்பாட்டிற்கு பயன்படும்</li>
+        <li>சமையல் மற்றும் சேமிப்புக்கு ஏற்றவை</li>
+      </ul>
+      <p><strong>மட்பாண்டம் செய்யும் முறை:</strong></p>
+      <ul>
+        <li><strong>மண் தேர்வு</strong> – களிமண்ணை தேர்ந்தெடுத்தல்</li>
+        <li><strong>மண் பதனிடுதல்</strong> – மண்ணை நன்றாக பிசைந்து தயார் செய்தல்</li>
+        <li><strong>வடிவமைத்தல்</strong> – குயவன் சக்கரத்தில் (கும்மாளம்) சுற்றி வடிவமைத்தல்</li>
+        <li><strong>உலர்த்துதல்</strong> – நிழலில் உலர வைத்தல்</li>
+        <li><strong>சூளை சுடுதல் (Kiln firing)</strong> – உயர் வெப்பத்தில் சுட்டு உறுதிப்படுத்துதல்</li>
+        <li><strong>சாயமிடுதல்</strong> – தேவையான நிறங்களை இடுதல்</li>
+        <li><strong>மெருகேற்றுதல்</strong> – மேற்பரப்பை பளபளப்பாக்குதல்</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">3</span>கருப்பு மற்றும் சிவப்பு மட்பாண்டங்கள் பற்றி விரிவாக விளக்கவும்.</div>
+    <div class="answer">
+      <p><strong>கருப்பு மற்றும் சிவப்பு மட்பாண்டங்கள் (Black and Red Ware – BRW):</strong></p>
+      <p><strong>தோற்றம்:</strong> இந்த மட்பாண்டங்கள் கி.மு. 1000 முதல் பயன்பாட்டில் இருந்துள்ளன.</p>
+      <p><strong>தனித்துவம்:</strong></p>
+      <ul>
+        <li>பாண்டத்தின் வெளிப்புறம் <strong>கருப்பு நிறம்</strong>, உட்புறம் <strong>சிவப்பு நிறம்</strong></li>
+        <li>இந்த இரட்டை நிறம் சுட்டும் முறையில் உருவாகும்</li>
+        <li>கவிழ்த்து சுடும் (inverted firing) முறையில் தயாரிக்கப்படும்</li>
+      </ul>
+      <p><strong>கண்டுபிடிக்கப்பட்ட இடங்கள்:</strong></p>
+      <ul>
+        <li>கீழடி (சிவகங்கை), அரிக்கமேடு, கொற்கை, மதுரை</li>
+      </ul>
+      <p><strong>சிறப்புகள்:</strong></p>
+      <ul>
+        <li>மிகவும் மெல்லிய சுவர்கள் (eggshell thin)</li>
+        <li>உயர்தர தொழில்நுட்பம்</li>
+        <li>வெளிநாடுகளுக்கு ஏற்றுமதி செய்யப்பட்டன</li>
+        <li>உரோமானியர்களும் இவற்றை வாங்கினர்</li>
+      </ul>
+      <p><strong>தமிழி எழுத்துகள்:</strong> பல மட்பாண்டங்களில் தமிழி எழுத்துகளும் குறியீடுகளும் காணப்படுகின்றன.</p>
+      <p><strong>முடிவு:</strong> கருப்பு சிவப்பு மட்பாண்டங்கள் சங்க கால தமிழர்களின் உயர்ந்த தொழில்நுட்ப திறமையை உலகிற்கு வெளிப்படுத்துகின்றன.</p>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">4</span>பண்டைய இந்தியாவில் மட்பாண்டங்களில் பொறிக்கப்பட்ட கீரல் குறிகளை விரிவாக எழுதுங்கள்.</div>
+    <div class="answer">
+      <p><strong>மட்பாண்டங்களில் கீரல் குறிகள்:</strong></p>
+      <p><strong>கீரல் குறிகள் (Graffiti marks)</strong> என்பது மட்பாண்டங்களின் மேற்பரப்பில் கூர்மையான கருவியால் வரையப்பட்ட குறியீடுகள் ஆகும்.</p>
+      <p><strong>வகைகள்:</strong></p>
+      <ul>
+        <li><strong>அகர குறிகள்</strong> – தமிழி எழுத்துகள்</li>
+        <li><strong>வடிவக் குறிகள்</strong> – வட்டம், கோடு, சதுரம் போன்றவை</li>
+        <li><strong>ஸ்வஸ்திக் குறி</strong> – மங்களச் சின்னம்</li>
+        <li><strong>மீன் குறி</strong> – மீனின் வடிவம்</li>
+      </ul>
+      <p><strong>நோக்கங்கள்:</strong></p>
+      <ul>
+        <li>உரிமையாளரை குறிக்க</li>
+        <li>குயவன் (தயாரிப்பாளர்) அடையாளம்</li>
+        <li>மதம் மற்றும் நம்பிக்கைகளை வெளிப்படுத்த</li>
+        <li>வர்த்தக நோக்கங்களுக்காக</li>
+      </ul>
+      <p><strong>முக்கியத்துவம்:</strong></p>
+      <ul>
+        <li>பண்டைய தமிழ் எழுத்துகளின் வளர்ச்சியை அறிய உதவும்</li>
+        <li>சமூக, மத, பொருளாதார வரலாறு தெரியும்</li>
+        <li>கீழடியில் 6000-க்கும் மேற்பட்ட கீரல் குறிகள் கண்டெடுக்கப்பட்டன</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">5</span>பழங்கால நெசவு மற்றும் குயவர் தொழில்நுட்பங்களைப் பாதுகாக்கும் முயற்சிகள் குறித்து விளக்குக.</div>
+    <div class="answer">
+      <p><strong>பாதுகாக்கும் முயற்சிகள்:</strong></p>
+      <p><strong>அரசு நடவடிக்கைகள்:</strong></p>
+      <ul>
+        <li>கைத்தறி வாரியம் (Handloom Board) மூலம் நெசவாளர்களுக்கு மானியம்</li>
+        <li>புவி சார்ந்த அடையாளம் (Geographical Indication – GI) வழங்குதல் (காஞ்சிபுரம் பட்டு, மதுரை சுங்கடி)</li>
+        <li>நெசவு கிராமங்களை கைத்தறி கிராமங்களாக அறிவித்தல்</li>
+      </ul>
+      <p><strong>தொழில்நுட்ப பாதுகாப்பு:</strong></p>
+      <ul>
+        <li>தொல்லியல் அகழ்வாராய்ச்சி மூலம் பண்டைய தொழில்நுட்பங்களை ஆய்வு செய்தல்</li>
+        <li>அருங்காட்சியகங்களில் மட்பாண்டங்களை பாதுகாத்தல்</li>
+        <li>ஆவணப்படுத்தல் (Documentation)</li>
+      </ul>
+      <p><strong>பயிற்சி மையங்கள்:</strong></p>
+      <ul>
+        <li>புதிய தலைமுறைக்கு பயிற்சி அளிக்கும் மையங்கள்</li>
+        <li>கைவினைஞர்களுக்கு சந்தை ஏற்பாடு</li>
+      </ul>
+      <p><strong>முடிவு:</strong> இந்த முயற்சிகள் மூலம் தமிழ் நாகரிகத்தின் பண்டைய தொழில்நுட்பங்களை வரும் தலைமுறையினருக்கு கொண்டு செல்ல முடியும்.</p>
     </div>
   </div>
 </div>
 
-<!-- STATS BAR -->
-<div class="stats-bar">
-  <div class="stat"><div class="stat-num">7+</div><div class="stat-label">Years Experience</div></div>
-  <div class="stat"><div class="stat-num">3</div><div class="stat-label">Leadership Roles</div></div>
-  <div class="stat"><div class="stat-num">84%</div><div class="stat-label">MCA Score</div></div>
-  <div class="stat"><div class="stat-num">Axis</div><div class="stat-label">Bank</div></div>
+<hr class="divider">
+
+<!-- ===== UNIT 2 ===== -->
+<div class="unit" id="unit2">
+  <div class="unit-header">
+    <h2>அலகு – II</h2>
+    <h3>வடிவமைப்பு மற்றும் கட்டுமான தொழில்நுட்பம்</h3>
+  </div>
+
+  <button class="show-all-btn" onclick="toggleAll('unit2')">🔍 அனைத்து விடைகளையும் காட்டு / மறை</button>
+
+  <div class="section-title">2 மதிப்பெண் விடைகள்</div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">1</span>கட்டடக்கலை என்றால் என்ன?</div>
+    <div class="answer"><p><strong>கட்டடக்கலை (Architecture)</strong> என்பது கட்டிடங்கள், நினைவுச்சின்னங்கள், கோயில்கள் ஆகியவற்றை வடிவமைக்கும் மற்றும் கட்டமைக்கும் கலை மற்றும் அறிவியல் ஆகும். இது அழகு, பயன்பாடு, உறுதி ஆகியவற்றை ஒருங்கிணைக்கும்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">2</span>சங்ககால கட்டுமானப் பொருட்கள் சிலவற்றை கூறுக.</div>
+    <div class="answer">
+      <ul>
+        <li><strong>கல்</strong> – கோயில்கள் மற்றும் அரணமைகளுக்கு</li>
+        <li><strong>செங்கல்</strong> – சுவர்கள் கட்ட</li>
+        <li><strong>மரம்</strong> – கூரை மற்றும் கதவுகளுக்கு</li>
+        <li><strong>சுண்ணாம்பு</strong> – சாந்து (cement) ஆக</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">3</span>தமிழகத்தில் கண்டெடுக்கப்பட்ட நடுகற்களில் பெரும்பாலும் எந்த எழுத்து மொழி காணப்படுகிறது?</div>
+    <div class="answer"><p>தமிழகத்தில் கண்டெடுக்கப்பட்ட நடுகற்களில் பெரும்பாலும் <strong>தமிழி (வட்டெழுத்து)</strong> மொழி காணப்படுகிறது. இவை இறந்த வீரர்களுக்கு நடப்பட்ட நினைவுக்கற்கள் ஆகும்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">4</span>அகழிகள் என்றால் என்ன?</div>
+    <div class="answer"><p><strong>அகழிகள்</strong> என்பது கோட்டைகளை சுற்றி தோண்டப்பட்ட <strong>அகன்ற அகழ்வு (பரந்த குழி / நீர்நிரம்பிய கால்வாய்)</strong> ஆகும். இது எதிரிகள் கோட்டையை தாக்குவதை தடுக்க உதவும் பாதுகாப்பு ஏற்பாடு.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">5</span>இந்தியாவில் கட்டப்படும் கோவில்களின் வகைகள் யாவை?</div>
+    <div class="answer">
+      <ul>
+        <li><strong>நாகர பாணி</strong> – வட இந்திய பாணி (கரிகான் வடிவக் கோபுரம்)</li>
+        <li><strong>திராவிட பாணி</strong> – தென் இந்திய பாணி (பிரமிட் வடிவக் கோபுரம்)</li>
+        <li><strong>வேசர பாணி</strong> – நாகர + திராவிட கலப்பு பாணி</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">6</span>தமிழகத்தின் மிக உயர்ந்த கோவில் கோபுரமாகக் கருதப்படுவது எது?</div>
+    <div class="answer"><p>தமிழகத்தின் மிக உயர்ந்த கோவில் கோபுரமாக <strong>ஸ்ரீரங்கம் அரங்கநாதர் கோவில் கோபுரம் (ராஜகோபுரம்)</strong> கருதப்படுகிறது. இது <strong>72 மீட்டர்</strong> (236 அடி) உயரம் கொண்டது.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">7</span>தொல்காப்பியர் குறிப்பிடும் நடுகல்லுக்குரிய ஆறு நிலைகள் யாவை?</div>
+    <div class="answer">
+      <ul>
+        <li>1. <strong>மரபு</strong> – வீரனின் குலம் குறிப்பிடுதல்</li>
+        <li>2. <strong>முன்னோர்</strong> – முன்னோர் பெயர் கூறுதல்</li>
+        <li>3. <strong>செயல்</strong> – வீரச் செயல் விவரிக்குதல்</li>
+        <li>4. <strong>காரணம்</strong> – இறப்பிற்கான காரணம்</li>
+        <li>5. <strong>மரணம்</strong> – இறந்த விதம்</li>
+        <li>6. <strong>விழா</strong> – நடுகல் நாட்டும் விழா</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">8</span>சோழர்கள் காட்டிய பெருங்கோவில்கள் சிலவற்றை கூறுக.</div>
+    <div class="answer">
+      <ul>
+        <li><strong>பெரிய கோவில் (தஞ்சாவூர்)</strong> – ராஜராஜ சோழன் கட்டியது</li>
+        <li><strong>கங்கை கொண்ட சோழபுரம்</strong> – ராஜேந்திர சோழன் கட்டியது</li>
+        <li><strong>ஐராவதேஸ்வரர் கோவில் (தாராசுரம்)</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">9</span>திருமலை நாயக்கர் அரண்மனை பற்றிக் குறிப்பு வரைக.</div>
+    <div class="answer"><p><strong>திருமலை நாயக்கர் அரண்மனை</strong> மதுரையில் உள்ளது. இதை <strong>திருமலை நாயக்கர் (1636)</strong> கட்டினார். இது <strong>இந்தோ-சாரசனிக் பாணி</strong>யில் கட்டப்பட்டது. <strong>சுவாமி வரும்போது</strong> (திரைப்படம்) உட்பட பல திரைப்படங்கள் இங்கு படமாக்கப்பட்டன. இங்கு ஒலி ஒளி நிகழ்ச்சி (Sound and Light Show) நடைபெறுகிறது.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">10</span>மாமல்லபுரம் கடற்கரைக் கோயில் யாரால் கட்டப்பட்டது?</div>
+    <div class="answer"><p>மாமல்லபுரம் கடற்கரைக் கோயில் <strong>நரசிம்மவர்மன் II (ராஜசிம்மன்)</strong> என்ற பல்லவ மன்னரால் கட்டப்பட்டது. இது கி.பி. 700-728 காலத்தில் கட்டப்பட்டது. இது <strong>யுனெஸ்கோ உலக பாரம்பரிய தளம்</strong> ஆகும்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">11</span>மாமல்லபுரம் வேறு பெயர்கள் யாவை?</div>
+    <div class="answer">
+      <ul>
+        <li><strong>மாமல்லபுரம்</strong> – மாமல்லன் (நரசிம்மவர்மன் I) பெயரில்</li>
+        <li><strong>மகாபலிபுரம்</strong> – மஹாபலி அரசனின் பெயரில்</li>
+        <li><strong>கடற்கரை நகரம்</strong> – கடலோர அமைவிடம் காரணமாக</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">12</span>பஞ்சபாண்டவர்கள் இரதங்கள் யாவை?</div>
+    <div class="answer">
+      <ul>
+        <li><strong>தர்மராஜ இரதம்</strong> – மிகப் பெரியது</li>
+        <li><strong>பீம இரதம்</strong></li>
+        <li><strong>அர்ஜுன இரதம்</strong></li>
+        <li><strong>நகுல சகதேவ இரதம்</strong></li>
+        <li><strong>திரௌபதி இரதம்</strong> – மிகச் சிறியது</li>
+      </ul>
+      <p>இவை ஒரே கல்லில் செதுக்கப்பட்ட (monolithic) ஐந்து இரதங்கள் ஆகும்.</p>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">13</span>குடைவரைக் கோவில் என்றால் என்ன?</div>
+    <div class="answer"><p><strong>குடைவரைக் கோவில்</strong> என்பது மலைகளை அல்லது பாறைகளை குடைந்து (வெட்டி) உருவாக்கப்பட்ட கோவில் ஆகும். இவை <strong>Rock-cut temples</strong> எனவும் அழைக்கப்படும். மாமல்லபுரத்தில் உள்ள பல கோவில்கள் இவ்வகையைச் சேர்ந்தவை.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">14</span>மதுரை மீனாட்சி அம்மன் கோயில் ஆயிரங்கால் மண்டபத்தைக் கட்டியவர் யார்?</div>
+    <div class="answer"><p>மதுரை மீனாட்சி அம்மன் கோயில் ஆயிரங்கால் மண்டபத்தைக் கட்டியவர் <strong>விஸ்வநாத நாயக்கர்</strong> ஆவார். இது <strong>985 தூண்களைக்</strong> கொண்டது. ஒவ்வொரு தூணிலும் அழகான சிற்பங்கள் வடிக்கப்பட்டுள்ளன.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">15</span>இந்தோ-சாரசனிக் கட்டிடக்கலை குறிப்பு வரைக.</div>
+    <div class="answer"><p><strong>இந்தோ-சாரசனிக் கட்டிடக்கலை</strong> என்பது <strong>இந்திய கட்டிடக்கலை + இஸ்லாமிய (மூரிஷ்) கட்டிடக்கலை</strong> கலந்த ஒரு பாணி ஆகும். இது <strong>பிரிட்டிஷ் காலத்தில்</strong> உருவானது. <strong>வட்டக் கோபுரங்கள், கமான் வளைவுகள், செதுக்கல் வேலைப்பாடுகள்</strong> இதன் சிறப்பு.</p></div>
+  </div>
+
+  <div class="section-title marks16">16 மதிப்பெண் விடைகள்</div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">1</span>பல்லவர் கால கட்டிடக் கலைகள் பற்றி விவரிக்கவும்</div>
+    <div class="answer">
+      <p><strong>பல்லவர் கால கட்டிடக்கலை:</strong></p>
+      <p>பல்லவர்கள் கி.பி. 4-9 நூற்றாண்டுகளில் ஆட்சி செய்தனர். இவர்கள் தமிழ் கட்டிடக்கலையில் புரட்சி செய்தனர்.</p>
+      <p><strong>முக்கிய வகைகள்:</strong></p>
+      <ul>
+        <li><strong>1. குடைவரைக் கோவில்கள் (Rock-cut temples)</strong> – மலைகளை குடைந்து கட்டிய கோவில்கள். எ.கா.: மாமல்லபுரம் குடைவரைகள்</li>
+        <li><strong>2. இரதங்கள் (Ratha)</strong> – ஒரே கல்லில் செதுக்கிய கோவில்கள். எ.கா.: பஞ்ச பாண்டவ இரதங்கள்</li>
+        <li><strong>3. கட்டுமான கோவில்கள் (Structural temples)</strong> – கல் கட்டிகளால் கட்டப்பட்ட கோவில்கள். எ.கா.: கடற்கரை கோவில்</li>
+      </ul>
+      <p><strong>சிறப்பு மன்னர்கள்:</strong></p>
+      <ul>
+        <li><strong>நரசிம்மவர்மன் I (மாமல்லன்)</strong> – இரதங்கள் கட்டினார்</li>
+        <li><strong>நரசிம்மவர்மன் II (ராஜசிம்மன்)</strong> – கடற்கரை கோவில் கட்டினார்</li>
+      </ul>
+      <p><strong>சிறப்புகள்:</strong></p>
+      <ul>
+        <li>யுனெஸ்கோ உலக பாரம்பரிய தளம்</li>
+        <li>அற்புதமான சிற்பங்கள் (அர்ஜுன தபசு – உலகின் மிகப் பெரிய பாறை சிற்பம்)</li>
+        <li>திராவிட பாணி கட்டிடக்கலையின் தொடக்கம்</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">2</span>நடுகல் வழிபாட்டு முறையை விளக்குக.</div>
+    <div class="answer">
+      <p><strong>நடுகல் வழிபாடு:</strong></p>
+      <p>நடுகல் என்பது வீரமரணம் அடைந்த வீரர்களுக்கு நட்டு வழிபடும் கல் ஆகும்.</p>
+      <p><strong>நட்டும் முறை (தொல்காப்பியம் கூறும் 6 நிலைகள்):</strong></p>
+      <ul>
+        <li><strong>1. மரபு</strong> – வீரனின் குடி (குலம்) சொல்லுதல்</li>
+        <li><strong>2. பெற்றோர்</strong> – தந்தை, தாய் பெயர் கூறுதல்</li>
+        <li><strong>3. செயல்</strong> – செய்த வீரச் செயல் விவரித்தல்</li>
+        <li><strong>4. காரணம்</strong> – இறப்பிற்கான காரணம் கூறல்</li>
+        <li><strong>5. இடம்</strong> – இறந்த இடம் சொல்லுதல்</li>
+        <li><strong>6. விழா</strong> – நடுகல் நாட்டும் விழா</li>
+      </ul>
+      <p><strong>வழிபாட்டு முறை:</strong></p>
+      <ul>
+        <li>கல்லை காட்டில் அல்லது வெளிப்பகுதியில் நிறுவுதல்</li>
+        <li>பெண்கள் குரவைக்கூத்தாடி வழிபடுதல்</li>
+        <li>மலர்கள் சாத்தி வழிபடுதல்</li>
+        <li>நெய் விளக்கேற்றுதல்</li>
+        <li>வீரன் கடவுளாக மாறுவான் என்று நம்பினர்</li>
+      </ul>
+      <p><strong>முக்கியத்துவம்:</strong> நடுகல்கள் சங்க கால வரலாற்றை, போர்களை, வீரர்களை அறிய உதவும் முக்கிய ஆதாரங்கள்.</p>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">3</span>சிலப்பதிகாரத்தில் மேடை அமைப்பு முறைகள் குறித்து விளக்குக.</div>
+    <div class="answer">
+      <p><strong>சிலப்பதிகாரத்தில் மேடை அமைப்பு:</strong></p>
+      <p>சிலப்பதிகாரம் என்னும் இலக்கியம் நாடக மேடை அமைப்பை மிகவும் விரிவாக விவரிக்கிறது.</p>
+      <p><strong>மேடை வகைகள்:</strong></p>
+      <ul>
+        <li><strong>கூத்து மேடை</strong> – கூத்தாடுவதற்கான மேடை</li>
+        <li><strong>அரங்கு</strong> – நாடகம் நடிக்கும் இடம்</li>
+        <li><strong>அரையரங்கு</strong> – அரை வட்ட வடிவ மேடை</li>
+      </ul>
+      <p><strong>மேடை அமைப்பு விவரம்:</strong></p>
+      <ul>
+        <li>மேடை உயர்ந்து இருக்கும்</li>
+        <li>நான்கு திசைகளிலும் நுழைவு வழி இருக்கும்</li>
+        <li>ஒலி எதிரொலிக்கும் (acoustic) வடிவமைப்பு</li>
+        <li>வர்ணமயமான திரைகளும் அலங்காரங்களும் இருக்கும்</li>
+        <li>கூத்தன் (நடிகன்) நிற்கும் இடம் தனி</li>
+      </ul>
+      <p><strong>பார்வையாளர் ஏற்பாடு:</strong></p>
+      <ul>
+        <li>வித்வான்களுக்கு முன்வரிசை</li>
+        <li>பொதுமக்களுக்கு பின்வரிசை</li>
+        <li>பெண்களுக்கு தனி பகுதி</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">4</span>சோழர் காலத்துப் பெருங்கோவில்கள் மற்றும் பிற வழிபாட்டு தலங்களைப் பற்றி விவரிக்கவும்.</div>
+    <div class="answer">
+      <p><strong>சோழர் கால பெருங்கோவில்கள்:</strong></p>
+      <p>சோழர்கள் கி.பி. 9-13 நூற்றாண்டுகளில் மிகப் பெரிய கோவில்களை கட்டினர். இவை <strong>திராவிட கட்டிடக்கலையின் உச்சம்</strong> ஆகும்.</p>
+      <p><strong>1. பெரிய கோவில் (தஞ்சாவூர்):</strong></p>
+      <ul>
+        <li>ராஜராஜ சோழன் கட்டினார் (கி.பி. 1010)</li>
+        <li>66 மீட்டர் உயர விமானம்</li>
+        <li>யுனெஸ்கோ உலக பாரம்பரிய தளம்</li>
+        <li>ஒரே கல்லால் ஆன 80 டன் தொப்பி சிலை</li>
+      </ul>
+      <p><strong>2. கங்கை கொண்ட சோழபுரம்:</strong></p>
+      <ul>
+        <li>ராஜேந்திர சோழன் கட்டினார்</li>
+        <li>கங்கை நதி வெற்றி கொண்ட நினைவாக கட்டப்பட்டது</li>
+        <li>தஞ்சாவூரை விட அழகிய சிற்பங்கள்</li>
+      </ul>
+      <p><strong>3. ஐராவதேஸ்வரர் கோவில் (தாரசுரம்):</strong></p>
+      <ul>
+        <li>ராஜராஜ சோழன் II கட்டினார்</li>
+        <li>சிறு அளவிலான ஆனால் மிக அழகான கோவில்</li>
+      </ul>
+      <p><strong>சிறப்புகள்:</strong></p>
+      <ul>
+        <li>இசையுடன் அமைந்த கோவில்கள்</li>
+        <li>அழகிய நடராஜர் சிற்பங்கள்</li>
+        <li>இசை தூண்கள்</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">5</span>செட்டிநாடு வீடுகளின் கட்டடக்கலையின் சிறப்புகளைக் கூறுக.</div>
+    <div class="answer">
+      <p><strong>செட்டிநாடு வீடுகளின் கட்டடக்கலை:</strong></p>
+      <p>செட்டிநாடு வீடுகள் தமிழ்நாட்டில் <strong>கரைக்குடி, பட்டுக்கோட்டை</strong> பகுதிகளில் காணப்படுகின்றன.</p>
+      <p><strong>கட்டமைப்பு சிறப்புகள்:</strong></p>
+      <ul>
+        <li><strong>1. தனித்துவமான பிரவேசவாயில்</strong> – தேக்கு மரத்தால் ஆன அழகான வாயில்</li>
+        <li><strong>2. முற்றம்</strong> – மீன் வடிவ (வைட்ட) நீர் சேகரிப்பு தொட்டி</li>
+        <li><strong>3. சுவர்கள்</strong> – முட்டை வெள்ளை + சுண்ணாம்பு கலந்த பளிங்கு சுவர்</li>
+        <li><strong>4. தரை</strong> – இந்திய சேகுவ மரத்தால் ஆன தரை</li>
+        <li><strong>5. கம்பம்</strong> – பர்மா தேக்கு மரம் + கிரானைட் தாங்கி</li>
+        <li><strong>6. வரையோவியங்கள்</strong> – இத்தாலி பளிங்கு கொண்டு தரை அமைப்பு</li>
+      </ul>
+      <p><strong>முக்கியத்துவம்:</strong></p>
+      <ul>
+        <li>செட்டியார்கள் வர்த்தகம் மூலம் வெளிநாடுகளிலிருந்து உயர்தர பொருட்கள் கொண்டு வந்தனர்</li>
+        <li>இன்று இவை பாரம்பரிய விடுதிகளாக (Heritage hotels) மாற்றப்பட்டுள்ளன</li>
+        <li>யுனெஸ்கோ பட்டியலில் சேர்க்கப்பட வேண்டும் என பரிந்துரை</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">6</span>பிரிட்டிஷ் காலத்தில் இந்தோ-சாரசனிக் கட்டடக்கலையின் முக்கிய அம்சங்களைக் கூறுக.</div>
+    <div class="answer">
+      <p><strong>இந்தோ-சாரசனிக் கட்டடக்கலை:</strong></p>
+      <p>இது பிரிட்டிஷ் ஆட்சிக் காலத்தில் (19-20 நூற்றாண்டு) உருவான ஒரு கட்டிடப் பாணி.</p>
+      <p><strong>இரண்டு பாணிகளின் கலப்பு:</strong></p>
+      <ul>
+        <li><strong>இந்திய பாணி</strong> – வட்ட கோபுரங்கள், சிற்பங்கள், மண்டபங்கள்</li>
+        <li><strong>இஸ்லாமிய / மூரிஷ் பாணி</strong> – கமான் வளைவுகள், மினார்கள் (கோபுர தூண்கள்)</li>
+      </ul>
+      <p><strong>முக்கிய அம்சங்கள்:</strong></p>
+      <ul>
+        <li>குதிரை கால் வளைவுகள் (Horseshoe arches)</li>
+        <li>வெற்றிடம் கொண்ட கோபுரங்கள்</li>
+        <li>செதுக்கல் வேலைப்பாடுகள்</li>
+        <li>பெரிய கண்ணாடி ஜன்னல்கள்</li>
+      </ul>
+      <p><strong>முக்கிய கட்டிடங்கள்:</strong></p>
+      <ul>
+        <li><strong>சென்னை உயர் நீதிமன்றம்</strong></li>
+        <li><strong>சென்னை மத்திய ரயில் நிலையம்</strong></li>
+        <li><strong>திருமலை நாயக்கர் அரண்மனை</strong></li>
+        <li><strong>மைசூர் அரண்மனை</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">7</span>மாமல்லபுரத்தில் உள்ள கடற்கரைக் கோயில்கள் மற்றும் குகைக் கோயில்களை விரிவாக விவரிக்கவும்.</div>
+    <div class="answer">
+      <p><strong>மாமல்லபுரம்:</strong></p>
+      <p>மாமல்லபுரம் (மகாபலிபுரம்) சென்னைக்கு 60 கி.மீ. தொலைவில் உள்ளது. பல்லவ மன்னர்களின் கடற்கரை நகரம்.</p>
+      <p><strong>கடற்கரை கோவில்கள்:</strong></p>
+      <ul>
+        <li><strong>கடற்கரை கோவில்</strong> – கி.பி. 700-728, ராஜசிம்மன் கட்டினார்</li>
+        <li>3 கோவில்கள் உள்ளன – 2 சிவன், 1 விஷ்ணு</li>
+        <li>கடலை நோக்கி அமைந்துள்ளது</li>
+        <li>யுனெஸ்கோ உலக பாரம்பரிய தளம்</li>
+      </ul>
+      <p><strong>குகைக் கோவில்கள்:</strong></p>
+      <ul>
+        <li><strong>மஹிஷாசுரமர்தனி குகை</strong> – துர்கை கோவில்</li>
+        <li><strong>வராஹ மண்டபம்</strong> – விஷ்ணு கோவில்</li>
+        <li><strong>திரிமூர்த்தி குகை</strong> – பிரம்மா, விஷ்ணு, சிவன்</li>
+        <li><strong>ஆதி வராஹ குகை</strong></li>
+      </ul>
+      <p><strong>பிற சிறப்புகள்:</strong></p>
+      <ul>
+        <li><strong>அர்ஜுன தபசு</strong> – உலகின் மிகப் பெரிய திறந்த வெளி பாறை சிற்பம்</li>
+        <li><strong>பஞ்சபாண்டவ இரதங்கள்</strong></li>
+        <li><strong>கிருஷ்ண மண்டபம்</strong></li>
+      </ul>
+    </div>
+  </div>
 </div>
 
-<!-- ABOUT -->
-<section class="about" id="about">
-  <div class="section-label">Who I Am</div>
-  <div class="section-title">About Me</div>
-  <div class="title-rule"></div>
-  <div class="about-grid fade-up">
-    <div class="about-text">
-      <p>I am a <strong>highly analytical banking professional</strong> with a strong foundation in computer applications and financial operations. Currently serving as <strong>Branch Manager at Axis Bank, Avinashi Branch</strong>, I bring a results-oriented approach to every challenge I take on.</p>
-      <p>My career at Axis Bank spans over seven years, progressing from <strong>Assistant Manager to Deputy Manager to Manager</strong> — each step built on a commitment to regulatory excellence, team development, and customer acquisition.</p>
-      <p>Beyond banking, I am a <strong>state-level athlete</strong> — competing in 800m and relay events — which has instilled in me the discipline, teamwork, and resilience I bring to the branch floor every day.</p>
-      <p><em style="color:var(--gold); font-style:normal; font-weight:500;">"Driven by purpose. Committed to excellence."</em></p>
-    </div>
-    <div class="contact-card" id="contact">
-      <h3>Contact Details</h3>
-      <div class="contact-item">
-        <div class="contact-icon">📞</div>
-        <div class="contact-detail"><span>Phone</span>+91 73970 88613</div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">✉️</div>
-        <div class="contact-detail"><span>Email</span>paramesh.hockey@gmail.com</div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">📍</div>
-        <div class="contact-detail"><span>Address</span>184/221, Bhavanisagar Road,<br>Ganesapuram, P. Pulampatti,<br>Sathyamangalam (Tk), Erode – 638459</div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-icon">🏦</div>
-        <div class="contact-detail"><span>Current Branch</span>Axis Bank, Avinashi Branch</div>
-      </div>
+<hr class="divider">
+
+<!-- ===== UNIT 3 ===== -->
+<div class="unit" id="unit3">
+  <div class="unit-header">
+    <h2>அலகு – III</h2>
+    <h3>உற்பத்தித் தொழில்நுட்பம்</h3>
+  </div>
+
+  <button class="show-all-btn" onclick="toggleAll('unit3')">🔍 அனைத்து விடைகளையும் காட்டு / மறை</button>
+
+  <div class="section-title">2 மதிப்பெண் விடைகள்</div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">1</span>கட்டு மரங்களின் வேறு பெயர்கள் யாவை?</div>
+    <div class="answer">
+      <ul>
+        <li><strong>அம்பி</strong> – சிறிய படகு</li>
+        <li><strong>நாவாய்</strong> – பெரிய கப்பல்</li>
+        <li><strong>வங்கம்</strong> – வணிக கப்பல்</li>
+        <li><strong>ஓடம்</strong> – சாதாரண படகு</li>
+        <li><strong>பரிசல்</strong> – ஆற்றுப் படகு</li>
+        <li><strong>திமில்</strong> – மீன்பிடி படகு</li>
+      </ul>
     </div>
   </div>
-</section>
 
-<!-- EXPERIENCE -->
-<section class="experience" id="experience">
-  <div class="section-label">Career Path</div>
-  <div class="section-title">Professional Experience</div>
-  <div class="title-rule"></div>
-  <div class="timeline fade-up">
-    <div class="timeline-item current">
-      <div class="timeline-dot"></div>
-      <div class="timeline-meta">
-        <div class="timeline-role">Manager</div>
-        <div class="timeline-company">Axis Bank</div>
-        <div class="timeline-period">2026 – Present</div>
-      </div>
-      <p class="timeline-desc">Managing end-to-end branch operations at Avinashi Branch, ensuring strict regulatory compliance, optimised workflow efficiency, and maintaining the highest standards of customer service excellence.</p>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-meta">
-        <div class="timeline-role">Deputy Manager</div>
-        <div class="timeline-company">Axis Bank</div>
-        <div class="timeline-period">2021 – 2026</div>
-      </div>
-      <p class="timeline-desc">Spearheaded daily branch operations at Annur Branch, ensuring regulatory compliance and service excellence while actively driving growth in retail liabilities and customer acquisition targets.</p>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-dot"></div>
-      <div class="timeline-meta">
-        <div class="timeline-role">Assistant Manager</div>
-        <div class="timeline-company">Axis Bank</div>
-        <div class="timeline-period">2019 – 2021</div>
-      </div>
-      <p class="timeline-desc">Managed end-to-end branch operations at Sathyamangalam Branch, ensuring strict compliance, optimising cash management processes, and delivering high-quality customer service to drive branch efficiency.</p>
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">2</span>சங்க இலக்கியத்தில் கூறப்பட்டுள்ள கலங்கள் எத்தனை?</div>
+    <div class="answer"><p>சங்க இலக்கியத்தில் <strong>பல வகையான</strong> கலங்கள் (கப்பல்கள்) குறிப்பிடப்படுகின்றன. புறநானூறு, அகநானூறு, பட்டினப்பாலை போன்ற நூல்களில் <strong>வங்கம், நாவாய், அம்பி, ஓடம், படகு</strong> ஆகிய கலங்கள் கூறப்படுகின்றன.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">3</span>பரதவர் பற்றி குறிப்பு வரைக.</div>
+    <div class="answer"><p><strong>பரதவர்</strong> என்பவர் சங்க காலத்தில் கடலோரங்களில் வாழ்ந்த <strong>மீனவ மக்கள்</strong> ஆவர். இவர்கள் மீன் பிடித்தல், கடல் வாணிகம் செய்தல், கப்பல் ஓட்டுதல் ஆகியவற்றில் வல்லவர்கள். இவர்கள் <strong>"நெய்தல்"</strong> திணையைச் சேர்ந்தவர்கள்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">4</span>இருமுனை மின் இறக்கம் என்றால் என்ன?</div>
+    <div class="answer"><p><strong>இருமுனை மின் இறக்கம் (Bipolar smelting)</strong> என்பது இரும்பை உருக்குவதற்கான ஒரு முறை. இதில் உலையின் இரு பக்கங்களிலும் காற்று செலுத்தப்பட்டு உலோகம் உருக்கப்படும். இம்முறையில் அதிக வெப்பம் கிடைக்கும்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">5</span>உலைக்களம் பற்றி எழுதுக.</div>
+    <div class="answer"><p><strong>உலைக்களம்</strong> என்பது உலோகங்களை உருக்கி பொருட்கள் செய்யும் <strong>கொல்லன் பட்டறை</strong> ஆகும். இங்கு இரும்பு, தாமிரம், வெண்கலம் போன்ற உலோகங்களை சூளையில் (furnace) சுட்டு வேண்டிய வடிவத்தில் செய்வர். சங்க கால கவிஞர்கள் இந்த உலைக்களத்தை உவமையாக பயன்படுத்தியுள்ளனர்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">6</span>சங்க இலக்கியத்தில் இரும்பு பற்றிய பயிர்கள் எவ்வாறு குறிப்பிடப்படுகிறது?</div>
+    <div class="answer"><p>சங்க இலக்கியத்தில் இரும்பு <strong>"கருங்கோட்டு"</strong> என்று குறிப்பிடப்படுகிறது. இரும்பால் செய்த கலப்பை, அரிவாள், வேல் போன்ற விவசாயக் கருவிகளும் போர்க்கருவிகளும் பாடல்களில் இடம்பெறுகின்றன.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">7</span>நாணயங்கள் குறிப்பு வரைக.</div>
+    <div class="answer"><p>சங்க காலத்தில் <strong>நாணயங்கள்</strong> வெள்ளி, தங்கம், செம்பு ஆகியவற்றால் செய்யப்பட்டன. <strong>கா, மஞ்சாடி, பொன்</strong> போன்ற நாணயங்கள் புழக்கத்தில் இருந்தன. வணிகத்திற்கு பயன்பட்டன. உரோமானிய நாணயங்களும் தமிழகத்தில் கண்டெடுக்கப்பட்டுள்ளன.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">8</span>நவரத்தினக் கற்களின் பெயர்களை எழுதுக.</div>
+    <div class="answer">
+      <p>நவரத்தினங்கள் ஒன்பது விலைமதிப்பற்ற கற்கள்:</p>
+      <ol>
+        <li>வைரம் (Diamond)</li>
+        <li>மாணிக்கம் (Ruby)</li>
+        <li>முத்து (Pearl)</li>
+        <li>பவளம் (Coral)</li>
+        <li>மரகதம் (Emerald)</li>
+        <li>நீலம் (Blue Sapphire)</li>
+        <li>புஷ்பராகம் (Topaz)</li>
+        <li>வைடூரியம் (Cat's eye)</li>
+        <li>கோமேதகம் (Hessonite)</li>
+      </ol>
     </div>
   </div>
-</section>
 
-<!-- VALUES BANNER -->
-<div class="values-banner fade-up">
-  <div class="value-item"><div class="value-icon">📊</div><div class="value-name">Operations Excellence</div><div class="value-desc">End-to-end branch management with precision</div></div>
-  <div class="value-item"><div class="value-icon">🛡️</div><div class="value-name">Integrity &amp; Commitment</div><div class="value-desc">Regulatory compliance as a non-negotiable standard</div></div>
-  <div class="value-item"><div class="value-icon">🤝</div><div class="value-name">Customer Focus</div><div class="value-desc">Service excellence that builds lasting trust</div></div>
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">9</span>கம்மியர் என்பவர் யார்?</div>
+    <div class="answer"><p><strong>கம்மியர்</strong> என்பவர் சங்க காலத்தில் <strong>இரும்பு மற்றும் பிற உலோகங்களை</strong> வேலை செய்த கொல்லர்கள் ஆவர். இவர்கள் வேல், வாள், கலப்பை போன்ற கருவிகளை தயாரித்தனர். நாட்டார் வழக்கில் <strong>கம்மாளர்</strong> என்றும் அழைக்கப்படுவர்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">10</span>குயினர் என்பவர் யார்?</div>
+    <div class="answer"><p><strong>குயினர்</strong> என்பவர் சங்க காலத்தில் <strong>மண் பாண்டங்கள்</strong> தயாரித்த <strong>குயவர்கள்</strong> ஆவர். இவர்கள் குயவன் சக்கரத்தில் மண்ணை வடிவமைத்து சூளையில் சுட்டு பாண்டங்கள் தயாரித்தனர்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">11</span>மணிகளின் வடிவங்களைக் கூறுக.</div>
+    <div class="answer">
+      <ul>
+        <li><strong>வட்ட வடிவம்</strong> (Spherical)</li>
+        <li><strong>நீளவட்ட வடிவம்</strong> (Oval)</li>
+        <li><strong>உருளை வடிவம்</strong> (Cylindrical)</li>
+        <li><strong>பட்டை வடிவம்</strong> (Faceted)</li>
+        <li><strong>சதுர வடிவம்</strong> (Square)</li>
+        <li><strong>ஆறுகோண வடிவம்</strong> (Hexagonal)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">12</span>வண்ணக்கண் குறிப்பு வரைக.</div>
+    <div class="answer"><p><strong>வண்ணக்கண்</strong> என்பது ஒரு வகையான அணிகலன் (நகை) ஆகும். இது <strong>வண்ணமயமான கண்கள் போன்ற</strong> வடிவில் செய்யப்பட்ட மணி அல்லது கல் ஆகும். சங்க கால கவிஞர்கள் இதை அழகின் அடையாளமாக கூறியுள்ளனர்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">13</span>மணிகளின் வடிவங்கள் எத்தனை? அவை யாவை?</div>
+    <div class="answer">
+      <p>மணிகளின் வடிவங்கள் <strong>ஆறு</strong> முக்கிய வகைகளாக பிரிக்கப்படும்:</p>
+      <ul>
+        <li>1. வட்டம் (Round)</li>
+        <li>2. நீளவட்டம் (Oval)</li>
+        <li>3. உருளை (Cylinder)</li>
+        <li>4. பட்டை (Faceted/Angular)</li>
+        <li>5. சதுரம் (Square)</li>
+        <li>6. கோள வடிவம் (Barrel)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">14</span>சிலப்பதிகாரத்தில் குறிப்பிடும் மணிகள் யாவை?</div>
+    <div class="answer">
+      <ul>
+        <li><strong>முத்து</strong> – முத்துமாலை</li>
+        <li><strong>மாணிக்கம்</strong> – சிவந்த நிறக் கல்</li>
+        <li><strong>நீலம்</strong> – நீல நிறக் கல்</li>
+        <li><strong>வைரம்</strong> – கடினமான கல்</li>
+        <li><strong>பவளம்</strong> – சமுத்திரத்தில் கிடைக்கும்</li>
+        <li><strong>மரகதம்</strong> – பசுமை நிறக் கல்</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">15</span>மணிகளால் என்னென்ன பொருட்கள் செய்தனர்?</div>
+    <div class="answer">
+      <ul>
+        <li><strong>மாலைகள்</strong> – கழுத்தில் அணியும் அணிகலன்</li>
+        <li><strong>காப்பு (வளை)</strong> – கையில் அணியும் அணிகலன்</li>
+        <li><strong>காதணிகள்</strong> – காதில் அணியும் அணிகலன்</li>
+        <li><strong>கிரீடம்</strong> – தலையில் அணியும் முடி அலங்காரம்</li>
+        <li><strong>மோதிரம்</strong> – விரலில் அணியும் அணிகலன்</li>
+        <li><strong>கால் சிலம்பு</strong> – கால்களில் அணியும் அணிகலன்</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-title marks16">16 மதிப்பெண் விடைகள்</div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">1</span>பழந்தமிழர் கப்பல் கலை குறித்து விளக்கி எழுதுக.</div>
+    <div class="answer">
+      <p><strong>பழந்தமிழர் கப்பல் கலை:</strong></p>
+      <p>சங்க காலத்தில் தமிழர்கள் கடல் வாணிகத்தில் மிகவும் திறமைசாலிகளாக இருந்தனர்.</p>
+      <p><strong>கப்பல் வகைகள்:</strong></p>
+      <ul>
+        <li><strong>வங்கம்</strong> – வணிக கப்பல், வெளிநாடுகளுக்கு போகும்</li>
+        <li><strong>நாவாய்</strong> – பெரிய கப்பல்</li>
+        <li><strong>அம்பி</strong> – சிறிய படகு</li>
+        <li><strong>ஓடம்</strong> – மீன்பிடி படகு</li>
+        <li><strong>திமில்</strong> – கடல் பயணப் படகு</li>
+        <li><strong>பரிசல்</strong> – ஆற்றுப் படகு</li>
+      </ul>
+      <p><strong>கப்பல் கட்டும் பொருட்கள்:</strong></p>
+      <ul>
+        <li>தேக்கு மரம், வேம்பு மரம்</li>
+        <li>பனை நார், தென்னை நார் (கட்ட)</li>
+        <li>மரப்பால் (Resin – நீர் புகாமல் தடுக்க)</li>
+        <li>இரும்பு ஆணி</li>
+      </ul>
+      <p><strong>திசை கண்டுபிடிக்கும் முறை:</strong></p>
+      <ul>
+        <li>நட்சத்திரங்களை பார்த்து திசை அறிந்தனர்</li>
+        <li>பறவைகளை வழிகாட்டியாக பயன்படுத்தினர்</li>
+        <li>காற்றின் திசை, அலைகளை கவனித்தனர்</li>
+      </ul>
+      <p><strong>வணிக இலக்குகள்:</strong> உரோமானிய சாம்ராஜ்யம், அரேபியா, ஆப்பிரிக்கா, தென்கிழக்கு ஆசிய நாடுகள்</p>
+      <p><strong>கப்பல் துறைமுகங்கள்:</strong> கொற்கை, புகார், தொண்டி, முசிறி</p>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">2</span>பண்டைய தமிழர்களின் உலோகவியல் திறனை ஆதாரங்களுடன் விளக்குங்கள்.</div>
+    <div class="answer">
+      <p><strong>உலோகவியல் (Metallurgy) திறன்:</strong></p>
+      <p>பண்டைய தமிழர்கள் உலோக செயலாக்கத்தில் மிகவும் முன்னேறியவர்கள்.</p>
+      <p><strong>இரும்பு உலோகவியல்:</strong></p>
+      <ul>
+        <li>கீழடி அகழ்வாராய்ச்சியில் இரும்பு கருவிகள் கிடைத்துள்ளன</li>
+        <li><strong>இருமுனை மின் இறக்கம்</strong> முறையில் இரும்பை உருக்கினர்</li>
+        <li>உலைக்களத்தில் (forge) கருவிகள் செய்தனர்</li>
+        <li>வேல், வாள், கலப்பை, அரிவாள் தயாரித்தனர்</li>
+      </ul>
+      <p><strong>தங்கம் மற்றும் வெள்ளி:</strong></p>
+      <ul>
+        <li>நகைகள் தயாரிக்க தங்கம் பயன்படுத்தினர்</li>
+        <li>நாணயங்கள் செய்ய வெள்ளி பயன்படுத்தினர்</li>
+      </ul>
+      <p><strong>வெண்கலம் (Bronze):</strong></p>
+      <ul>
+        <li>செம்பு + தகரம் கலந்து வெண்கலம் செய்தனர்</li>
+        <li>சிற்பங்கள், விளக்குகள், கிண்ணங்கள் தயாரித்தனர்</li>
+        <li>நடராஜர் சிற்பங்கள் வெண்கலத்தில் செய்யப்பட்டன</li>
+      </ul>
+      <p><strong>ஆதாரங்கள்:</strong></p>
+      <ul>
+        <li>கீழடி, அரிக்கமேடு அகழ்வாராய்ச்சி கண்டுபிடிப்புகள்</li>
+        <li>சங்க இலக்கிய குறிப்புகள்</li>
+        <li>அருங்காட்சியக பொருட்கள்</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">3</span>நாணயங்கள் மற்றும் அவற்றின் வரலாற்று முக்கியத்துவம் பற்றிய குறிப்பை எழுதவும்.</div>
+    <div class="answer">
+      <p><strong>நாணயங்கள் – வரலாற்று முக்கியத்துவம்:</strong></p>
+      <p><strong>பொருட்கள்:</strong> தங்கம், வெள்ளி, செம்பு, வெண்கலம்</p>
+      <p><strong>வகைகள்:</strong></p>
+      <ul>
+        <li><strong>பொன் (Gold coins)</strong> – அரச நாணயங்கள்</li>
+        <li><strong>வெள்ளி நாணயங்கள்</strong> – வணிக நாணயங்கள்</li>
+        <li><strong>செப்பு நாணயங்கள்</strong> – அன்றாட பரிமாற்றம்</li>
+        <li><strong>பஞ்சமார்க் நாணயங்கள்</strong> – குத்திய சின்னங்களுடன்</li>
+      </ul>
+      <p><strong>நாணயங்களில் காணப்படும் உருவங்கள்:</strong></p>
+      <ul>
+        <li>அரசர்களின் உருவங்கள்</li>
+        <li>யானை, குதிரை, புலி சின்னங்கள்</li>
+        <li>மீன், வில் – பாண்டியர், சேரர் சின்னங்கள்</li>
+        <li>புலி – சோழர் சின்னம்</li>
+      </ul>
+      <p><strong>வரலாற்று முக்கியத்துவம்:</strong></p>
+      <ul>
+        <li>வணிக பரிமாற்றத்தை தெரிவிக்கும்</li>
+        <li>அரசர்களை அடையாளம் காண உதவும்</li>
+        <li>வெளிநாட்டு வர்த்தகத்தை நிரூபிக்கும்</li>
+        <li>காலவரிசை நிர்ணயிக்க (Dating) உதவும்</li>
+      </ul>
+      <p><strong>உரோமானிய நாணயங்கள்</strong> தமிழகத்தில் ஏராளமாக கிடைத்துள்ளன – இது உரோமா-தமிழக வணிகத்தை நிரூபிக்கிறது.</p>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">4</span>மணிகளின் வடிவங்கள்/வகைகளை ஆதாரங்களுடன் விளக்கவும்.</div>
+    <div class="answer">
+      <p><strong>மணிகளின் வடிவங்கள் மற்றும் வகைகள்:</strong></p>
+      <p><strong>வடிவங்கள்:</strong></p>
+      <ul>
+        <li><strong>கோள வடிவம்</strong> – வட்டமான மணி (முத்து)</li>
+        <li><strong>நீள உருளை</strong> – கம்பு போல நீண்ட மணி</li>
+        <li><strong>சதுரம்</strong> – நான்கு கோணமுள்ள மணி</li>
+        <li><strong>ஆறுகோணம்</strong> – கட்டை வெட்டிய மணி</li>
+        <li><strong>நேர்கோட்டு பட்டை</strong> – நட்சத்திர வடிவம்</li>
+      </ul>
+      <p><strong>மணியின் வகைகள் – பொருளால்:</strong></p>
+      <ul>
+        <li><strong>கல் மணி</strong> – வைரம், மாணிக்கம், மரகதம்</li>
+        <li><strong>கடல் மணி</strong> – முத்து, பவளம்</li>
+        <li><strong>ஊசி மணி</strong> – கண்ணாடி மணி</li>
+        <li><strong>மட் மணி</strong> – மண்ணால் செய்த மணி (Terra cotta)</li>
+      </ul>
+      <p><strong>ஆதாரங்கள்:</strong></p>
+      <ul>
+        <li>அரிக்கமேட்டில் கண்ணாடி மணி தொழிற்சாலை கண்டெடுக்கப்பட்டது</li>
+        <li>கீழடியில் ஆயிரக்கணக்கான மணிகள் கிடைத்துள்ளன</li>
+        <li>சிலப்பதிகாரம் விரிவாக மணிகளை விவரிக்கிறது</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">5</span>ஊர்காண் காதையில் இளங்கோவடிகள் கூறும் மணிகள் பற்றிய செய்திகளை விளக்குக.</div>
+    <div class="answer">
+      <p><strong>ஊர்காண் காதையில் மணிகள்:</strong></p>
+      <p>சிலப்பதிகாரத்தின் <strong>ஊர்காண் காதை</strong> புகார் நகரின் அழகை விவரிக்கும் பகுதி. இதில் மணிகள் பற்றிய விரிவான விவரணை உள்ளது.</p>
+      <p><strong>கூறப்பட்ட மணிகள்:</strong></p>
+      <ul>
+        <li><strong>முத்து</strong> – வணிகர்கள் வாங்கி விற்கும் மதிப்பு மிக்க பொருள்</li>
+        <li><strong>பவளம்</strong> – கடலில் கிடைக்கும் சிவந்த மணி</li>
+        <li><strong>வைரம்</strong> – மிகக் கடினமான கல்</li>
+        <li><strong>மரகதம்</strong> – பச்சை நிறக் கல்</li>
+        <li><strong>மாணிக்கம்</strong> – சிவந்த கல்</li>
+        <li><strong>கனகம் (தங்கம்)</strong></li>
+      </ul>
+      <p><strong>விவரணைகள்:</strong></p>
+      <ul>
+        <li>புகார் நகர் கடற்கரையில் மணிகள் கொண்டு வணிகம் நடைபெற்றது</li>
+        <li>வெளிநாட்டு வணிகர்கள் மணிகளை வாங்கி சென்றனர்</li>
+        <li>மணி வணிகர்கள் (மணிகோலர்) தனி சந்தைகளில் வணிகம் செய்தனர்</li>
+        <li>நகர வீதிகளில் மணிகளின் ஒளி பரவியது என்று கவிஞர் வர்ணிக்கிறார்</li>
+      </ul>
+      <p><strong>முடிவு:</strong> ஊர்காண் காதை சங்க கால மணி வணிகத்தின் சிறந்த ஆவணம் ஆகும்.</p>
+    </div>
+  </div>
 </div>
 
-<!-- SKILLS -->
-<section class="skills-section" id="skills">
-  <div class="section-label">Competencies</div>
-  <div class="section-title">Skills &amp; Expertise</div>
-  <div class="title-rule"></div>
-  <div class="skills-grid fade-up">
-    <div class="skill-box"><span class="skill-icon">💻</span><span class="skill-name">Visual Basic &amp; .NET</span></div>
-    <div class="skill-box"><span class="skill-icon">🌐</span><span class="skill-name">HTML &amp; Web Basics</span></div>
-    <div class="skill-box"><span class="skill-icon">☕</span><span class="skill-name">C, C++ &amp; Java</span></div>
-    <div class="skill-box"><span class="skill-icon">📋</span><span class="skill-name">Microsoft Office Suite</span></div>
-    <div class="skill-box"><span class="skill-icon">🧾</span><span class="skill-name">Tally ERP9</span></div>
-    <div class="skill-box"><span class="skill-icon">☁️</span><span class="skill-name">Cloud Computing</span></div>
-    <div class="skill-box"><span class="skill-icon">🔤</span><span class="skill-name">Tamil Type Writing</span></div>
-    <div class="skill-box"><span class="skill-icon">🏦</span><span class="skill-name">Branch Operations</span></div>
-    <div class="skill-box"><span class="skill-icon">📈</span><span class="skill-name">Retail Liabilities</span></div>
-    <div class="skill-box"><span class="skill-icon">✅</span><span class="skill-name">Regulatory Compliance</span></div>
-    <div class="skill-box"><span class="skill-icon">👥</span><span class="skill-name">Team Leadership</span></div>
-    <div class="skill-box"><span class="skill-icon">💰</span><span class="skill-name">Cash Management</span></div>
-  </div>
-</section>
+<hr class="divider">
 
-<!-- EDUCATION -->
-<section class="education" id="education">
-  <div class="section-label">Academic Background</div>
-  <div class="section-title">Education</div>
-  <div class="title-rule"></div>
-  <div class="edu-grid fade-up">
-    <div class="edu-card"><div class="edu-degree">Master of Computer Applications</div><div class="edu-institution">Bharathiar University, Coimbatore</div><div class="edu-meta"><span class="edu-year">2016 – 2018</span><span class="edu-score">84%</span></div></div>
-    <div class="edu-card"><div class="edu-degree">Bachelor of Computer Applications</div><div class="edu-institution">Bharathiar University, Coimbatore</div><div class="edu-meta"><span class="edu-year">2013 – 2016</span><span class="edu-score">73%</span></div></div>
-    <div class="edu-card"><div class="edu-degree">HSC (+2)</div><div class="edu-institution">State Board of Tamil Nadu</div><div class="edu-meta"><span class="edu-year">2010 – 2012</span><span class="edu-score">72%</span></div></div>
-    <div class="edu-card"><div class="edu-degree">SSLC (10th)</div><div class="edu-institution">State Board of Tamil Nadu</div><div class="edu-meta"><span class="edu-year">2009 – 2010</span><span class="edu-score">72%</span></div></div>
+<!-- ===== UNIT 4 ===== -->
+<div class="unit" id="unit4">
+  <div class="unit-header">
+    <h2>அலகு – IV</h2>
+    <h3>வேளாண்மை மற்றும் நீர் பாசன தொழில்நுட்பம்</h3>
   </div>
-</section>
 
-<!-- ACHIEVEMENTS -->
-<section class="achievements">
-  <div class="section-label">Beyond the Office</div>
-  <div class="section-title">Achievements</div>
-  <div class="title-rule"></div>
-  <div class="ach-grid fade-up">
-    <div class="ach-card"><div class="ach-trophy">🏆</div><div><div class="ach-title">Athletic Excellence</div><p class="ach-desc">Secured first place in multiple state-level events including the 800m run. Competed in 400m, 800m, 4×100m, and 4×400m relay events at Bharathiar University inter-collegiate championships.</p></div></div>
-    <div class="ach-card"><div class="ach-trophy">🥇</div><div><div class="ach-title">Hockey Excellence</div><p class="ach-desc">Achieved numerous top finishes across university, state, and national tournaments — including first-place finishes at the inter-collegiate level and the prestigious Chief Minister's Trophy.</p></div></div>
+  <button class="show-all-btn" onclick="toggleAll('unit4')">🔍 அனைத்து விடைகளையும் காட்டு / மறை</button>
+
+  <div class="section-title">2 மதிப்பெண் விடைகள்</div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">1</span>கல்லணை குறித்துக் குறிப்பு வரைக.</div>
+    <div class="answer"><p><strong>கல்லணை</strong> தமிழ்நாட்டில் திருச்சிராப்பள்ளி மாவட்டத்தில் காவேரி நதியில் அமைந்துள்ளது. இதை <strong>கரிகால் சோழன்</strong> கி.மு. 2-ம் நூற்றாண்டில் கட்டினார். இது <strong>உலகின் மிகப் பழமையான நீர்த்தேக்கம்</strong> இன்றும் பயன்பாட்டில் உள்ளது. நீளம் 329 மீட்டர்.</p></div>
   </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-quote"><em>"Driven by purpose."</em> &nbsp;Committed to excellence.</div>
-  <div class="footer-copy">S. Parameshwari &nbsp;·&nbsp; Banking Professional &nbsp;·&nbsp; Tamil Nadu</div>
-</footer>
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">2</span>நீர் வெட்டியார் என்பவர் யார்?</div>
+    <div class="answer"><p><strong>நீர் வெட்டியார்</strong> என்பவர் சங்க காலத்தில் <strong>வயல்களுக்கு நீர் பாசனம் நிர்வகித்த</strong> அலுவலர் ஆவர். இவர்கள் நீரை சரியான அளவில் பகிர்ந்தளிக்கும் பொறுப்பை வகித்தனர். இவர்கள் <strong>ஊர்ப்பொது நிர்வாகத்தின்</strong> ஒரு பகுதியினர்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">3</span>குமிழித்தூம்பு குறிப்பு வரைக.</div>
+    <div class="answer"><p><strong>குமிழித்தூம்பு</strong> என்பது நீர்த்தேக்கங்களில் நீரை வெளியேற்றுவதற்காக அமைக்கப்பட்ட <strong>அடிமட்ட வடிகால் குழாய் (sluice)</strong> ஆகும். தேவைப்படும்போது இதை திறந்து நீரை வயல்களுக்கு அனுப்பினர்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">4</span>திரையன் ஏரியை அமைத்தவர் யார்?</div>
+    <div class="answer"><p><strong>திரையன்</strong> என்ற சிற்றரசன் திரையன் ஏரியை அமைத்தான். இவன் பற்றி சங்க இலக்கியங்களில் குறிப்பிடப்படுகிறது. இவன் விவசாயத்திற்கு உதவும் பொருட்டு இந்த ஏரியை உருவாக்கினான்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">5</span>ஏழு வாரியங்கள் அமைத்து ஆட்சி செய்த மன்னர்கள் யார்?</div>
+    <div class="answer"><p>சங்க காலத்தில் <strong>ஏழு வாரியங்கள்</strong> (நிர்வாக குழுக்கள்) அமைத்து ஆட்சி செய்த மன்னராக <strong>பல்லவர்</strong> மற்றும் <strong>சோழர்</strong> கால கல்வெட்டுகளில் குறிப்பிடப்படுகின்றது. ஏழு வாரியங்கள்: பொன் வாரியம், ஏரி வாரியம், தோட்ட வாரியம், நகர வாரியம், சேரி வாரியம், தச்சு வாரியம், கணக்கு வாரியம்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">6</span>நீரணிக்காரர்கள் என்பவர் யார்?</div>
+    <div class="answer"><p><strong>நீரணிக்காரர்கள்</strong> என்பவர் சங்க காலத்தில் <strong>பாசன நீரை ஒழுங்குபடுத்தி வயல்களுக்கு அளந்து வழங்கும்</strong> அலுவலர்கள் ஆவர். இவர்கள் நீர் திருட்டை தடுக்கவும், சரியான நேரத்தில் தண்ணீர் கிடைக்கவும் உதவினர்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">7</span>மடை குறிப்பு வரைக.</div>
+    <div class="answer"><p><strong>மடை (Sluice)</strong> என்பது ஏரி அல்லது கால்வாயில் நீரை கட்டுப்படுத்த அமைக்கப்படும் <strong>வாயில் (gate)</strong> ஆகும். இதை திறந்தால் நீர் வயல்களுக்கு சென்று விடும். மடையை திறந்து மூடி பாசனம் நிர்வகிக்கப்பட்டது.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">8</span>நீர்வளம் பற்றிக் குறிப்பு வரைக.</div>
+    <div class="answer"><p><strong>நீர்வளம்</strong> என்பது ஒரு பகுதியில் கிடைக்கும் <strong>நீரின் அளவு மற்றும் தரம்</strong> ஆகும். சங்க காலத்தில் தமிழகம் மிகுந்த நீர்வளம் உடையதாக இருந்தது. ஏரிகள், ஆறுகள், குளங்கள், கிணறுகள் மூலம் நீர்வளம் பெருக்கப்பட்டது.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">9</span>முறை பாளை குறிப்பு வரைக.</div>
+    <div class="answer"><p><strong>முறை பாளை</strong> என்பது <strong>நீர் பாசன முறையில் ஒவ்வொரு விவசாயியும் நீரை பெற தங்கள் முறை வரும்வரை காத்திருக்கும் முறை</strong> ஆகும். இந்த வழக்கம் சங்க காலத்திலேயே இருந்தது. நீரை நியாயமாக பங்கிட இந்த முறை பயன்படுத்தப்பட்டது.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">10</span>தமிழ் இலக்கியத்தில் குறிப்பிடும் நீர்நிலைகள் எவை?</div>
+    <div class="answer">
+      <ul>
+        <li><strong>ஏரி</strong> – செயற்கை நீர்த்தேக்கம்</li>
+        <li><strong>குளம்</strong> – சிறிய நீர்நிலை</li>
+        <li><strong>கண்மாய்</strong> – மழை நீர் சேரும் குழி</li>
+        <li><strong>கால்வாய்</strong> – பாசன நீர் பாயும் வழி</li>
+        <li><strong>அணை</strong> – நீர்த்தேக்க சுவர்</li>
+        <li><strong>ஊற்று</strong> – நீர் ஊறும் இடம்</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">11</span>மேய்ச்சல் தொழில் பற்றிக் குறிப்பு வரைக</div>
+    <div class="answer"><p><strong>மேய்ச்சல் தொழில்</strong> என்பது <strong>கால்நடைகளை மேய்க்கும் தொழில்</strong> ஆகும். சங்க காலத்தில் <strong>இடையர்</strong> என்ற சமூகம் இத்தொழில் செய்தது. பசு, எருமை, ஆடு, மான் மேய்த்தனர். <strong>முல்லை</strong> திணை நிலத்தில் இத்தொழில் நடந்தது.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">12</span>கால்நடைகளுக்கான நீர் நிலை எது?</div>
+    <div class="answer"><p>கால்நடைகளுக்கான நீர் நிலையாக <strong>ஆறுகள், குளங்கள், தடாகங்கள்</strong> பயன்படுத்தப்பட்டன. சங்க கால இலக்கியங்களில் <strong>பரணர், கம்பர்</strong> போன்ற கவிஞர்கள் கால்நடைகள் குளங்களில் நீர் குடிக்கும் காட்சிகளை வருணித்துள்ளனர்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">13</span>வன்புலம் மென்புலம் குறிப்பு வரைக.</div>
+    <div class="answer">
+      <ul>
+        <li><strong>வன்புலம்</strong> – கடினமான, கல்லும் மணலும் நிறைந்த நிலம். விவசாயம் செய்வது கடினம். மழை குறைவு.</li>
+        <li><strong>மென்புலம்</strong> – மிருதுவான, வளமான மண் நிறைந்த நிலம். விவசாயம் செய்ய ஏற்றது. நீர்வளம் நிறைந்தது.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">14</span>சங்க கால நூல்களில் குறிப்பிடப்படும் கடல்வாழ் பறவைகள் யாவை.</div>
+    <div class="answer">
+      <ul>
+        <li><strong>கடல்காகம்</strong> (Cormorant)</li>
+        <li><strong>நாரை</strong> (Crane / Heron)</li>
+        <li><strong>கொக்கு</strong> (Egret)</li>
+        <li><strong>நீர்க்காக்கை</strong></li>
+        <li><strong>பெலிகன்</strong> (Vாய்பறை)</li>
+        <li><strong>கடல் கோழி</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">15</span>முத்துக்குளித்தல் குறிப்பு வரைக.</div>
+    <div class="answer"><p><strong>முத்துக்குளித்தல்</strong> என்பது கடலில் முங்கி <strong>முத்தெடுக்கும் தொழில்</strong> ஆகும். சங்க காலத்தில் <strong>கொற்கை</strong> (திருநெல்வேலி மாவட்டம்) முத்து வணிகத்திற்கு பிரசித்தமான இடம். <strong>முத்துவர்</strong> என்ற சமூகம் இத்தொழில் செய்தது. இந்த முத்துகளை வெளிநாடுகளுக்கு ஏற்றுமதி செய்தனர்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">16</span>குளங்களின் நான்கு நன்மைகளை எழுதுக.</div>
+    <div class="answer">
+      <ul>
+        <li><strong>1. பாசன நீர்</strong> – விவசாயத்திற்கு தண்ணீர் கிடைக்கும்</li>
+        <li><strong>2. குடிநீர்</strong> – மக்களுக்கும் கால்நடைகளுக்கும் குடிநீர்</li>
+        <li><strong>3. மீன் வளர்ப்பு</strong> – மீன்பிடி தொழில் நடைபெறும்</li>
+        <li><strong>4. நிலத்தடி நீர் பெருக்கம்</strong> – குளம் நிரம்பியிருந்தால் சுற்றுப்பகுதி கிணறுகளில் நீர் இருக்கும்</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-title marks16">16 மதிப்பெண் விடைகள்</div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">1</span>சங்க காலத்து நீர் மேலாண்மை பற்றி விரிவாக எழுதவும்.</div>
+    <div class="answer">
+      <p><strong>சங்க கால நீர் மேலாண்மை:</strong></p>
+      <p>சங்க காலத்தில் தமிழர்கள் நீரை சேமிக்கவும் பயன்படுத்தவும் சிறந்த தொழில்நுட்பங்களை வளர்த்திருந்தனர்.</p>
+      <p><strong>நீர்நிலை வகைகள்:</strong></p>
+      <ul>
+        <li><strong>கல்லணை</strong> – கரிகால் சோழன் கட்டிய உலகின் மிகப் பழமையான அணை</li>
+        <li><strong>ஏரிகள்</strong> – மழை நீர் சேகரிக்கும் செயற்கை ஏரிகள்</li>
+        <li><strong>குளங்கள்</strong> – கிராம மட்ட நீர்நிலைகள்</li>
+        <li><strong>கால்வாய்கள்</strong> – வயல்களுக்கு நீர் பாயும் வழிகள்</li>
+      </ul>
+      <p><strong>நீர் நிர்வாக முறைகள்:</strong></p>
+      <ul>
+        <li><strong>நீர் வெட்டியார்</strong> – நீர் பகிர்வு அலுவலர்</li>
+        <li><strong>நீரணிக்காரர்</strong> – நீரை ஒழுங்குபடுத்துபவர்</li>
+        <li><strong>முறை பாளை</strong> – நியாயமான நீர் பகிர்வு முறை</li>
+        <li><strong>ஏரி வாரியம்</strong> – ஏரி நிர்வாக குழு</li>
+      </ul>
+      <p><strong>தொழில்நுட்ப சிறப்புகள்:</strong></p>
+      <ul>
+        <li>மடை (Sluice) அமைத்து நீர் கட்டுப்படுத்தினர்</li>
+        <li>குமிழித்தூம்பு மூலம் அடிப்பகுதி நீரை வெளியேற்றினர்</li>
+        <li>ஏரி முகம் (Surplus weir) மூலம் அதிக நீரை வெளியேற்றினர்</li>
+      </ul>
+      <p><strong>முடிவு:</strong> சங்க கால நீர் மேலாண்மை இன்றைய பொறியியல் அறிவியலுக்கு ஈடான திறனை காட்டுகிறது.</p>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">2</span>கல்லணை - அதன் கட்டுமானம், நோக்கம் மற்றும் வரலாற்று முக்கியத்துவம் பற்றி விரிவாக விளக்குக.</div>
+    <div class="answer">
+      <p><strong>கல்லணை (Grand Anicut):</strong></p>
+      <p><strong>கட்டிய மன்னர்:</strong> கரிகால் சோழன் (கி.மு. 2-ம் நூற்றாண்டு)</p>
+      <p><strong>இடம்:</strong> திருச்சிராப்பள்ளி மாவட்டம், காவேரி நதி</p>
+      <p><strong>அளவு:</strong> நீளம் 329 மீட்டர், அகலம் 20 மீட்டர், உயரம் 5.4 மீட்டர்</p>
+      <p><strong>கட்டுமான முறை:</strong></p>
+      <ul>
+        <li>கற்களை சுண்ணாம்பு சாந்து இல்லாமல் நிரைத்தனர்</li>
+        <li>கற்களை ஒன்றின்மேல் ஒன்றாக பொருத்தினர்</li>
+        <li>நதியின் குறுக்கே கட்டினர்</li>
+        <li>நீரை திசை திருப்பி டெல்டா பகுதிக்கு அனுப்பினர்</li>
+      </ul>
+      <p><strong>நோக்கங்கள்:</strong></p>
+      <ul>
+        <li>காவேரி டெல்டா விவசாய நிலங்களுக்கு பாசனம்</li>
+        <li>நீர் வெள்ளத்தை கட்டுப்படுத்துதல்</li>
+        <li>நீரை கிளை நதிகளுக்கு பகிர்தல்</li>
+      </ul>
+      <p><strong>வரலாற்று முக்கியத்துவம்:</strong></p>
+      <ul>
+        <li>உலகின் மிகப் பழமையான நீர்த்தேக்க அமைப்பு</li>
+        <li>2000 ஆண்டுகளுக்கும் மேலாக இன்றும் பயன்பாட்டில் உள்ளது</li>
+        <li>பிரிட்டிஷ் இன்ஜினீயர் சர் ஆர்தர் காட்டன் இதை பார்த்து ஆச்சரியப்பட்டார்</li>
+        <li>கோதாவரி, கிருஷ்ணா நதிகளில் அணைகள் கட்ட இதிலிருந்து உத்வேகம் பெற்றனர்</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">3</span>சங்க காலத்தில் தமிழர்களின் விவசாயம் பற்றி எழுதவும்.</div>
+    <div class="answer">
+      <p><strong>சங்க கால தமிழர் விவசாயம்:</strong></p>
+      <p><strong>பயிர்கள்:</strong></p>
+      <ul>
+        <li><strong>நெல்</strong> – முக்கிய உணவு தானியம்</li>
+        <li><strong>தினை</strong> – மலை பகுதி பயிர்</li>
+        <li><strong>கரும்பு</strong> – சர்க்கரை உற்பத்திக்கு</li>
+        <li><strong>பருத்தி</strong> – நெசவுத் தொழிலுக்கு</li>
+        <li><strong>வாழை, மா, பலா</strong> – பழ வகைகள்</li>
+      </ul>
+      <p><strong>விவசாய கருவிகள்:</strong></p>
+      <ul>
+        <li><strong>கலப்பை</strong> – நிலம் உழ</li>
+        <li><strong>அரிவாள்</strong> – அறுவடை செய்ய</li>
+        <li><strong>குழைவை</strong> – நிலம் தோண்ட</li>
+      </ul>
+      <p><strong>பாசன முறைகள்:</strong></p>
+      <ul>
+        <li>ஏரி, குளம், கால்வாய் மூலம் பாசனம்</li>
+        <li>கிணறு மூலம் நீர் இறைத்தல்</li>
+        <li>மழை நீரை நம்பி சேர்ப்பு விவசாயம்</li>
+      </ul>
+      <p><strong>விவசாயிகள்:</strong></p>
+      <ul>
+        <li><strong>உழவர்</strong> – நெல் விவசாயிகள்</li>
+        <li><strong>வேளாளர்</strong> – உயர் நிலை விவசாயிகள்</li>
+        <li><strong>கடையர்</strong> – சிறு விவசாயிகள்</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">4</span>பழங்காலத்தில் முத்து சேகரிப்பு மற்றும் முத்துக்குளித்தல் செயல்முறை பற்றி விரிவாக விளக்குக.</div>
+    <div class="answer">
+      <p><strong>முத்துக்குளித்தல்:</strong></p>
+      <p><strong>முக்கிய இடங்கள்:</strong></p>
+      <ul>
+        <li><strong>கொற்கை</strong> – தென் தமிழகம், பாண்டிய நாட்டின் துறைமுகம்</li>
+        <li><strong>கடலூர்</strong></li>
+        <li><strong>மன்னார் வளைகுடா</strong></li>
+      </ul>
+      <p><strong>முத்து கிடைக்கும் முறை:</strong></p>
+      <ul>
+        <li>சிப்பிகளுக்குள் உருவாகும் (Oyster shells)</li>
+        <li>ஒரு மணல் துகள் சிப்பிக்குள் நுழைந்தால் அதை சுற்றி முத்து உருவாகும்</li>
+      </ul>
+      <p><strong>குளிக்கும் முறை:</strong></p>
+      <ul>
+        <li>மூச்சை நிறுத்தி ஆழ்கடலில் மூழ்குவர்</li>
+        <li>சிப்பிகளை கைகளால் பறித்து மேலே வருவர்</li>
+        <li>பல முறை மூழ்கி சிப்பி சேகரிப்பர்</li>
+        <li>சிப்பிகளை உடைத்து முத்தை எடுப்பர்</li>
+      </ul>
+      <p><strong>முத்தின் வகைகள்:</strong></p>
+      <ul>
+        <li>வெண்முத்து – சிறந்தது</li>
+        <li>சிவப்பு முத்து</li>
+        <li>கடல் முத்து, ஆறு முத்து</li>
+      </ul>
+      <p><strong>வணிகம்:</strong> முத்துகள் உரோமானியர்கள், அரேபியர்கள் உட்பட வெளிநாட்டினருக்கு ஏற்றுமதி ஆயின.</p>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">5</span>சங்க காலத்தில் கால்நடை வளர்ப்பு, கால்நடை மேலாண்மை, விலங்கு வளர்ப்பு முறைகள் பற்றி எழுதுக.</div>
+    <div class="answer">
+      <p><strong>சங்க கால கால்நடை மேலாண்மை:</strong></p>
+      <p><strong>வளர்க்கப்பட்ட விலங்குகள்:</strong></p>
+      <ul>
+        <li><strong>பசு, எருமை</strong> – பால் மற்றும் விவசாய வேலைக்கு</li>
+        <li><strong>ஆடு, செம்மறி</strong> – இறைச்சி மற்றும் கம்பளிக்கு</li>
+        <li><strong>யானை</strong> – போர்க்கு மற்றும் அரச சின்னமாக</li>
+        <li><strong>குதிரை</strong> – போர்க்கு மற்றும் பயணத்திற்கு</li>
+        <li><strong>நாய்</strong> – வேட்டைக்கும் காவலுக்கும்</li>
+      </ul>
+      <p><strong>மேய்ச்சல் முறை:</strong></p>
+      <ul>
+        <li>முல்லை திணை காட்டு நிலத்தில் மேய்ச்சல்</li>
+        <li>இடையர் என்ற சமூகம் கால்நடை மேய்த்தது</li>
+        <li>கோவல் என்பவர் பசு மேய்த்தவர்</li>
+        <li>ஆயர் என்பவர் ஆடு மேய்த்தவர்</li>
+      </ul>
+      <p><strong>கால்நடை பராமரிப்பு:</strong></p>
+      <ul>
+        <li>கால்நடைகளுக்கு மருத்துவம் செய்தனர்</li>
+        <li>சிறப்பான தீவனம் கொடுத்தனர்</li>
+        <li>குளிர்ந்த நீர் வசதி செய்தனர்</li>
+      </ul>
+      <p><strong>முடிவு:</strong> சங்க காலத்தில் கால்நடை செல்வம் ஒரு நாட்டின் செழிப்பின் அளவுகோலாக கருதப்பட்டது.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- ===== UNIT 5 ===== -->
+<div class="unit" id="unit5">
+  <div class="unit-header">
+    <h2>அலகு – V</h2>
+    <h3>அறிவியல் தமிழ் மற்றும் கணித்தமிழ்</h3>
+  </div>
+
+  <button class="show-all-btn" onclick="toggleAll('unit5')">🔍 அனைத்து விடைகளையும் காட்டு / மறை</button>
+
+  <div class="section-title">2 மதிப்பெண் விடைகள்</div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">1</span>கணித்தமிழ் குறிப்பு வரைக.</div>
+    <div class="answer"><p><strong>கணித்தமிழ்</strong> என்பது கணிதக் கருத்துக்களை தமிழ் மொழியில் விளக்கும் துறை ஆகும். எண்கள், கணக்கீடு, வடிவியல், அளவீடு போன்ற கணித கருத்துக்கள் தமிழில் எழுதப்படும். <strong>கணக்கதிகாரம்</strong> போன்ற நூல்கள் கணித தமிழின் வளர்ச்சியை காட்டுகின்றன.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">2</span>தமிழ் இணையக் கல்விக் கழகம் எந்த ஆண்டு தொடங்கப்பட்டது?</div>
+    <div class="answer"><p><strong>தமிழ் இணையக் கல்விக் கழகம் (Tamil Virtual Academy – TVA)</strong> <strong>2001-ம் ஆண்டு</strong> தொடங்கப்பட்டது. இது தமிழ்நாடு அரசின் கல்வி முயற்சியாக தமிழ் மொழியை இணையத்தில் பரப்ப தொடங்கப்பட்டது.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">3</span>மின்னூல் அமைப்புகள் மூன்றினைக் கூறுக.</div>
+    <div class="answer">
+      <ul>
+        <li><strong>1. PDF (Portable Document Format)</strong> – Adobe நிறுவனம் உருவாக்கியது</li>
+        <li><strong>2. EPUB (Electronic Publication)</strong> – திரையில் படிக்க ஏற்றது</li>
+        <li><strong>3. MOBI / Kindle Format</strong> – Amazon Kindle-க்கான வடிவம்</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">4</span>தமிழ் மென்பொருள் உருவாகும் இடங்களைக் கூறுக.</div>
+    <div class="answer">
+      <ul>
+        <li><strong>சென்னை</strong> – C-DAC, IIT மெட்ராஸ்</li>
+        <li><strong>மதுரை</strong> – மதுரை காமராஜ் பல்கலைக்கழகம்</li>
+        <li><strong>கோவை</strong> – NIT திருச்சி</li>
+        <li><strong>திருவனந்தபுரம்</strong> – Kerala IT companies</li>
+        <li>அமெரிக்கா, கனடா போன்ற வெளிநாடுகளிலும் தமிழர்கள் மென்பொருள் செய்கின்றனர்</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">5</span>மின் நூலகம் குறிப்பு வரைக.</div>
+    <div class="answer"><p><strong>மின் நூலகம் (Digital Library / E-Library)</strong> என்பது புத்தகங்கள், ஆவணங்கள், சஞ்சிகைகள் போன்றவற்றை <strong>இணையத்தில் மின்னணு வடிவில் சேமித்து</strong> படிக்கும் வசதி ஆகும். <strong>www.projectmadurai.org, திருவாசகம் தளம்</strong> போன்றவை தமிழ் மின் நூலகங்கள்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">6</span>மின் அகராதி குறித்து எழுதுக.</div>
+    <div class="answer"><p><strong>மின் அகராதி (E-Dictionary)</strong> என்பது கணினி அல்லது தொலைபேசியில் பயன்படுத்தும் <strong>அகராதி மென்பொருள்</strong> ஆகும். தமிழ் மின் அகராதிகளில் <strong>மதுரை அகராதி (Madurai Dictionary), பேரகராதி, University of Madras Tamil Lexicon</strong> போன்றவை முக்கியமானவை.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">7</span>மதுரம் மின் அகராதியில் எத்தனை கூறுகள் உள்ளன?</div>
+    <div class="answer"><p><strong>மதுரம் மின் அகராதி</strong> என்பது ஒரு தமிழ் ஆங்கில மின் அகராதி. இதில் <strong>லட்சக்கணக்கான</strong> சொற்கள் உள்ளன. இது <strong>University of Madras Tamil Lexicon</strong> ஆனது மின்னணு வடிவில் உருவாக்கப்பட்டது.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">8</span>தமிழ் விக்சனரி -குறிப்பு வரைக.</div>
+    <div class="answer"><p><strong>தமிழ் விக்சனரி (Tamil Wiktionary)</strong> என்பது <strong>Wikipedia நிறுவனம்</strong> நடத்தும் இணையத்தில் இலவசமாக கிடைக்கும் தமிழ் அகராதி. யாரும் இதில் சொற்கள் சேர்க்கலாம் (Open source). இது <strong>wiktionary.org/wiki/ta</strong> என்ற தளத்தில் கிடைக்கும்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">9</span>சொற்குவைத்திட்டம் என்றால் என்ன?</div>
+    <div class="answer"><p><strong>சொற்குவைத்திட்டம் (Corpus)</strong> என்பது ஒரு மொழியில் உள்ள <strong>இலட்சக்கணக்கான வாக்கியங்கள் மற்றும் சொற்களை கணினியில் சேகரித்து வைக்கும் தொகுப்பு</strong> ஆகும். இது மொழி ஆராய்ச்சிக்கும், மொழி மென்பொருள் தயாரிக்கவும் பயன்படும்.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">10</span>சொற்குவையின் முதன்மை நோக்கங்கள் யாவை?</div>
+    <div class="answer">
+      <ul>
+        <li><strong>1. மொழி ஆராய்ச்சி</strong> – சொல் பயன்பாட்டு முறை ஆய்வு</li>
+        <li><strong>2. மொழிபெயர்ப்பு</strong> – தானியங்கி மொழிபெயர்ப்பு மென்பொருளுக்கு</li>
+        <li><strong>3. அகராதி தயாரிப்பு</strong> – புதிய சொற்களை சேர்க்க</li>
+        <li><strong>4. கல்வி</strong> – மொழி கற்பிக்க உதவும் மென்பொருட்களுக்கு</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">11</span>தமிழ் இணையக் கல்விக்கழகத்தின் முந்தைய பெயர் என்ன?</div>
+    <div class="answer"><p>தமிழ் இணையக் கல்விக்கழகத்தின் முந்தைய பெயர் <strong>"தமிழ் இணைய பல்கலைக்கழகம்" (Tamil Internet University)</strong> ஆகும். பின்னர் இது <strong>Tamil Virtual Academy (TVA)</strong> என்று மாற்றப்பட்டது.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">12</span>வலைப்பூ -குறிப்பு வரைக.</div>
+    <div class="answer"><p><strong>வலைப்பூ (Blog)</strong> என்பது இணையத்தில் <strong>தனி நபர் அல்லது குழு</strong> தங்கள் கருத்துகள், கட்டுரைகள், செய்திகளை எழுதும் தளம் ஆகும். <strong>Blogger, WordPress</strong> போன்ற தளங்களில் வலைப்பூ எழுதலாம். தமிழ் வலைப்பூக்கள் ஏராளமாக உள்ளன.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">13</span>வலைப்பூவில் தமிழ் வளர்ச்சி குறித்து எழுதுக.</div>
+    <div class="answer"><p>தமிழ் வலைப்பூக்கள் <strong>2003</strong>-ம் ஆண்டிலிருந்து வேகமாக வளர்ந்தன. இன்று லட்சக்கணக்கான தமிழ் வலைப்பூக்கள் உள்ளன. கவிதை, கதை, அரசியல், கல்வி, தொழில்நுட்பம் என பல்வேறு தலைப்புகளில் தமிழ் வலைப்பூக்கள் எழுதப்படுகின்றன.</p></div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">14</span>இணையத்தில் தமிழ் அகராதிகள் குறித்து சிறு குறிப்பு வரைக.</div>
+    <div class="answer">
+      <ul>
+        <li><strong>மதுரம் (Maduram)</strong> – தமிழ் ஆங்கில அகராதி</li>
+        <li><strong>University of Madras Tamil Lexicon</strong> – மிகப் பழமையான விரிவான அகராதி</li>
+        <li><strong>தமிழ் விக்சனரி</strong> – திறந்த மூல அகராதி</li>
+        <li><strong>Google Translate</strong> – தமிழுக்கும் ஆங்கிலத்திற்கும்</li>
+        <li><strong>Agarathi.com</strong> – நவீன தமிழ் அகராதி</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card">
+    <div class="question" onclick="toggle(this)"><span class="q-num">15</span>தமிழ் மென்பொருள் உருவாக்கத்தின் பயன்கள் யாவை?</div>
+    <div class="answer">
+      <ul>
+        <li>தமிழ் கணினி மொழிபெயர்ப்பு சாத்தியமாகும்</li>
+        <li>தமிழ் குரல் அங்கீகாரம் (Voice recognition)</li>
+        <li>தமிழ் கல்வி மென்பொருட்கள்</li>
+        <li>தமிழ் செய்தி தளங்கள்</li>
+        <li>தமிழ் சமூக வலைத்தளங்கள்</li>
+        <li>தமிழ் இ-வாணிகம் (E-commerce)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-title marks16">16 மதிப்பெண் விடைகள்</div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">1</span>கணித்தமிழ் வளர்ச்சி குறித்து விவரித்து எழுதுக.</div>
+    <div class="answer">
+      <p><strong>கணித்தமிழ் வளர்ச்சி:</strong></p>
+      <p>தமிழ் மொழியில் கணிதம் மிக பழமையான காலத்திலிருந்தே இருந்தது.</p>
+      <p><strong>பண்டைய கணித்தமிழ் நூல்கள்:</strong></p>
+      <ul>
+        <li><strong>கணக்கதிகாரம்</strong> – தொகுப்பு கணக்கு</li>
+        <li><strong>நெல்லியடி</strong> – அளவைகள்</li>
+        <li><strong>கணிதசாரம்</strong></li>
+        <li><strong>உதயடித்தம்</strong></li>
+      </ul>
+      <p><strong>தமிழ் எண் முறைகள்:</strong></p>
+      <ul>
+        <li>தமிழ் எண்கள் (Tamil numerals) – ஒரு, இரண்டு... நூறு, ஆயிரம், லட்சம், கோடி</li>
+        <li>பழந்தமிழ் எண் சின்னங்கள் (Brahmi base)</li>
+      </ul>
+      <p><strong>அளவை முறைகள்:</strong></p>
+      <ul>
+        <li><strong>நீள அளவு</strong> – விரல், சாண், முழம், கோல், காதம்</li>
+        <li><strong>நிறை அளவு</strong> – குன்றிமணி, பலம், மணை, வீசை</li>
+        <li><strong>திரவ அளவு</strong> – உழக்கு, படி, ஆழாக்கு</li>
+      </ul>
+      <p><strong>நவீன கணித்தமிழ்:</strong></p>
+      <ul>
+        <li>கணினி கணக்கீட்டை தமிழில் வழங்குவது</li>
+        <li>பள்ளி கணித பாடநூல்கள் தமிழில்</li>
+        <li>தமிழ் கணிதம் – ஆராய்ச்சி நிலை</li>
+      </ul>
+      <p><strong>முடிவு:</strong> கணித்தமிழ் மொழி வளர்ச்சியில் முக்கிய பங்காற்றுகிறது.</p>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">2</span>மின்நூல்கள் பற்றி விவரித்து எழுதுக.</div>
+    <div class="answer">
+      <p><strong>மின்நூல்கள் (E-Books):</strong></p>
+      <p><strong>வரையறை:</strong> மின்னணு வடிவில் (digital format) தயாரிக்கப்பட்டு கணினி அல்லது தொலைபேசியில் படிக்கக்கூடிய நூல்கள்.</p>
+      <p><strong>மின்நூல் வடிவங்கள்:</strong></p>
+      <ul>
+        <li><strong>PDF</strong> – Adobe தயாரித்தது, அச்சு தோற்றத்தில் காணலாம்</li>
+        <li><strong>EPUB</strong> – திரை அளவிற்கு ஏற்ப மாறும் வடிவம்</li>
+        <li><strong>MOBI/AZW</strong> – Kindle படிப்பான்களுக்கு</li>
+        <li><strong>HTML</strong> – இணைய உலாவியில் படிக்க</li>
+      </ul>
+      <p><strong>தமிழ் மின்நூல் தளங்கள்:</strong></p>
+      <ul>
+        <li><strong>Project Madurai (projectmadurai.org)</strong> – சங்க நூல்கள் இலவசம்</li>
+        <li><strong>Tamil Virtual Academy (tamilvu.org)</strong></li>
+        <li><strong>Kaganam (காகணம்)</strong></li>
+        <li><strong>NTPLibrary</strong></li>
+      </ul>
+      <p><strong>மின்நூலின் சிறப்புகள்:</strong></p>
+      <ul>
+        <li>எடை இல்லாமல் ஆயிரக்கணக்கான நூல்கள் சேமிக்கலாம்</li>
+        <li>தேடல் வசதி உள்ளது</li>
+        <li>எங்கிருந்தும் படிக்கலாம்</li>
+        <li>பல மொழிகளில் கிடைக்கும்</li>
+        <li>சுற்றுச்சூழல் நட்பு (காடழிப்பு குறைவு)</li>
+      </ul>
+      <p><strong>குறைகள்:</strong> மின்சாரம் தேவை, கண் சோர்வு ஏற்படலாம்</p>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">3</span>இணைய அகராதி அல்லது மின் அகராதி குறித்து விளக்குக</div>
+    <div class="answer">
+      <p><strong>மின் அகராதி / இணைய அகராதி:</strong></p>
+      <p><strong>வரையறை:</strong> கணினி அல்லது தொலைபேசியில் பயன்படுத்தும் அகராதி மென்பொருள்.</p>
+      <p><strong>தமிழ் மின் அகராதிகள்:</strong></p>
+      <ul>
+        <li><strong>University of Madras Tamil Lexicon</strong> – 1924-1936 கால அகராதி, மின்னணு வடிவில்</li>
+        <li><strong>Madurai Dictionary</strong> – ஆங்கிலம்-தமிழ், தமிழ்-ஆங்கிலம்</li>
+        <li><strong>தமிழ் விக்சனரி</strong> – திறந்த மூல</li>
+        <li><strong>Agarathi.com</strong></li>
+        <li><strong>Google Translate</strong></li>
+      </ul>
+      <p><strong>மின் அகராதியின் சிறப்புகள்:</strong></p>
+      <ul>
+        <li>உடனடி தேடல் முடிவு</li>
+        <li>ஒலி உச்சரிப்பு வசதி</li>
+        <li>உதாரண வாக்கியங்கள்</li>
+        <li>படங்களுடன் விளக்கம்</li>
+        <li>அடிக்கடி புதுப்பிக்கப்படும்</li>
+        <li>இலவசமாக கிடைக்கும்</li>
+      </ul>
+      <p><strong>முக்கியத்துவம்:</strong></p>
+      <ul>
+        <li>தமிழை கற்பவர்களுக்கு மிகவும் உதவியாக உள்ளது</li>
+        <li>தமிழ் சொற்களின் அர்த்தம் உடனே தெரியும்</li>
+        <li>மொழிபெயர்ப்பு எளிதாகும்</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">4</span>சொற்குவைத் திட்டங்களையும் அவற்றின் நோக்கங்களையும் விவரித்து எழுதுக.</div>
+    <div class="answer">
+      <p><strong>சொற்குவை (Corpus) திட்டங்கள்:</strong></p>
+      <p><strong>வரையறை:</strong> ஒரு மொழியில் உள்ள சொற்கள், வாக்கியங்கள் அனைத்தையும் கணினியில் சேகரித்து வைக்கும் தரவுத்தளம்.</p>
+      <p><strong>தமிழ் சொற்குவை திட்டங்கள்:</strong></p>
+      <ul>
+        <li><strong>IIT Madras Tamil Corpus</strong> – சென்னை IIT தயாரித்தது</li>
+        <li><strong>AU-KBC Tamil Corpus</strong> – அண்ணா பல்கலைக்கழகம்</li>
+        <li><strong>TDIL (Technology Development for Indian Languages)</strong></li>
+        <li><strong>தமிழ் இணையக் கல்விக் கழக corpus</strong></li>
+      </ul>
+      <p><strong>நோக்கங்கள்:</strong></p>
+      <ul>
+        <li><strong>1. மொழி ஆராய்ச்சி</strong> – எந்த சொல் எவ்வளவு முறை பயன்படுகிறது என்று அறிய</li>
+        <li><strong>2. தானியங்கி மொழிபெயர்ப்பு</strong> – Google Translate போன்ற மென்பொருட்களுக்கு</li>
+        <li><strong>3. Speech Recognition</strong> – குரல் மூலம் தமிழ் தட்டச்சு செய்ய</li>
+        <li><strong>4. அகராதி தயாரிப்பு</strong> – புதிய சொற்களை கண்டுபிடிக்க</li>
+        <li><strong>5. NLP (Natural Language Processing)</strong> – கணினி தமிழை புரிந்துகொள்ள</li>
+        <li><strong>6. Spell Check</strong> – தமிழ் எழுத்துப் பிழை திருத்தம்</li>
+      </ul>
+      <p><strong>முடிவு:</strong> சொற்குவை திட்டங்கள் தமிழ் மொழி தொழில்நுட்ப வளர்ச்சியில் மிக முக்கியமான பங்கு வகிக்கின்றன.</p>
+    </div>
+  </div>
+
+  <div class="qa-card marks16">
+    <div class="question" onclick="toggle(this)"><span class="q-num" style="background:#b45309">5</span>அறிவியல் தமிழ் என்னும் தலைப்பில் கட்டுரை எழுதுக.</div>
+    <div class="answer">
+      <p><strong>அறிவியல் தமிழ்</strong></p>
+      <p><strong>முன்னுரை:</strong> அறிவியல் என்பது இயற்கையை ஆய்வு செய்யும் துறை. தமிழில் அறிவியல் கருத்துக்களை வெளிப்படுத்துவதே அறிவியல் தமிழ்.</p>
+      <p><strong>பண்டைய அறிவியல் தமிழ்:</strong></p>
+      <ul>
+        <li>திருக்குறளில் மருத்துவம், மழை, விவசாயம் பற்றிய குறிப்புகள்</li>
+        <li>சங்க இலக்கியத்தில் வானியல், விவசாயம் பற்றி குறிப்புகள்</li>
+        <li>சித்தர்கள் மருத்துவ அறிவியல் தமிழில் எழுதினர்</li>
+      </ul>
+      <p><strong>நவீன அறிவியல் தமிழ்:</strong></p>
+      <ul>
+        <li><strong>தமிழ் பாடநூல்கள்</strong> – பள்ளி, கல்லூரி அறிவியல் தமிழில்</li>
+        <li><strong>தமிழ் விஞ்ஞான இதழ்கள்</strong> – ஆராய்ச்சி கட்டுரைகள்</li>
+        <li><strong>தமிழ் Wikipedia</strong> – அறிவியல் கட்டுரைகள்</li>
+        <li><strong>தமிழ் YouTube</strong> – அறிவியல் விளக்க வீடியோக்கள்</li>
+      </ul>
+      <p><strong>சவால்கள்:</strong></p>
+      <ul>
+        <li>புதிய அறிவியல் சொற்களுக்கு தமிழ் சொல் கண்டுபிடிப்பது சிரமம்</li>
+        <li>ஆங்கிலத்தில் கிடைக்கும் தகவல்களை தமிழாக்குவதில் தாமதம்</li>
+      </ul>
+      <p><strong>தீர்வுகள்:</strong></p>
+      <ul>
+        <li>தமிழ் மொழியியல் வல்லுநர்கள் புதிய சொற்கள் உருவாக்குவது</li>
+        <li>அரசு ஆதரவுடன் மொழிபெயர்ப்பு திட்டங்கள்</li>
+        <li>இளைஞர்கள் அறிவியல் தமிழ் எழுதுவது</li>
+      </ul>
+      <p><strong>முடிவு:</strong> அறிவியல் தமிழ் வளர்வது மொழியின் வளர்ச்சிக்கும் தமிழ் மக்களின் அறிவியல் சிந்தனைக்கும் மிகவும் அவசியம்.</p>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center; padding: 30px; color: #a78bfa;">
+  <p>✅ அனைத்து அலகுகளும் முடிந்தன | Full Marks வரும்! 🎯</p>
+  <p style="font-size:0.85rem; color:#6b7280; margin-top:8px;">Ctrl+P → Print to PDF ஆக save பண்ணலாம்</p>
+</div>
 
 <script>
-  const observer = new IntersectionObserver((entries) => {{
-    entries.forEach((entry, i) => {{
-      if (entry.isIntersecting) setTimeout(() => entry.target.classList.add('visible'), i * 80);
-    }});
-  }}, {{ threshold: 0.1 }});
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+function toggle(el) {
+  const ans = el.nextElementSibling;
+  ans.classList.toggle('show');
+}
 
-  window.addEventListener('scroll', () => {{
-    let cur = '';
-    document.querySelectorAll('section[id]').forEach(s => {{
-      if (window.scrollY >= s.offsetTop - 80) cur = s.id;
-    }});
-    document.querySelectorAll('.nav-links a').forEach(a => {{
-      a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--gold)' : '';
-    }});
-  }});
+function toggleAll(unitId) {
+  const unit = document.getElementById(unitId);
+  const answers = unit.querySelectorAll('.answer');
+  const anyHidden = Array.from(answers).some(a => !a.classList.contains('show'));
+  answers.forEach(a => {
+    if (anyHidden) a.classList.add('show');
+    else a.classList.remove('show');
+  });
+}
 </script>
 </body>
-</html>"""
+</html>
